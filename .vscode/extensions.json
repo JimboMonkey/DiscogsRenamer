@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "ms-python.black-formatter", // Black for Python
+    "bodil.prettier-toml", // Prettier TOML for TOML files
+    "esbenp.prettier-vscode" // Prettier for JSON with Comments (for vscode json files)
+  ]
+}

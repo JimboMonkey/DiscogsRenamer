@@ -1,6 +1,8 @@
 from PyQt6 import QtWidgets
 from typing import Optional
 
+from constants import APP_NAME
+
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, parent: Optional[QtWidgets.QWidget] = None) -> None:
@@ -8,4 +10,4 @@ class MainWindow(QtWidgets.QMainWindow):
         self._init_ui()
 
     def _init_ui(self) -> None:
-        self.setWindowTitle("DiscogsRenamer")
+        self.setWindowTitle(APP_NAME)

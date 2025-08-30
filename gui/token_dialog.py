@@ -1,10 +1,14 @@
 from PyQt6 import QtWidgets, QtCore, QtGui
 
+from token_manager import TokenManager
+
 
 class TokenDialogGui(QtWidgets.QDialog):
 
     def __init__(self) -> None:
         super(QtWidgets.QDialog, self).__init__()
+
+        self._token_manager = TokenManager()
         self._init_ui()
 
     def _init_ui(self) -> None:
@@ -19,6 +23,7 @@ class TokenDialogGui(QtWidgets.QDialog):
         self._token_lineedit.setPlaceholderText("Enter your Discogs API token")
         self._token_lineedit.setMinimumWidth(350)
         self._token_lineedit.setValidator(validator)
+        self._token_lineedit.setText(self._token_manager.load_token())
 
         self._token_lineedit.textChanged.connect(self._save_button_enabled)
 
@@ -44,6 +49,10 @@ class TokenDialogGui(QtWidgets.QDialog):
         else:
             enabled = False
         self._save_button.setEnabled(enabled)
+
+    # Save the token
+    def _save_token(self) -> None:
+        self._token_manager.save_token(self._token_lineedit.text())
 
     # Close the dialog
     def _close_dialog(self) -> None:

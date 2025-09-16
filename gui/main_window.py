@@ -1,4 +1,4 @@
-from PyQt6 import QtWidgets
+from PyQt6 import QtWidgets, QtGui, QtCore
 from typing import Optional
 
 from gui.token_dialog import TokenDialogGui
@@ -17,19 +17,37 @@ class MainWindow(QtWidgets.QMainWindow):
         release_label = QtWidgets.QLabel("Release")
         folder_label = QtWidgets.QLabel("Folder")
 
-        web_browser_button = QtWidgets.QPushButton("Browse")
-        release_text_entry = QtWidgets.QLineEdit()
+        # Only allow release to be specified in form r[12345], r12345, or 12345
+        regex = QtCore.QRegularExpression(r"(?:^\d+$|^r\[\d+\]$|^r\d+$)")
+        validator = QtGui.QRegularExpressionValidator(regex, self)
 
-        file_browser_button = QtWidgets.QPushButton("Browse")
-        folder_entry_label = QtWidgets.QLabel()
+        release_number_label = QtWidgets.QLabel("Discogs Release Number")
+        self._load_release_button = QtWidgets.QPushButton("Load Release")
+        self._load_release_button.setEnabled(False)
+        self._release_lineedit = QtWidgets.QLineEdit()
+        self._release_lineedit.setPlaceholderText(
+            "Enter the Discogs release number you wish to load eg r[180865] or 180865"
+        )
+        self._release_lineedit.setValidator(validator)
+
+        self._release_lineedit.textChanged.connect(self.load_release_button_enabled)
+
+        self.file_browser_button = QtWidgets.QPushButton("Browse")
+        self.folder_entry_label = QtWidgets.QLabel()
 
         release_entry_layout = QtWidgets.QHBoxLayout()
-        release_entry_layout.addWidget(web_browser_button)
-        release_entry_layout.addWidget(release_text_entry)
+        release_entry_layout.addWidget(release_number_label)
+        release_entry_layout.addWidget(self._release_lineedit)
+        release_entry_layout.addWidget(self._load_release_button)
+        # Ensure the label expands horizontally
+        self.folder_entry_label.setSizePolicy(
+            QtWidgets.QSizePolicy.Policy.Expanding,
+            QtWidgets.QSizePolicy.Policy.Preferred,
+        )
 
         folder_entry_layout = QtWidgets.QHBoxLayout()
-        folder_entry_layout.addWidget(file_browser_button)
-        folder_entry_layout.addWidget(folder_entry_label)
+        folder_entry_layout.addWidget(self.file_browser_button)
+        folder_entry_layout.addWidget(self.folder_entry_label)
 
         release_listwidget = QtWidgets.QListWidget()
         folder_listwidget = QtWidgets.QListWidget()
@@ -54,6 +72,19 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setCentralWidget(central_widget)
 
         # self.open_token_dialog()
+        self.show()
+
+    # Enable the load release button only if
+    # there is valid text in the line edit
+    def load_release_button_enabled(self) -> None:
+        if (
+            self._release_lineedit.text()
+            and self._release_lineedit.hasAcceptableInput()
+        ):
+            enabled = True
+        else:
+            enabled = False
+        self._load_release_button.setEnabled(enabled)
 
     def open_token_dialog(self) -> None:
         dialog = TokenDialogGui()

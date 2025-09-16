@@ -1,10 +1,22 @@
-from PyQt6.QtGui import QValidator
 from gui.token_dialog import TokenDialogGui
 from pytestqt.qtbot import QtBot
 
+import pytest
 
-# Ensure line edit only accepts alphanumeric characters
-def test_token_lineedit_accepts_only_alphanumeric(qtbot: QtBot):
+
+# Ensure line edit accepts alphanumeric characters
+@pytest.mark.parametrize(
+    "valid_input",
+    [
+        "abc123",  # Letters and digits
+        "ABCdef456",  # Mixed case letters and digits
+        "abcde",  # Only letters
+        "12345",  # Only digits
+    ],
+)
+def test_token_lineedit_accepts_alphanumeric_input(
+    qtbot: QtBot, valid_input: str
+) -> None:
     dialog = TokenDialogGui()
     qtbot.addWidget(dialog)
 
@@ -14,12 +26,35 @@ def test_token_lineedit_accepts_only_alphanumeric(qtbot: QtBot):
     assert validator is not None
 
     # Valid lineedit input
-    validation_result = validator.validate("abc123", 0)[0]
-    assert validation_result == QValidator.State.Acceptable
+    line_edit.setText(valid_input)
+    qtbot.waitSignal(line_edit.textChanged)
+    assert line_edit.hasAcceptableInput()
+
+
+# Ensure line edit rejects non-alphanumeric characters
+@pytest.mark.parametrize(
+    "invalid_input",
+    [
+        "!@#$%",  # Special characters
+        "abc 123",  # Space between letters and digits
+        "ABC£def456!",  # Mixed case letters, digits, and special characters
+    ],
+)
+def test_token_lineedit_rejects_non_alphanumeric_input(
+    qtbot: QtBot, invalid_input: str
+) -> None:
+    dialog = TokenDialogGui()
+    qtbot.addWidget(dialog)
+
+    # Check validator exists
+    line_edit = dialog._token_lineedit
+    validator = line_edit.validator()
+    assert validator is not None
 
     # Invalid lineedit input
-    validation_result = validator.validate("abc123%?!", 0)[0]
-    assert validation_result == QValidator.State.Invalid
+    line_edit.setText(invalid_input)
+    qtbot.waitSignal(line_edit.textChanged)
+    assert not line_edit.hasAcceptableInput()
 
 
 # Ensure save button is only enabled when text is entered

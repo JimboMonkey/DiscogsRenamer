@@ -17,6 +17,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "black>=25.1.0",
+    "keyrings-alt>=5.0.2",
     "pytest>=8.4.1",
     "pytest-qt>=4.5.0",
 ]

@@ -1,12 +1,20 @@
 import keyring
 import pytest
+import os
 
 from keyring.errors import PasswordDeleteError
 
 from constants import APP_NAME, TOKEN_KEY
-
-
 from token_manager import TokenManager
+
+# Use a plaintext keyring for CI environments where secure storage may not be available
+if os.getenv("CI") == "true":
+    try:
+        from keyrings.alt.file import PlaintextKeyring
+
+        keyring.set_keyring(PlaintextKeyring())
+    except ImportError:
+        raise RuntimeError("keyrings.alt must be installed for CI keyring fallback")
 
 
 @pytest.fixture

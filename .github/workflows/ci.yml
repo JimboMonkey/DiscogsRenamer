@@ -26,13 +26,20 @@ jobs:
           sudo apt update
           sudo apt install -y \
             qt6-base-dev \
-            xvfb \
             libxkbcommon-x11-0 \
-            libegl1
+            libxcb-icccm4 \
+            libxcb-image0 \
+            libxcb-keysyms1 \
+            libxcb-randr0 \
+            libxcb-render-util0 \
+            libxcb-xinerama0 \
+            libxcb-xfixes0 \
+            libegl1 \
+            xvfb
 
       - name: Sync Python dependencies from pyproject.toml
         run: uv sync
 
       - name: Run tests in virtual display
-        run: xvfb-run -a uv run python -m pytest -v
+        run: xvfb-run -a uv run python -m pytest -v --capture=no
 

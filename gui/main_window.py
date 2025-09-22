@@ -1,7 +1,9 @@
 from PyQt6 import QtWidgets, QtGui, QtCore
 from typing import Optional
+from pathlib import Path
 
 from gui.token_dialog import TokenDialogGui
+from gui.file_list_item import FileListItem
 
 from constants import APP_NAME
 
@@ -93,6 +95,29 @@ class MainWindow(QtWidgets.QMainWindow):
     def open_token_dialog(self) -> None:
         dialog = TokenDialogGui()
         dialog.exec()
+
+    # Populate the folder list with the given list of file paths
+    def populate_folder_list(self, file_list: list[Path]) -> None:
+        # Clear any existing items from the list
+        self._folder_listwidget.clear()
+
+        # For each file path in the list...
+        for file_path in file_list:
+
+            # Create and configure the custom widget
+            file_list_item = FileListItem()
+            file_list_item.set_original_filename(file_path.name)
+
+            # Create a QListWidgetItem and add it to the list
+            list_widget_item = QtWidgets.QListWidgetItem()
+            list_widget_item.setSizeHint(file_list_item.sizeHint())
+            self._folder_listwidget.addItem(list_widget_item)
+
+            # Embed the custom widget into the item
+            self._folder_listwidget.setItemWidget(list_widget_item, file_list_item)
+
+        # Update the track numbers and shading
+        self.on_rows_moved()
 
     def on_rows_moved(self):
         for index in range(self._folder_listwidget.count()):

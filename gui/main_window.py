@@ -50,7 +50,11 @@ class MainWindow(QtWidgets.QMainWindow):
         folder_entry_layout.addWidget(self.folder_entry_label)
 
         release_listwidget = QtWidgets.QListWidget()
-        folder_listwidget = QtWidgets.QListWidget()
+        self._folder_listwidget = QtWidgets.QListWidget()
+        self._folder_listwidget.setDragDropMode(
+            QtWidgets.QListWidget.DragDropMode.InternalMove
+        )
+        self._folder_listwidget.model().rowsMoved.connect(self.on_rows_moved)
 
         release_layout = QtWidgets.QVBoxLayout()
         release_layout.addWidget(release_label)
@@ -60,7 +64,7 @@ class MainWindow(QtWidgets.QMainWindow):
         folder_layout = QtWidgets.QVBoxLayout()
         folder_layout.addWidget(folder_label)
         folder_layout.addLayout(folder_entry_layout)
-        folder_layout.addWidget(folder_listwidget)
+        folder_layout.addWidget(self._folder_listwidget)
 
         listwidget_layout = QtWidgets.QHBoxLayout()
         listwidget_layout.addLayout(release_layout)
@@ -89,3 +93,16 @@ class MainWindow(QtWidgets.QMainWindow):
     def open_token_dialog(self) -> None:
         dialog = TokenDialogGui()
         dialog.exec()
+
+    def on_rows_moved(self):
+        for index in range(self._folder_listwidget.count()):
+            item = self._folder_listwidget.item(index)
+            widget: FileListItem = self._folder_listwidget.itemWidget(item)
+
+            widget.set_track_number(str(index + 1))
+
+            if index % 2 == 1:
+                shaded = True
+            else:
+                shaded = False
+            widget.set_shaded(shaded)

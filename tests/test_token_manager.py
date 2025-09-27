@@ -1,11 +1,13 @@
 import keyring
 import pytest
+from unittest.mock import patch, MagicMock
 import os
 
 from keyring.errors import PasswordDeleteError
 
 from constants import APP_NAME, TOKEN_KEY
 from token_manager import TokenManager
+from discogs_client import Client
 
 # Use a plaintext keyring for CI environments where secure storage may not be available
 if os.getenv("CI") == "true":
@@ -60,3 +62,42 @@ def test_save_token_stores_value(
 ):
     token_manager.save_token(set_test_token_for_save)
     assert set_test_token_for_save == keyring.get_password(APP_NAME, TOKEN_KEY)
+
+
+@pytest.mark.parametrize(
+    "token_input, side_effect, expected_response, expected_message",
+    [
+        (
+            "valid_token",
+            False,
+            True,
+            "Authenticated as test_user",
+        ),
+        ("invalid_token", True, False, "Token verification failed"),
+        ("", False, False, "No token provided"),
+    ],
+    ids=["valid", "invalid", "empty"],
+)
+def test_verify_token(
+    token_input: str,
+    side_effect: bool,
+    expected_response: bool,
+    expected_message: str,
+):
+
+    with patch("discogs_client.Client") as mock_client_class:
+        mock_user = MagicMock()
+        mock_user.username = "test_user"
+
+        mock_client_instance = mock_client_class.return_value
+        if side_effect:
+            mock_client_instance.identity.side_effect = Exception(
+                "401: Invalid consumer token. Please register an app before making requests."
+            )
+        else:
+            mock_client_instance.identity.return_value = mock_user
+
+        token_manager = TokenManager()
+        success, message = token_manager.verify_token(token_input)
+        assert success is expected_response
+        assert message == expected_message

@@ -1,0 +1,45 @@
+from typing import Optional
+
+from PyQt6 import QtGui, QtWidgets
+
+
+class Toolbar(QtWidgets.QToolBar):
+
+    def __init__(self, parent: Optional[QtWidgets.QWidget] = None) -> None:
+        super().__init__(parent)
+        self._init_ui()
+
+    def _init_ui(self) -> None:
+        # Create a New File action
+        self.authentication_action = QtGui.QAction(
+            QtGui.QIcon("gui/icons/user.png"),
+            "Authenticate against your Discogs account",
+            self,
+        )
+
+        # Create a file path label and set its font
+        user_name_font = QtGui.QFont()
+        user_name_font.setBold(True)
+        user_name_font.setPointSize(12)
+
+        self.user_name = QtWidgets.QLabel()
+        self.user_name.setFont(user_name_font)
+        self.user_name.setText("Jimbot")
+
+        # Spacer to push file write button to the right of the toolbar
+        toolbar_spacer = QtWidgets.QWidget()
+        toolbar_spacer.setSizePolicy(
+            QtWidgets.QSizePolicy(
+                QtWidgets.QSizePolicy.Policy.Expanding,
+                QtWidgets.QSizePolicy.Policy.Expanding,
+            )
+        )
+
+        # Add all the actions to the tool bar
+        self.addAction(self.authentication_action)
+        self.addWidget(self.user_name)
+        self.addWidget(toolbar_spacer)
+
+    # # Called externally to set the file path label
+    # def set_file_path_label(self, file_path: Path) -> None:
+    #     self.open_file_label.setText(str(file_path))

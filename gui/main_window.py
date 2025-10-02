@@ -2,7 +2,7 @@ from PyQt6 import QtWidgets, QtGui, QtCore
 from typing import Optional
 from pathlib import Path
 
-from gui.token_dialog import TokenDialogGui
+from gui.toolbar import Toolbar
 from gui.file_list_item import FileListItem
 
 from constants import APP_NAME
@@ -15,6 +15,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def _init_ui(self) -> None:
         self.setWindowTitle(APP_NAME)
+
+        self.toolbar = Toolbar()
 
         release_label = QtWidgets.QLabel("Release")
         folder_label = QtWidgets.QLabel("Folder")

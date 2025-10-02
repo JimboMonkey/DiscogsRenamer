@@ -1,6 +1,7 @@
 from PyQt6 import QtCore, QtWidgets
 
 from gui.main_window import MainWindow
+from discogs_manager import DiscogsManager
 
 from pathlib import Path
 from os.path import expanduser
@@ -12,6 +13,7 @@ class MainManager(QtCore.QObject):
     def __init__(self) -> None:
         # Create the main GUI window
         self._ui = MainWindow()
+        self._discogs_manager = DiscogsManager()
         super(MainManager, self).__init__()
 
         # Connect signals and slots

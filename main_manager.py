@@ -1,7 +1,10 @@
 from PyQt6 import QtCore, QtWidgets
 
 from gui.main_window import MainWindow
+from token_dialog import TokenDialog
+from token_manager import TokenManager
 from discogs_manager import DiscogsManager
+from auth_data_class import AuthenticationResult
 
 from pathlib import Path
 from os.path import expanduser
@@ -13,12 +16,21 @@ class MainManager(QtCore.QObject):
     def __init__(self) -> None:
         # Create the main GUI window
         self._ui = MainWindow()
+        token_manager = TokenManager()
         self._discogs_manager = DiscogsManager()
         super(MainManager, self).__init__()
 
         # Connect signals and slots
         self._ui.file_browser_button.pressed.connect(self._show_open_dialog)
 
+        token = token_manager.load_token()
+        # result: AuthenticationResult = token_manager.verify_token(token)
+        result = AuthenticationResult(False, None, "Authentication failed")
+        # if not result.status:
+        #    self.open_token_dialog(result)
+        self._ui.toolbar.authentication_action.triggered.connect(
+            lambda: self.open_token_dialog(result)
+        )
     # Open Folder dialog and return the selected path
     def _open_dialog(self) -> str:
         return QtWidgets.QFileDialog.getExistingDirectory(
@@ -65,3 +77,6 @@ class MainManager(QtCore.QObject):
             for audio_file in sorted(folder_path.glob(extension))
             if audio_file.is_file()
         ]
+
+    def open_token_dialog(self, result: AuthenticationResult) -> None:
+        _dialog = TokenDialog(result)

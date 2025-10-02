@@ -1,5 +1,6 @@
 import keyring
 import discogs_client
+from auth_data_class import AuthenticationResult
 
 from constants import APP_NAME, TOKEN_KEY
 
@@ -15,16 +16,25 @@ class TokenManager:
 
     # Verify a token by checking if it authenticates
     # Return a message to display on the token entry dialog
-    def verify_token(self, token: str) -> tuple[bool, str]:
-        if token:
-            try:
-                client = discogs_client.Client("DiscogsRenamer/1.0", user_token=token)
-                user = client.identity()
-                message = f"Authenticated as {user.username}"
-                return True, message
-            except Exception:
-                message = f"Token verification failed"
-                return False, message
-        else:
-            message = f"No token provided"
-            return False, message
+    def verify_token(self, token: str | None) -> AuthenticationResult:
+        def result(state: bool, username: str | None, message: str):
+            return AuthenticationResult(state, username, message)
+
+        if not token:
+            return result(False, None, "No token provided")
+
+        try:
+            client = discogs_client.Client("DiscogsRenamer/1.0", user_token=token)
+            user = client.identity()
+            username = str(user.username)
+            return result(
+                True,
+                username,
+                f"Authenticated as {username}",
+            )
+        except Exception:
+            return result(
+                False,
+                None,
+                "Token verification failed",
+            )

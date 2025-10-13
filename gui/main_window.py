@@ -21,8 +21,8 @@ class MainWindow(QtWidgets.QMainWindow):
         release_label = QtWidgets.QLabel("Release")
         folder_label = QtWidgets.QLabel("Folder")
 
-        # Only allow release to be specified in form r[12345], r12345, or 12345
-        regex = QtCore.QRegularExpression(r"(?:^\d+$|^r\[\d+\]$|^r\d+$)")
+        # Only allow release to be specified in form [r12345], r12345, or 12345
+        regex = QtCore.QRegularExpression(r"(?:^\d+$|^\[r\d+\]$|^r\d+$)")
         validator = QtGui.QRegularExpressionValidator(regex, self)
 
         release_number_label = QtWidgets.QLabel("Discogs Release Number")
@@ -30,7 +30,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self._load_release_button.setEnabled(False)
         self._release_lineedit = QtWidgets.QLineEdit()
         self._release_lineedit.setPlaceholderText(
-            "Enter the Discogs release number you wish to load eg r[180865] or 180865"
+            "Enter the Discogs release number you wish to load eg [r180865] or 180865"
         )
         self._release_lineedit.setValidator(validator)
 

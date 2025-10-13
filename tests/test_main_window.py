@@ -10,7 +10,7 @@ import pytest
     [
         "12345",  # Only digits
         "r12345",  # r followed by digits
-        "r[12345]",  # r followed by bracketed digits
+        "[r12345]",  # r followed by bracketed digits
     ],
 )
 def test_release_lineedit_accepts_valid_inputs(qtbot: QtBot, valid_input: str) -> None:
@@ -32,13 +32,13 @@ def test_release_lineedit_accepts_valid_inputs(qtbot: QtBot, valid_input: str) -
     [
         "abcde",  # Only letters
         "rabcde",  # r followed by letters
-        "r[abcde]",  # r followed by bracketed letters
+        "[rabcde]",  # r followed by bracketed letters
         "r12345abc",  # r followed by digits and letters
-        "r[12345abc]",  # r followed by bracketed digits and letters
-        "r[12345",  # r followed by unclosed bracket
+        "[r12345abc]",  # r followed by bracketed digits and letters
+        "[r12345",  # r followed by unclosed bracket
         "r12345]",  # r followed by unstarted bracket
-        "r[12 345]",  # r followed by bracketed digits with space
-        "r[!@#$%]",  # r followed by bracketed special characters
+        "[r12 345]",  # r followed by bracketed digits with space
+        "[r!@#$%]",  # r followed by bracketed special characters
     ],
 )
 def test_release_lineedit_rejects_invalid_inputs(
@@ -68,5 +68,5 @@ def test_load_release_button_enabled_by_text(qtbot: QtBot):
     assert not button.isEnabled()
 
     # Simulate valid input
-    line_edit.setText("r[12345]")
+    line_edit.setText("[r12345]")
     assert button.isEnabled()

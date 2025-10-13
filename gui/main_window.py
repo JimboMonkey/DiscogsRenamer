@@ -3,7 +3,7 @@ from typing import Optional
 from pathlib import Path
 
 from gui.toolbar import Toolbar
-from gui.file_list_item import FileListItem
+from gui.tracklist_item import TracklistItem
 
 from constants import APP_NAME
 
@@ -107,7 +107,7 @@ class MainWindow(QtWidgets.QMainWindow):
         for file_path in file_list:
 
             # Create and configure the custom widget
-            file_list_item = FileListItem()
+            file_list_item = TracklistItem()
             file_list_item.set_original_filename(file_path.name)
 
             # Create a QListWidgetItem and add it to the list

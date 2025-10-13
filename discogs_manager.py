@@ -15,7 +15,6 @@ class DiscogsManager:
     def get_release(self, release_id: int) -> Release | None:
         try:
             release = self._client.release(release_id)
-            print("release", release, release.tracklist, release.artists)
             return release
         except Exception as e:
             print(f"Failed to fetch release {release_id}: {e}")

@@ -74,13 +74,16 @@ class MainWindow(QtWidgets.QMainWindow):
         listwidget_layout.addLayout(release_layout)
         listwidget_layout.addLayout(folder_layout)
 
+        vertical_layout = QtWidgets.QVBoxLayout()
+        vertical_layout.addWidget(self.toolbar)
+        vertical_layout.addLayout(listwidget_layout)
+
         # Set the listwidget layout as the layout for the window
         central_widget = QtWidgets.QWidget(self)
-        central_widget.setLayout(listwidget_layout)
+        central_widget.setLayout(vertical_layout)
         self.setCentralWidget(central_widget)
 
-        # self.open_token_dialog()
-        self.show()
+        self.showMaximized()
 
     # Enable the load release button only if
     # there is valid text in the line edit

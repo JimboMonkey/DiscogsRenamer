@@ -7,7 +7,7 @@ from keyring.errors import PasswordDeleteError
 
 from constants import APP_NAME, TOKEN_KEY
 from token_manager import TokenManager
-from discogs_client import Client
+from auth_data_class import AuthenticationResult
 
 # Use a plaintext keyring for CI environments where secure storage may not be available
 if os.getenv("CI") == "true":
@@ -98,6 +98,6 @@ def test_verify_token(
             mock_client_instance.identity.return_value = mock_user
 
         token_manager = TokenManager()
-        success, message = token_manager.verify_token(token_input)
-        assert success is expected_response
-        assert message == expected_message
+        auth_result: AuthenticationResult = token_manager.verify_token(token_input)
+        assert auth_result.status is expected_response
+        assert auth_result.message == expected_message

@@ -1,4 +1,4 @@
-from gui.token_dialog import TokenDialogGui
+from gui.token_dialog_gui import TokenDialogGui
 from pytestqt.qtbot import QtBot
 
 import pytest
@@ -21,7 +21,7 @@ def test_token_lineedit_accepts_alphanumeric_input(
     qtbot.addWidget(dialog)
 
     # Check validator exists
-    line_edit = dialog._token_lineedit
+    line_edit = dialog.token_lineedit
     validator = line_edit.validator()
     assert validator is not None
 
@@ -47,7 +47,7 @@ def test_token_lineedit_rejects_non_alphanumeric_input(
     qtbot.addWidget(dialog)
 
     # Check validator exists
-    line_edit = dialog._token_lineedit
+    line_edit = dialog.token_lineedit
     validator = line_edit.validator()
     assert validator is not None
 
@@ -62,8 +62,8 @@ def test_save_button_enabled_by_text(qtbot: QtBot):
     dialog = TokenDialogGui()
     qtbot.addWidget(dialog)
 
-    line_edit = dialog._token_lineedit
-    button = dialog._save_button
+    line_edit = dialog.token_lineedit
+    button = dialog.save_button
 
     # Initially, the button should be disabled
     assert not button.isEnabled()

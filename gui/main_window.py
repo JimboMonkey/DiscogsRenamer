@@ -26,23 +26,23 @@ class MainWindow(QtWidgets.QMainWindow):
         validator = QtGui.QRegularExpressionValidator(regex, self)
 
         release_number_label = QtWidgets.QLabel("Discogs Release Number")
-        self._load_release_button = QtWidgets.QPushButton("Load Release")
-        self._load_release_button.setEnabled(False)
-        self._release_lineedit = QtWidgets.QLineEdit()
-        self._release_lineedit.setPlaceholderText(
+        self.load_release_button = QtWidgets.QPushButton("Load Release")
+        self.load_release_button.setEnabled(False)
+        self.release_lineedit = QtWidgets.QLineEdit()
+        self.release_lineedit.setPlaceholderText(
             "Enter the Discogs release number you wish to load eg [r180865] or 180865"
         )
-        self._release_lineedit.setValidator(validator)
+        self.release_lineedit.setValidator(validator)
 
-        self._release_lineedit.textChanged.connect(self.load_release_button_enabled)
+        self.release_lineedit.textChanged.connect(self.load_release_button_enabled)
 
         self.file_browser_button = QtWidgets.QPushButton("Browse")
         self.folder_entry_label = QtWidgets.QLabel()
 
         release_entry_layout = QtWidgets.QHBoxLayout()
         release_entry_layout.addWidget(release_number_label)
-        release_entry_layout.addWidget(self._release_lineedit)
-        release_entry_layout.addWidget(self._load_release_button)
+        release_entry_layout.addWidget(self.release_lineedit)
+        release_entry_layout.addWidget(self.load_release_button)
         # Ensure the label expands horizontally
         self.folder_entry_label.setSizePolicy(
             QtWidgets.QSizePolicy.Policy.Expanding,
@@ -53,7 +53,7 @@ class MainWindow(QtWidgets.QMainWindow):
         folder_entry_layout.addWidget(self.file_browser_button)
         folder_entry_layout.addWidget(self.folder_entry_label)
 
-        release_listwidget = QtWidgets.QListWidget()
+        self._release_listwidget = QtWidgets.QListWidget()
         self._folder_listwidget = QtWidgets.QListWidget()
         self._folder_listwidget.setDragDropMode(
             QtWidgets.QListWidget.DragDropMode.InternalMove
@@ -63,7 +63,7 @@ class MainWindow(QtWidgets.QMainWindow):
         release_layout = QtWidgets.QVBoxLayout()
         release_layout.addWidget(release_label)
         release_layout.addLayout(release_entry_layout)
-        release_layout.addWidget(release_listwidget)
+        release_layout.addWidget(self._release_listwidget)
 
         folder_layout = QtWidgets.QVBoxLayout()
         folder_layout.addWidget(folder_label)
@@ -85,18 +85,11 @@ class MainWindow(QtWidgets.QMainWindow):
     # Enable the load release button only if
     # there is valid text in the line edit
     def load_release_button_enabled(self) -> None:
-        if (
-            self._release_lineedit.text()
-            and self._release_lineedit.hasAcceptableInput()
-        ):
+        if self.release_lineedit.text() and self.release_lineedit.hasAcceptableInput():
             enabled = True
         else:
             enabled = False
-        self._load_release_button.setEnabled(enabled)
-
-    def open_token_dialog(self) -> None:
-        dialog = TokenDialogGui()
-        dialog.exec()
+        self.load_release_button.setEnabled(enabled)
 
     # Populate the folder list with the given list of file paths
     def populate_folder_list(self, file_list: list[Path]) -> None:

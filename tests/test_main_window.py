@@ -17,7 +17,7 @@ def test_release_lineedit_accepts_valid_inputs(qtbot: QtBot, valid_input: str) -
     main_window = MainWindow()
     qtbot.addWidget(main_window)
 
-    line_edit = main_window._release_lineedit
+    line_edit = main_window.release_lineedit
     validator = line_edit.validator()
     assert validator is not None
 
@@ -47,7 +47,7 @@ def test_release_lineedit_rejects_invalid_inputs(
     main_window = MainWindow()
     qtbot.addWidget(main_window)
 
-    line_edit = main_window._release_lineedit
+    line_edit = main_window.release_lineedit
     validator = line_edit.validator()
     assert validator is not None
 
@@ -61,8 +61,8 @@ def test_load_release_button_enabled_by_text(qtbot: QtBot):
     main_window = MainWindow()
     qtbot.addWidget(main_window)
 
-    line_edit = main_window._release_lineedit
-    button = main_window._load_release_button
+    line_edit = main_window.release_lineedit
+    button = main_window.load_release_button
 
     # Initially, the button should be disabled
     assert not button.isEnabled()

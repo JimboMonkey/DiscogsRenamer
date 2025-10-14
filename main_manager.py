@@ -21,6 +21,7 @@ class MainManager(QtCore.QObject):
         super(MainManager, self).__init__()
 
         # Connect signals and slots
+        self._ui.load_release_button.pressed.connect(self._load_release)
         self._ui.file_browser_button.pressed.connect(self._show_open_dialog)
 
         token = token_manager.load_token()
@@ -31,6 +32,26 @@ class MainManager(QtCore.QObject):
         self._ui.toolbar.authentication_action.triggered.connect(
             lambda: self.open_token_dialog(result)
         )
+
+
+    def extract_digits(self, release_id_string: str) -> int | None:
+        digits_string = "".join(
+            character for character in release_id_string if character.isdigit()
+        )
+        return int(digits_string) if digits_string else None
+
+    # Load the release from Discogs and populate the release list
+    def _load_release(self) -> None:
+        release_id = self.extract_digits(self._ui.release_lineedit.text())
+        if release_id:
+            release = self._discogs_manager.get_release(release_id)
+        if release:
+            tracklist = self._discogs_manager.get_tracklist(
+                release
+            )  # [<Track 'A' "I'll Take You There (Remix)">, <Track 'B1' "I'll Take You There (Edit)">, <Track 'B2' 'Wrath Of Kane'>]
+            track_titles = self._discogs_manager.get_track_titles(tracklist)
+            self._ui.populate_release_list(track_titles)
+
     # Open Folder dialog and return the selected path
     def _open_dialog(self) -> str:
         return QtWidgets.QFileDialog.getExistingDirectory(

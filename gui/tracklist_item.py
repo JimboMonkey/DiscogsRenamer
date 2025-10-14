@@ -36,7 +36,6 @@ class TracklistItem(QtWidgets.QWidget):
 
     # Set the upper label with the original filename of the file
     def set_original_filename(self, text: str) -> None:
-        print(text)
         self._original_filename.setText(text)
 
     # Set the lower lineedit with the new filename for the file

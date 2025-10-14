@@ -50,7 +50,7 @@ class MainManager(QtCore.QObject):
                 release
             )  # [<Track 'A' "I'll Take You There (Remix)">, <Track 'B1' "I'll Take You There (Edit)">, <Track 'B2' 'Wrath Of Kane'>]
             track_titles = self._discogs_manager.get_track_titles(tracklist)
-            self._ui.populate_release_list(track_titles)
+            self._ui._release_listwidget.populate(track_titles)
 
     # Open Folder dialog and return the selected path
     def _open_dialog(self) -> str:
@@ -76,10 +76,10 @@ class MainManager(QtCore.QObject):
     def _read_folder_contents(self, folder_path: Path) -> None:
         self._ui.folder_entry_label.setText(str(folder_path))
         file_list = self._list_audio_files_in_folder(folder_path)
-        self._ui.populate_folder_list(file_list)
+        self._ui._folder_listwidget.populate(file_list)
 
     # Return a sorted list of audio files in a folder
-    def _list_audio_files_in_folder(self, folder_path: Path) -> List[Path]:
+    def _list_audio_files_in_folder(self, folder_path: Path) -> List[str]:
 
         audio_file_extensions = [
             "*.mp3",
@@ -93,7 +93,7 @@ class MainManager(QtCore.QObject):
             "*.aac",
         ]
         return [
-            audio_file
+            str(audio_file.name)
             for extension in audio_file_extensions
             for audio_file in sorted(folder_path.glob(extension))
             if audio_file.is_file()

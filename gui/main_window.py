@@ -1,9 +1,8 @@
 from PyQt6 import QtWidgets, QtGui, QtCore
 from typing import Optional
-from pathlib import Path
 
 from gui.toolbar import Toolbar
-from gui.tracklist_item import TracklistItem
+from gui.tracklist import Tracklist
 
 from constants import APP_NAME
 
@@ -53,12 +52,8 @@ class MainWindow(QtWidgets.QMainWindow):
         folder_entry_layout.addWidget(self.file_browser_button)
         folder_entry_layout.addWidget(self.folder_entry_label)
 
-        self._release_listwidget = QtWidgets.QListWidget()
-        self._folder_listwidget = QtWidgets.QListWidget()
-        self._folder_listwidget.setDragDropMode(
-            QtWidgets.QListWidget.DragDropMode.InternalMove
-        )
-        self._folder_listwidget.model().rowsMoved.connect(self.on_rows_moved)
+        self._release_listwidget = Tracklist(editable=False)
+        self._folder_listwidget = Tracklist(editable=True)
 
         release_layout = QtWidgets.QVBoxLayout()
         release_layout.addWidget(release_label)
@@ -93,39 +88,3 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             enabled = False
         self.load_release_button.setEnabled(enabled)
-
-    # Populate the folder list with the given list of file paths
-    def populate_folder_list(self, file_list: list[Path]) -> None:
-        # Clear any existing items from the list
-        self._folder_listwidget.clear()
-
-        # For each file path in the list...
-        for file_path in file_list:
-
-            # Create and configure the custom widget
-            file_list_item = TracklistItem()
-            file_list_item.set_original_filename(file_path.name)
-
-            # Create a QListWidgetItem and add it to the list
-            list_widget_item = QtWidgets.QListWidgetItem()
-            list_widget_item.setSizeHint(file_list_item.sizeHint())
-            self._folder_listwidget.addItem(list_widget_item)
-
-            # Embed the custom widget into the item
-            self._folder_listwidget.setItemWidget(list_widget_item, file_list_item)
-
-        # Update the track numbers and shading
-        self.on_rows_moved()
-
-    def on_rows_moved(self):
-        for index in range(self._folder_listwidget.count()):
-            item = self._folder_listwidget.item(index)
-            widget: FileListItem = self._folder_listwidget.itemWidget(item)
-
-            widget.set_track_number(str(index + 1))
-
-            if index % 2 == 1:
-                shaded = True
-            else:
-                shaded = False
-            widget.set_shaded(shaded)

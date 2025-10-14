@@ -21,9 +21,9 @@ class DiscogsManager:
             return None
 
     def get_tracklist(self, release: Release) -> list[Track]:
-        return release.tracklist
+        return list(release.tracklist)
 
-    def get_track_titles(tracklist: list[Track]) -> list[str]:
+    def get_track_titles(self, tracklist: list[Track]) -> list[str]:
         return [track.title for track in tracklist]
 
 

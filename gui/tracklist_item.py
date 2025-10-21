@@ -11,6 +11,8 @@ class TracklistItem(QtWidgets.QWidget):
         # Create the display widgets
         self._original_filename = QtWidgets.QLabel()
         self._new_filename = QtWidgets.QLineEdit()
+        self._checkbox = QtWidgets.QCheckBox()
+        self._checkbox.setChecked(True)
 
         # Layout the filenames vertically
         vertical_layout = QtWidgets.QVBoxLayout()
@@ -23,6 +25,7 @@ class TracklistItem(QtWidgets.QWidget):
         self.horizontal_layout = QtWidgets.QHBoxLayout()
         self.horizontal_layout.addWidget(self._track_number)
         self.horizontal_layout.addLayout(vertical_layout)
+        self.horizontal_layout.addWidget(self._checkbox)
         self.setLayout(self.horizontal_layout)
 
     def set_track_number(self, text: str) -> None:
@@ -41,3 +44,7 @@ class TracklistItem(QtWidgets.QWidget):
     # Set the lower lineedit with the new filename for the file
     def set_new_filename(self, text: str) -> None:
         self._new_filename.setText(text)
+
+    # Return state of checkbox
+    def is_ticked(self) -> bool:
+        return self._checkbox.isChecked()

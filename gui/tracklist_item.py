@@ -48,3 +48,7 @@ class TracklistItem(QtWidgets.QWidget):
     # Return state of checkbox
     def is_ticked(self) -> bool:
         return self._checkbox.isChecked()
+
+    # Return the original filename of the file
+    def get_original_filename(self) -> str:
+        return self._original_filename.text()

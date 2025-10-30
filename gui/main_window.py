@@ -13,6 +13,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self._init_ui()
 
     def _init_ui(self) -> None:
+
+        self.ticked_release_tracks = 0
+        self.ticked_folder_tracks = 0
+
         self.setWindowTitle(APP_NAME)
 
         self.toolbar = Toolbar()
@@ -47,6 +51,13 @@ class MainWindow(QtWidgets.QMainWindow):
             QtWidgets.QSizePolicy.Policy.Expanding,
             QtWidgets.QSizePolicy.Policy.Preferred,
         )
+        self.tick_count = QtWidgets.QLabel()
+        self.tick_count.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+
+        middle_layout = QtWidgets.QVBoxLayout()
+        middle_layout.addStretch(1)
+        middle_layout.addWidget(self.tick_count)
+        middle_layout.addStretch(1)
 
         folder_entry_layout = QtWidgets.QHBoxLayout()
         folder_entry_layout.addWidget(self.file_browser_button)
@@ -67,6 +78,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         listwidget_layout = QtWidgets.QHBoxLayout()
         listwidget_layout.addLayout(release_layout)
+        listwidget_layout.addLayout(middle_layout)
         listwidget_layout.addLayout(folder_layout)
 
         vertical_layout = QtWidgets.QVBoxLayout()
@@ -88,3 +100,23 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             enabled = False
         self.load_release_button.setEnabled(enabled)
+
+    def handle_tick_count(self, tick_count: int, release_tracklist: bool) -> None:
+        if release_tracklist:
+            self.ticked_release_tracks = tick_count
+        else:
+            self.ticked_folder_tracks = tick_count
+
+        self.update_tick_count_label()
+        self.compare_counts()
+
+    def update_tick_count_label(self):
+        self.tick_count.setText(
+            f"{self.ticked_release_tracks} vs {self.ticked_folder_tracks} \n selected"
+        )
+
+    def compare_counts(self):
+        if self.ticked_release_tracks == self.ticked_folder_tracks:
+            self.transfer_button.setEnabled(True)
+        else:
+            self.transfer_button.setEnabled(False)

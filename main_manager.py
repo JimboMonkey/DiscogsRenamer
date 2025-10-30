@@ -9,6 +9,7 @@ from auth_data_class import AuthenticationResult
 from pathlib import Path
 from os.path import expanduser
 from typing import List
+from functools import partial
 
 
 class MainManager(QtCore.QObject):
@@ -23,6 +24,12 @@ class MainManager(QtCore.QObject):
         # Connect signals and slots
         self._ui.load_release_button.pressed.connect(self._load_release)
         self._ui.file_browser_button.pressed.connect(self._show_open_dialog)
+        self._ui.release_listwidget.tick_count.connect(
+            partial(self._ui.handle_tick_count, release_tracklist=True)
+        )
+        self._ui.folder_listwidget.tick_count.connect(
+            partial(self._ui.handle_tick_count, release_tracklist=False)
+        )
 
         token = token_manager.load_token()
         # result: AuthenticationResult = token_manager.verify_token(token)

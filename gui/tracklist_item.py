@@ -14,6 +14,11 @@ class TracklistItem(QtWidgets.QWidget):
         self._checkbox = QtWidgets.QCheckBox()
         self._checkbox.setChecked(True)
 
+        self._original_filename.setSizePolicy(
+            QtWidgets.QSizePolicy.Policy.Expanding,
+            QtWidgets.QSizePolicy.Policy.Preferred,
+        )
+
         # Layout the filenames vertically
         vertical_layout = QtWidgets.QVBoxLayout()
         vertical_layout.addWidget(self._original_filename)

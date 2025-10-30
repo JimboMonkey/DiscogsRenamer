@@ -28,11 +28,6 @@ class Tracklist(QtWidgets.QListWidget):
             tracklist_item = TracklistItem()
             tracklist_item.set_original_filename(track)
 
-            tracklist_item._original_filename.setSizePolicy(
-                QtWidgets.QSizePolicy.Policy.Expanding,
-                QtWidgets.QSizePolicy.Policy.Preferred,
-            )
-
             # Create a QListWidgetItem and add it to the list
             list_widget_item = QtWidgets.QListWidgetItem()
             list_widget_item.setSizeHint(tracklist_item.sizeHint())

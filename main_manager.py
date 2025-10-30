@@ -57,7 +57,7 @@ class MainManager(QtCore.QObject):
                 release
             )  # [<Track 'A' "I'll Take You There (Remix)">, <Track 'B1' "I'll Take You There (Edit)">, <Track 'B2' 'Wrath Of Kane'>]
             track_titles = self._discogs_manager.get_track_titles(tracklist)
-            self._ui._release_listwidget.populate(track_titles)
+            self._ui.release_listwidget.populate(track_titles)
 
     # Open Folder dialog and return the selected path
     def _open_dialog(self) -> str:
@@ -83,7 +83,7 @@ class MainManager(QtCore.QObject):
     def _read_folder_contents(self, folder_path: Path) -> None:
         self._ui.folder_entry_label.setText(str(folder_path))
         file_list = self._list_audio_files_in_folder(folder_path)
-        self._ui._folder_listwidget.populate(file_list)
+        self._ui.folder_listwidget.populate(file_list)
 
     # Return a sorted list of audio files in a folder
     def _list_audio_files_in_folder(self, folder_path: Path) -> List[str]:

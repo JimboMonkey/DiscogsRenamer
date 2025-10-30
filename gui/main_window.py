@@ -63,18 +63,18 @@ class MainWindow(QtWidgets.QMainWindow):
         folder_entry_layout.addWidget(self.file_browser_button)
         folder_entry_layout.addWidget(self.folder_entry_label)
 
-        self._release_listwidget = Tracklist(editable=False)
-        self._folder_listwidget = Tracklist(editable=True)
+        self.release_listwidget = Tracklist(editable=False)
+        self.folder_listwidget = Tracklist(editable=True)
 
         release_layout = QtWidgets.QVBoxLayout()
         release_layout.addWidget(release_label)
         release_layout.addLayout(release_entry_layout)
-        release_layout.addWidget(self._release_listwidget)
+        release_layout.addWidget(self.release_listwidget)
 
         folder_layout = QtWidgets.QVBoxLayout()
         folder_layout.addWidget(folder_label)
         folder_layout.addLayout(folder_entry_layout)
-        folder_layout.addWidget(self._folder_listwidget)
+        folder_layout.addWidget(self.folder_listwidget)
 
         listwidget_layout = QtWidgets.QHBoxLayout()
         listwidget_layout.addLayout(release_layout)

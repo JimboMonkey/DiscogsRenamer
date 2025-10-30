@@ -55,6 +55,17 @@ class Tracklist(QtWidgets.QListWidget):
 
             tracklist_item.set_track_number(str(index + 1).zfill(zfill_width))
 
+    def list_ticked_tracks(self) -> deque[str] | None:
+
+        ticked_tracks: deque[str] = deque()
+
+        for index in range(self.count()):
+            tracklist_item = self.itemWidget(self.item(index))
+            if isinstance(tracklist_item, TracklistItem):
+                if tracklist_item.is_ticked():
+                    ticked_tracks.append(tracklist_item.get_original_filename())
+
+        return ticked_tracks
     def count_ticks(self) -> None:
         tick_count = 0
         for index in range(self.count()):

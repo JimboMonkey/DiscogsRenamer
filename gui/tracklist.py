@@ -66,6 +66,16 @@ class Tracklist(QtWidgets.QListWidget):
                     ticked_tracks.append(tracklist_item.get_original_filename())
 
         return ticked_tracks
+
+    def apply_track_names(self, release_tracklist: deque[str] | None) -> None:
+        for index in range(self.count()):
+            tracklist_item = self.itemWidget(self.item(index))
+            if isinstance(tracklist_item, TracklistItem):
+                if not release_tracklist:
+                    break
+                if tracklist_item.is_ticked():
+                    tracklist_item.set_new_filename(release_tracklist.popleft())
+
     def count_ticks(self) -> None:
         tick_count = 0
         for index in range(self.count()):

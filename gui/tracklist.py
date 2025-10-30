@@ -1,6 +1,7 @@
 from PyQt6 import QtWidgets, QtCore
 
 from typing import Optional
+from collections import deque
 
 from gui.tracklist_item import TracklistItem
 

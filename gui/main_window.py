@@ -51,11 +51,16 @@ class MainWindow(QtWidgets.QMainWindow):
             QtWidgets.QSizePolicy.Policy.Expanding,
             QtWidgets.QSizePolicy.Policy.Preferred,
         )
+
+        self.transfer_button = QtWidgets.QPushButton(">>>>")
+        self.transfer_button.setEnabled(False)
+
         self.tick_count = QtWidgets.QLabel()
         self.tick_count.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
 
         middle_layout = QtWidgets.QVBoxLayout()
         middle_layout.addStretch(1)
+        middle_layout.addWidget(self.transfer_button)
         middle_layout.addWidget(self.tick_count)
         middle_layout.addStretch(1)
 

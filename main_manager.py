@@ -24,6 +24,7 @@ class MainManager(QtCore.QObject):
         # Connect signals and slots
         self._ui.load_release_button.pressed.connect(self._load_release)
         self._ui.file_browser_button.pressed.connect(self._show_open_dialog)
+        self._ui.transfer_button.pressed.connect(self._transfer_track_names)
         self._ui.release_listwidget.tick_count.connect(
             partial(self._ui.handle_tick_count, release_tracklist=True)
         )
@@ -108,3 +109,7 @@ class MainManager(QtCore.QObject):
 
     def open_token_dialog(self, result: AuthenticationResult) -> None:
         _dialog = TokenDialog(result)
+
+    def _transfer_track_names(self):
+        ticked_track_list = self._ui.release_listwidget.list_ticked_tracks()
+        self._ui.folder_listwidget.apply_track_names(ticked_track_list)

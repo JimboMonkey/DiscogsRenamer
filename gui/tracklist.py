@@ -1,4 +1,4 @@
-from PyQt6 import QtWidgets
+from PyQt6 import QtWidgets, QtCore
 
 from typing import Optional
 
@@ -6,6 +6,9 @@ from gui.tracklist_item import TracklistItem
 
 
 class Tracklist(QtWidgets.QListWidget):
+
+    tick_count = QtCore.pyqtSignal(int)
+
     def __init__(
         self, editable: bool, parent: Optional[QtWidgets.QWidget] = None
     ) -> None:
@@ -27,6 +30,7 @@ class Tracklist(QtWidgets.QListWidget):
             # Create and configure the custom widget
             tracklist_item = TracklistItem()
             tracklist_item.set_original_filename(track)
+            tracklist_item._checkbox.stateChanged.connect(self.count_ticks)
 
             # Create a QListWidgetItem and add it to the list
             list_widget_item = QtWidgets.QListWidgetItem()
@@ -40,6 +44,7 @@ class Tracklist(QtWidgets.QListWidget):
 
         # Update the track numbers and shading
         self._number_and_shade()
+        self.count_ticks()
 
     def _number_and_shade(self):
         number_of_tracks = self.count()
@@ -50,8 +55,11 @@ class Tracklist(QtWidgets.QListWidget):
 
             tracklist_item.set_track_number(str(index + 1).zfill(zfill_width))
 
-            if index % 2 == 1:
-                shaded = True
-            else:
-                shaded = False
-            tracklist_item.set_shaded(shaded)
+    def count_ticks(self) -> None:
+        tick_count = 0
+        for index in range(self.count()):
+            tracklist_item = self.itemWidget(self.item(index))
+            if isinstance(tracklist_item, TracklistItem):
+                if tracklist_item.is_ticked():
+                    tick_count = tick_count + 1
+        self.tick_count.emit(tick_count)

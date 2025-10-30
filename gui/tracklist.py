@@ -51,10 +51,15 @@ class Tracklist(QtWidgets.QListWidget):
         number_of_tracks = self.count()
         zfill_width = len(str(number_of_tracks))
         for index in range(number_of_tracks):
-            item = self.item(index)
-            tracklist_item: TracklistItem = self.itemWidget(item)
+            tracklist_item = self.itemWidget(self.item(index))
+            if isinstance(tracklist_item, TracklistItem):
+                tracklist_item.set_track_number(str(index + 1).zfill(zfill_width))
 
-            tracklist_item.set_track_number(str(index + 1).zfill(zfill_width))
+                if index % 2 == 1:
+                    shaded = True
+                else:
+                    shaded = False
+                tracklist_item.set_shaded(shaded)
 
     def list_ticked_tracks(self) -> deque[str] | None:
 

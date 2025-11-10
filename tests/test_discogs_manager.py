@@ -1,12 +1,12 @@
 import pytest
 from unittest.mock import patch, MagicMock
 from discogs_manager import DiscogsManager
-from discogs_client import Release, Track
+from discogs_client import Release, Track, Client
 
 
 @pytest.fixture
 def mock_discogs_client() -> MagicMock:
-    return MagicMock()
+    return MagicMock(spec_set=Client)
 
 
 @pytest.fixture
@@ -21,7 +21,7 @@ def mock_discogs_release() -> MagicMock:
 
 
 def test_get_release_success(
-    mock_discogs_client: MagicMock, mock_discogs_release: Release
+    mock_discogs_client: Client, mock_discogs_release: Release
 ) -> None:
     mock_client = mock_discogs_client
     mock_client.release.return_value = mock_discogs_release
@@ -35,7 +35,7 @@ def test_get_release_success(
     assert result is mock_discogs_release
 
 
-def test_get_release_failure(mock_discogs_client: MagicMock) -> None:
+def test_get_release_failure(mock_discogs_client: Client) -> None:
     mock_client = mock_discogs_client
     mock_client.release.side_effect = Exception("Failed to fetch release")
     release_id = 54321

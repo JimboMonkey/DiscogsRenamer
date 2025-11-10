@@ -2,21 +2,23 @@ import keyring
 import pytest
 from unittest.mock import patch, MagicMock
 
-from keyrings.alt.file import PlaintextKeyring
 from keyring.errors import PasswordDeleteError
 
 from constants import APP_NAME, TOKEN_KEY
 from token_manager import TokenManager
 from auth_data_class import AuthenticationResult
 
-# Use a plaintext keyring for testing rather than
-# interacting with the system keyring. This also applies
-# to GitHub CI where secure storage may not be available
-try:
-    keyring.set_keyring(PlaintextKeyring())
-except ImportError:
-    raise RuntimeError(
-        "keyrings.alt must be installed for testing or CI keyring fallback"
+
+@pytest.fixture(autouse=True)
+def mock_keyring(monkeypatch):
+    store = {}
+
+    monkeypatch.setattr(
+        "keyring.set_password", lambda app, key, val: store.setdefault((app, key), val)
+    )
+    monkeypatch.setattr("keyring.get_password", lambda app, key: store.get((app, key)))
+    monkeypatch.setattr(
+        "keyring.delete_password", lambda app, key: store.pop((app, key), None)
     )
 
 

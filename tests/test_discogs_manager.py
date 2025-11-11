@@ -3,22 +3,6 @@ from discogs_manager import DiscogsManager
 from discogs_client import Release, Track, Client
 
 
-@pytest.fixture
-def mock_discogs_client() -> MagicMock:
-    return MagicMock(spec_set=Client)
-
-
-@pytest.fixture
-def mock_discogs_release() -> MagicMock:
-    mock_release = MagicMock(spec_set=Release)
-    mock_release.tracklist = [
-        MagicMock(spec_set=Track, title="Track 1"),
-        MagicMock(spec_set=Track, title="Track 2"),
-        MagicMock(spec_set=Track, title="Track 3"),
-    ]
-    return mock_release
-
-
 def test_get_release_success(
     mock_discogs_client: Client, mock_discogs_release: Release
 ) -> None:

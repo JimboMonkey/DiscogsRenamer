@@ -9,19 +9,6 @@ from token_manager import TokenManager
 from auth_data_class import AuthenticationResult
 
 
-@pytest.fixture(autouse=True)
-def mock_keyring(monkeypatch):
-    store = {}
-
-    monkeypatch.setattr(
-        "keyring.set_password", lambda app, key, val: store.setdefault((app, key), val)
-    )
-    monkeypatch.setattr("keyring.get_password", lambda app, key: store.get((app, key)))
-    monkeypatch.setattr(
-        "keyring.delete_password", lambda app, key: store.pop((app, key), None)
-    )
-
-
 @pytest.fixture
 def token_manager() -> TokenManager:
     return TokenManager()

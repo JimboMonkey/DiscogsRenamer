@@ -56,3 +56,15 @@ def test_get_track_titles(mock_discogs_release: Release) -> None:
     assert isinstance(track_titles, list)
     assert len(track_titles) == 3
     assert track_titles == ["Track 1", "Track 2", "Track 3"]
+
+
+def test_get_release_artists(mock_discogs_release: Release) -> None:
+    discogs_manager = DiscogsManager()
+    artists = discogs_manager.get_release_artists(mock_discogs_release)
+    assert artists == "DJ Mock"
+
+
+def test_get_release_title(mock_discogs_release: Release) -> None:
+    discogs_manager = DiscogsManager()
+    title = discogs_manager.get_release_title(mock_discogs_release)
+    assert title == "Mock & Test"

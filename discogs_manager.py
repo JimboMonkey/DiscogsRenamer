@@ -20,6 +20,12 @@ class DiscogsManager:
             print(f"Failed to fetch release {release_id}: {e}")
             return None
 
+    def get_release_artists(self, release: Release) -> str:
+        return release.artists_sort
+
+    def get_release_title(self, release: Release) -> str:
+        return release.title
+
     def get_tracklist(self, release: Release) -> list[Track]:
         return list(release.tracklist)
 

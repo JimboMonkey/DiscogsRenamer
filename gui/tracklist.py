@@ -9,6 +9,7 @@ from gui.tracklist_item import TracklistItem
 class Tracklist(QtWidgets.QListWidget):
 
     tick_count = QtCore.pyqtSignal(int)
+    all_new_filenames_filled = QtCore.pyqtSignal(bool)
 
     def __init__(
         self, editable: bool, parent: Optional[QtWidgets.QWidget] = None
@@ -32,6 +33,9 @@ class Tracklist(QtWidgets.QListWidget):
             tracklist_item = TracklistItem()
             tracklist_item.set_original_filename(track)
             tracklist_item._checkbox.stateChanged.connect(self.count_ticks)
+            tracklist_item._new_filename.textChanged.connect(
+                self.check_all_new_filenames_filled
+            )
 
             # Create a QListWidgetItem and add it to the list
             list_widget_item = QtWidgets.QListWidgetItem()
@@ -90,3 +94,14 @@ class Tracklist(QtWidgets.QListWidget):
                 if tracklist_item.is_ticked():
                     tick_count = tick_count + 1
         self.tick_count.emit(tick_count)
+
+    def check_all_new_filenames_filled(self) -> None:
+        tracklist_items = [
+            self.itemWidget(self.item(index)) for index in range(self.count())
+        ]
+
+        all_new_filenames_filled = all(
+            [tracklist_item.new_filename_filled() for tracklist_item in tracklist_items]
+        )
+
+        self.all_new_filenames_filled.emit(all_new_filenames_filled)

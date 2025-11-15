@@ -57,6 +57,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.transfer_button = QtWidgets.QPushButton(">>>>")
         self.transfer_button.setEnabled(False)
 
+        self.apply_button = QtWidgets.QPushButton("Apply")
+        self.apply_button.setEnabled(False)
+
         self.tick_count = QtWidgets.QLabel()
         self.tick_count.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
 
@@ -92,6 +95,9 @@ class MainWindow(QtWidgets.QMainWindow):
         vertical_layout = QtWidgets.QVBoxLayout()
         vertical_layout.addWidget(self.toolbar)
         vertical_layout.addLayout(listwidget_layout)
+        vertical_layout.addWidget(
+            self.apply_button, alignment=QtCore.Qt.AlignmentFlag.AlignRight
+        )
 
         # Set the listwidget layout as the layout for the window
         central_widget = QtWidgets.QWidget(self)
@@ -108,6 +114,9 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             enabled = False
         self.load_release_button.setEnabled(enabled)
+
+    def apply_button_enabled(self, enabled: bool) -> None:
+        self.apply_button.setEnabled(enabled)
 
     def handle_tick_count(self, tick_count: int, release_tracklist: bool) -> None:
         if release_tracklist:

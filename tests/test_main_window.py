@@ -70,6 +70,26 @@ def test_load_release_button_enabled_by_text(qtbot: QtBot):
     # Simulate valid input
     line_edit.setText("[r12345]")
     assert button.isEnabled()
+
+
+def test_apply_button_enabled(qtbot: QtBot) -> None:
+    main_window = MainWindow()
+    qtbot.add_widget(main_window)
+
+    apply_button = main_window.apply_button
+
+    # Initially, the button should be disabled
+    assert not apply_button.isEnabled()
+
+    # Simulate true condition
+    main_window.apply_button_enabled(True)
+    assert apply_button.isEnabled()
+
+    # Simulate false condition
+    main_window.apply_button_enabled(False)
+    assert not apply_button.isEnabled()
+
+
 def test_update_release_artist_title_label(qtbot: QtBot) -> None:
     main_window = MainWindow()
     qtbot.addWidget(main_window)

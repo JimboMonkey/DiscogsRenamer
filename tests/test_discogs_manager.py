@@ -1,6 +1,15 @@
+import pytest
 from unittest.mock import patch
 from discogs_manager import DiscogsManager
 from discogs_client import Release, Track, Client
+
+
+# DiscogsManager won't attempt to make a client if
+# there is no token, so patch a mock_token to every test
+@pytest.fixture(autouse=True)
+def patch_load_token():
+    with patch("discogs_manager.TokenManager.load_token", return_value="mock_token"):
+        yield
 
 
 def test_get_release_success(
@@ -10,10 +19,7 @@ def test_get_release_success(
     mock_client.release.return_value = mock_discogs_release
     release_id = 12345
 
-    with (
-        patch("discogs_manager.TokenManager.load_token", return_value="mock_token"),
-        patch("discogs_manager.Client", return_value=mock_client),
-    ):
+    with (patch("discogs_manager.Client", return_value=mock_client),):
         discogs_manager = DiscogsManager()
         result = discogs_manager.get_release(release_id)
 
@@ -26,10 +32,7 @@ def test_get_release_failure(mock_discogs_client: Client) -> None:
     mock_client.release.side_effect = Exception("Failed to fetch release")
     release_id = 54321
 
-    with (
-        patch("discogs_manager.TokenManager.load_token", return_value="mock_token"),
-        patch("discogs_manager.Client", return_value=mock_client),
-    ):
+    with (patch("discogs_manager.Client", return_value=mock_client),):
         discogs_manager = DiscogsManager()
         result = discogs_manager.get_release(release_id)
 

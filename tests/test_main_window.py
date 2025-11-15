@@ -70,3 +70,13 @@ def test_load_release_button_enabled_by_text(qtbot: QtBot):
     # Simulate valid input
     line_edit.setText("[r12345]")
     assert button.isEnabled()
+def test_update_release_artist_title_label(qtbot: QtBot) -> None:
+    main_window = MainWindow()
+    qtbot.addWidget(main_window)
+
+    test_artist = "DJ Test"
+    test_title = "Testing The Night Away"
+
+    label = main_window.release_artist_title_label
+    main_window.update_release_artist_title_label(test_artist, test_title)
+    assert label.text() == f"{test_artist} - {test_title}"

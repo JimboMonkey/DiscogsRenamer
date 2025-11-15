@@ -54,10 +54,13 @@ class MainManager(QtCore.QObject):
         if release_id:
             release = self._discogs_manager.get_release(release_id)
         if release:
+            artist = self._discogs_manager.get_release_artists(release)
+            title = self._discogs_manager.get_release_title(release)
             tracklist = self._discogs_manager.get_tracklist(
                 release
             )  # [<Track 'A' "I'll Take You There (Remix)">, <Track 'B1' "I'll Take You There (Edit)">, <Track 'B2' 'Wrath Of Kane'>]
             track_titles = self._discogs_manager.get_track_titles(tracklist)
+            self._ui.update_release_artist_title_label(artist, title)
             self._ui.release_listwidget.populate(track_titles)
 
     # Open Folder dialog and return the selected path

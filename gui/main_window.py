@@ -39,6 +39,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.release_lineedit.textChanged.connect(self.load_release_button_enabled)
 
+        self.release_artist_title_label = QtWidgets.QLabel()
+
         self.file_browser_button = QtWidgets.QPushButton("Browse")
         self.folder_entry_label = QtWidgets.QLabel()
 
@@ -74,6 +76,7 @@ class MainWindow(QtWidgets.QMainWindow):
         release_layout = QtWidgets.QVBoxLayout()
         release_layout.addWidget(release_label)
         release_layout.addLayout(release_entry_layout)
+        release_layout.addWidget(self.release_artist_title_label)
         release_layout.addWidget(self.release_listwidget)
 
         folder_layout = QtWidgets.QVBoxLayout()
@@ -125,3 +128,6 @@ class MainWindow(QtWidgets.QMainWindow):
             self.transfer_button.setEnabled(True)
         else:
             self.transfer_button.setEnabled(False)
+
+    def update_release_artist_title_label(self, artist: str, title: str) -> None:
+        self.release_artist_title_label.setText(f"{artist} - {title}")

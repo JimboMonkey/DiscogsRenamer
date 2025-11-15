@@ -57,3 +57,7 @@ class TracklistItem(QtWidgets.QWidget):
     # Return the original filename of the file
     def get_original_filename(self) -> str:
         return self._original_filename.text()
+
+    # Return whether new_filename lineedit contains text or not
+    def new_filename_filled(self) -> bool:
+        return bool(self._new_filename.text().strip())

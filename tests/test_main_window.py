@@ -1,5 +1,7 @@
+from main_manager import MainManager
 from gui.main_window import MainWindow
 from pytestqt.qtbot import QtBot
+from collections import deque
 
 import pytest
 
@@ -100,3 +102,20 @@ def test_update_release_artist_title_label(qtbot: QtBot) -> None:
     label = main_window.release_artist_title_label
     main_window.update_release_artist_title_label(test_artist, test_title)
     assert label.text() == f"{test_artist} - {test_title}"
+
+
+def test_apply_button_enabled_when_all_filenames_populated(qtbot: QtBot) -> None:
+    main_manager = MainManager()
+    main_window = main_manager._ui
+    qtbot.addWidget(main_window)
+
+    test_tracklist = ["One", "Two", "Three"]
+    test_new_filenames = deque(["1", "2", "3"])
+    main_window.folder_listwidget.populate(test_tracklist)
+
+    # Initially, the button should be disabled
+    assert not main_window.apply_button.isEnabled()
+
+    # Simulate valid input
+    main_window.folder_listwidget.apply_track_names(test_new_filenames)
+    assert main_window.apply_button.isEnabled()

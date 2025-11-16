@@ -31,7 +31,7 @@ class MainManager(QtCore.QObject):
         self._ui.folder_listwidget.tick_count.connect(
             partial(self._ui.handle_tick_count, release_tracklist=False)
         )
-        self._ui.folder_listwidget.all_new_filenames_filled.connect(
+        self._ui.folder_listwidget.all_ticked_new_filenames_filled.connect(
             self._ui.apply_button_enabled
         )
 

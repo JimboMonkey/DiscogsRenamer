@@ -2,6 +2,7 @@ from main_manager import MainManager
 from gui.main_window import MainWindow
 from pytestqt.qtbot import QtBot
 from collections import deque
+from pathlib import Path
 
 import pytest
 
@@ -119,3 +120,30 @@ def test_apply_button_enabled_when_all_filenames_populated(qtbot: QtBot) -> None
     # Simulate valid input
     main_window.folder_listwidget.apply_track_names(test_new_filenames)
     assert main_window.apply_button.isEnabled()
+
+
+def test_set_folder_path_label(qtbot: QtBot) -> None:
+
+    main_window = MainWindow()
+    qtbot.addWidget(main_window)
+
+    test_folder_path = "/test/folder/path"
+
+    main_window.set_folder_path_label(test_folder_path)
+    assert main_window.folder_entry_label.text() == test_folder_path
+
+
+def test_get_folder_path(qtbot: QtBot) -> None:
+    main_window = MainWindow()
+    qtbot.addWidget(main_window)
+    test_folder_path = "/test/folder/path"
+
+    # First check when the folder path hasn't been set yet
+    folder_path = main_window.get_folder_path()
+    assert folder_path is None
+
+    # Then check once set
+    main_window.set_folder_path_label(test_folder_path)
+    folder_path = main_window.get_folder_path()
+    assert isinstance(folder_path, Path)
+    assert folder_path == Path(test_folder_path)

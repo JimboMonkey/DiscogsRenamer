@@ -1,5 +1,6 @@
 from PyQt6 import QtWidgets, QtGui, QtCore
 from typing import Optional
+from pathlib import Path
 
 from gui.toolbar import Toolbar
 from gui.tracklist import Tracklist
@@ -140,3 +141,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def update_release_artist_title_label(self, artist: str, title: str) -> None:
         self.release_artist_title_label.setText(f"{artist} - {title}")
+
+    def set_folder_path_label(self, folder_path: str) -> None:
+        self.folder_entry_label.setText(folder_path)
+
+    def get_folder_path(self) -> Path | None:
+        folder_path = self.folder_entry_label.text()
+        return Path(folder_path) if folder_path.strip() else None

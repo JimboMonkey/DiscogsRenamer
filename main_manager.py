@@ -88,7 +88,7 @@ class MainManager(QtCore.QObject):
     # Set the folder path in the GUI and populate
     # the folder list with the names of its files
     def _read_folder_contents(self, folder_path: Path) -> None:
-        self._ui.folder_entry_label.setText(str(folder_path))
+        self._ui.set_folder_path_label(str(folder_path))
         file_list = self._list_audio_files_in_folder(folder_path)
         self._ui.folder_listwidget.populate(file_list)
 

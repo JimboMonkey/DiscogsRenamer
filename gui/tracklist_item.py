@@ -36,6 +36,9 @@ class TracklistItem(QtWidgets.QWidget):
     def set_track_number(self, text: str) -> None:
         self._track_number.setText(text)
 
+    def get_track_number(self) -> str:
+        return self._track_number.text()
+
     def set_shaded(self, shaded: bool) -> None:
         if shaded:
             self.setStyleSheet("background-color: lightgray;")
@@ -57,6 +60,10 @@ class TracklistItem(QtWidgets.QWidget):
     # Return the original filename of the file
     def get_original_filename(self) -> str:
         return self._original_filename.text()
+
+    # Return the original filename of the file
+    def get_new_filename(self) -> str:
+        return self._new_filename.text()
 
     # Return whether new_filename lineedit contains text or not
     def new_filename_filled(self) -> bool:

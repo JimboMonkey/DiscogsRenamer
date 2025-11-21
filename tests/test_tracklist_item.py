@@ -22,3 +22,21 @@ def test_new_filename_filled(
     qtbot.addWidget(tracklist_item)
     tracklist_item.set_new_filename(new_filename_test_input)
     assert tracklist_item.new_filename_filled() == expected_response
+
+
+def test_get_track_number(qtbot: QtBot) -> None:
+    tracklist_item = TracklistItem()
+    qtbot.addWidget(tracklist_item)
+
+    test_track_number = "99"
+    tracklist_item.set_track_number(test_track_number)
+    assert tracklist_item.get_track_number() == test_track_number
+
+
+def test_get_new_filename(qtbot: QtBot) -> None:
+    tracklist_item = TracklistItem()
+    qtbot.addWidget(tracklist_item)
+
+    test_new_filename = "Testing"
+    tracklist_item.set_new_filename(test_new_filename)
+    assert tracklist_item.get_new_filename() == test_new_filename

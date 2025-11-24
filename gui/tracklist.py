@@ -2,6 +2,7 @@ from PyQt6 import QtWidgets, QtCore
 
 from typing import Optional
 from collections import deque
+from pathlib import Path
 
 from gui.tracklist_item import TracklistItem
 
@@ -79,6 +80,22 @@ class Tracklist(QtWidgets.QListWidget):
                     ticked_tracks.append(tracklist_item.get_original_filename())
 
         return ticked_tracks
+
+    def list_track_renaming_info(self) -> list[tuple[str, Path, Path]] | None:
+        ticked_tracks: list[tuple[str, Path, Path]] = []
+
+        for index in range(self.count()):
+            tracklist_item = self.itemWidget(self.item(index))
+            if isinstance(tracklist_item, TracklistItem):
+                if tracklist_item.is_ticked():
+                    ticked_tracks.append(
+                        (
+                            tracklist_item.get_track_number(),
+                            Path(tracklist_item.get_original_filename()),
+                            Path(tracklist_item.get_new_filename()),
+                        )
+                    )
+        return ticked_tracks if ticked_tracks else None
 
     def apply_track_names(self, release_tracklist: deque[str] | None) -> None:
         for index in range(self.count()):

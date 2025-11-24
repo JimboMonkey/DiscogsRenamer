@@ -22,6 +22,7 @@ class MainManager(QtCore.QObject):
         super(MainManager, self).__init__()
 
         # Connect signals and slots
+        self._ui.release_lineedit.returnPressed.connect(self._load_release)
         self._ui.load_release_button.pressed.connect(self._load_release)
         self._ui.file_browser_button.pressed.connect(self._show_open_dialog)
         self._ui.transfer_button.pressed.connect(self._transfer_track_names)

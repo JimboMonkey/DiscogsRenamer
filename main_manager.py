@@ -8,7 +8,8 @@ from auth_data_class import AuthenticationResult
 
 from pathlib import Path
 from os.path import expanduser
-from typing import List
+import os
+from typing import List, Tuple
 from functools import partial
 
 
@@ -120,3 +121,26 @@ class MainManager(QtCore.QObject):
     def _transfer_track_names(self):
         ticked_track_list = self._ui.release_listwidget.list_ticked_tracks()
         self._ui.folder_listwidget.apply_track_names(ticked_track_list)
+    def _rename_files(
+        self, list_of_file_renaming_info: list[Tuple[str, Path, Path]]
+    ) -> None:
+
+        folder_path: Path | None = self._ui.get_folder_path()
+
+        if folder_path:
+            for file_info in list_of_file_renaming_info:
+                track_number = file_info[0]
+                original_filename = file_info[1]
+                new_filename = file_info[2]
+                full_original_file_path = folder_path / original_filename
+                _, file_extension = os.path.splitext(full_original_file_path)
+                full_prefix = Path(track_number + " - " + str(new_filename))
+
+                full_new_file_path = folder_path / full_prefix.with_suffix(
+                    file_extension
+                )
+                print(full_original_file_path, full_new_file_path)
+                os.rename(
+                    full_original_file_path,
+                    full_new_file_path.with_suffix(file_extension),
+                )

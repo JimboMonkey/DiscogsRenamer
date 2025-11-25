@@ -36,6 +36,7 @@ class MainManager(QtCore.QObject):
         self._ui.folder_listwidget.all_ticked_new_filenames_filled.connect(
             self._ui.apply_button_enabled
         )
+        self._ui.apply_button.pressed.connect(self._apply_new_names)
 
         token = token_manager.load_token()
         # result: AuthenticationResult = token_manager.verify_token(token)
@@ -121,6 +122,14 @@ class MainManager(QtCore.QObject):
     def _transfer_track_names(self):
         ticked_track_list = self._ui.release_listwidget.list_ticked_tracks()
         self._ui.folder_listwidget.apply_track_names(ticked_track_list)
+
+    def _apply_new_names(self) -> None:
+        list_of_track_renaming_info = (
+            self._ui.folder_listwidget.list_track_renaming_info()
+        )
+        if list_of_track_renaming_info:
+            self._rename_files(list_of_track_renaming_info)
+
     def _rename_files(
         self, list_of_file_renaming_info: list[Tuple[str, Path, Path]]
     ) -> None:

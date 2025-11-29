@@ -134,7 +134,9 @@ class MainWindow(QtWidgets.QMainWindow):
         )
 
     def compare_counts(self):
-        if self.ticked_release_tracks == self.ticked_folder_tracks:
+        if self.ticked_release_tracks == self.ticked_folder_tracks and (
+            self.ticked_release_tracks != 0 or self.ticked_folder_tracks != 0
+        ):
             self.transfer_button.setEnabled(True)
         else:
             self.transfer_button.setEnabled(False)

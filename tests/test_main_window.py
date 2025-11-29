@@ -78,6 +78,32 @@ def test_load_release_button_enabled_by_text(qtbot: QtBot, main_window: MainWind
     assert button.isEnabled()
 
 
+@pytest.mark.parametrize(
+    "release_ticks, folder_ticks, expected_response",
+    [
+        (5, 5, True),
+        (0, 0, False),
+        (3, 4, False),
+        (0, 2, False),
+    ],
+    ids=["equal_nonzero", "equal_zero", "unequal", "unequal_one_zero"],
+)
+def test_compare_counts(
+    qtbot: QtBot,
+    main_window: MainWindow,
+    release_ticks: int,
+    folder_ticks: int,
+    expected_response: bool,
+):
+
+    main_window.ticked_release_tracks = release_ticks
+    main_window.ticked_folder_tracks = folder_ticks
+
+    main_window.compare_counts()
+
+    assert main_window.transfer_button.isEnabled() == expected_response
+
+
 def test_apply_button_enabled(qtbot: QtBot, main_window: MainWindow) -> None:
 
     apply_button = main_window.apply_button

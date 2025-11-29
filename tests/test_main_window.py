@@ -65,7 +65,7 @@ def test_release_lineedit_rejects_invalid_inputs(
 
 
 # Ensure load release button is only enabled when valid text is entered
-def test_load_release_button_enabled_by_text(qtbot: QtBot, main_window: MainWindow):
+def test_load_release_button_enabled_by_text(main_window: MainWindow):
 
     line_edit = main_window.release_lineedit
     button = main_window.load_release_button
@@ -89,7 +89,6 @@ def test_load_release_button_enabled_by_text(qtbot: QtBot, main_window: MainWind
     ids=["equal_nonzero", "equal_zero", "unequal", "unequal_one_zero"],
 )
 def test_compare_counts(
-    qtbot: QtBot,
     main_window: MainWindow,
     release_ticks: int,
     folder_ticks: int,
@@ -104,7 +103,7 @@ def test_compare_counts(
     assert main_window.transfer_button.isEnabled() == expected_response
 
 
-def test_apply_button_enabled(qtbot: QtBot, main_window: MainWindow) -> None:
+def test_apply_button_enabled(main_window: MainWindow) -> None:
 
     apply_button = main_window.apply_button
 
@@ -120,9 +119,7 @@ def test_apply_button_enabled(qtbot: QtBot, main_window: MainWindow) -> None:
     assert not apply_button.isEnabled()
 
 
-def test_update_release_artist_title_label(
-    qtbot: QtBot, main_window: MainWindow
-) -> None:
+def test_update_release_artist_title_label(main_window: MainWindow) -> None:
 
     test_artist = "DJ Test"
     test_title = "Testing The Night Away"
@@ -149,7 +146,7 @@ def test_apply_button_enabled_when_all_filenames_populated(qtbot: QtBot) -> None
     assert main_window.apply_button.isEnabled()
 
 
-def test_set_folder_path_label(qtbot: QtBot, main_window: MainWindow) -> None:
+def test_set_folder_path_label(main_window: MainWindow) -> None:
 
     test_folder_path = "/test/folder/path"
 
@@ -157,7 +154,7 @@ def test_set_folder_path_label(qtbot: QtBot, main_window: MainWindow) -> None:
     assert main_window.folder_entry_label.text() == test_folder_path
 
 
-def test_get_folder_path(qtbot: QtBot, main_window: MainWindow) -> None:
+def test_get_folder_path(main_window: MainWindow) -> None:
 
     test_folder_path = "/test/folder/path"
 

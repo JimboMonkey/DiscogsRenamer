@@ -59,3 +59,10 @@ class Toolbar(QtWidgets.QToolBar):
     # # Called externally to set the file path label
     # def set_file_path_label(self, file_path: Path) -> None:
     #     self.open_file_label.setText(str(file_path))
+
+    def set_user_authenticated_icon(self, authenticated: bool) -> None:
+        if authenticated:
+            icon = QtGui.QIcon("gui/icons/user_authenticated.png")
+        else:
+            icon = QtGui.QIcon("gui/icons/user_unauthenticated.png")
+        self.authentication_action.setIcon(icon)

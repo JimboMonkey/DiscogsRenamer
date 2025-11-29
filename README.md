@@ -1,1 +1,1 @@
-A PyQt based GUI application for automating the process of renaming mp3 files in a folder using a chosen Discogs release
+A PyQt based GUI application for automating the process of renaming audio files in a folder using a chosen Discogs release

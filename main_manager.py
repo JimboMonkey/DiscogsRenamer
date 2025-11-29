@@ -57,9 +57,10 @@ class MainManager(QtCore.QObject):
     # Load the release from Discogs and populate the release list
     def _load_release(self) -> None:
         release_id = self.extract_digits(self._ui.release_lineedit.text())
+        release = None
         if release_id:
             release = self._discogs_manager.get_release(release_id)
-        if release:
+        if release is not None:
             artist = self._discogs_manager.get_release_artists(release)
             title = self._discogs_manager.get_release_title(release)
             tracklist = self._discogs_manager.get_tracklist(

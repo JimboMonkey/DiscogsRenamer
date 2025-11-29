@@ -7,6 +7,13 @@ from pathlib import Path
 import pytest
 
 
+@pytest.fixture
+def main_window(qtbot: QtBot) -> MainWindow:
+    window = MainWindow()
+    qtbot.add_widget(window)
+    return window
+
+
 # Test that the release lineedit accepts valid inputs
 @pytest.mark.parametrize(
     "valid_input",
@@ -16,9 +23,9 @@ import pytest
         "[r12345]",  # r followed by bracketed digits
     ],
 )
-def test_release_lineedit_accepts_valid_inputs(qtbot: QtBot, valid_input: str) -> None:
-    main_window = MainWindow()
-    qtbot.addWidget(main_window)
+def test_release_lineedit_accepts_valid_inputs(
+    qtbot: QtBot, main_window: MainWindow, valid_input: str
+) -> None:
 
     line_edit = main_window.release_lineedit
     validator = line_edit.validator()
@@ -45,10 +52,8 @@ def test_release_lineedit_accepts_valid_inputs(qtbot: QtBot, valid_input: str) -
     ],
 )
 def test_release_lineedit_rejects_invalid_inputs(
-    qtbot: QtBot, invalid_input: str
+    qtbot: QtBot, main_window: MainWindow, invalid_input: str
 ) -> None:
-    main_window = MainWindow()
-    qtbot.addWidget(main_window)
 
     line_edit = main_window.release_lineedit
     validator = line_edit.validator()
@@ -60,9 +65,7 @@ def test_release_lineedit_rejects_invalid_inputs(
 
 
 # Ensure load release button is only enabled when valid text is entered
-def test_load_release_button_enabled_by_text(qtbot: QtBot):
-    main_window = MainWindow()
-    qtbot.addWidget(main_window)
+def test_load_release_button_enabled_by_text(qtbot: QtBot, main_window: MainWindow):
 
     line_edit = main_window.release_lineedit
     button = main_window.load_release_button
@@ -75,9 +78,7 @@ def test_load_release_button_enabled_by_text(qtbot: QtBot):
     assert button.isEnabled()
 
 
-def test_apply_button_enabled(qtbot: QtBot) -> None:
-    main_window = MainWindow()
-    qtbot.add_widget(main_window)
+def test_apply_button_enabled(qtbot: QtBot, main_window: MainWindow) -> None:
 
     apply_button = main_window.apply_button
 
@@ -93,9 +94,9 @@ def test_apply_button_enabled(qtbot: QtBot) -> None:
     assert not apply_button.isEnabled()
 
 
-def test_update_release_artist_title_label(qtbot: QtBot) -> None:
-    main_window = MainWindow()
-    qtbot.addWidget(main_window)
+def test_update_release_artist_title_label(
+    qtbot: QtBot, main_window: MainWindow
+) -> None:
 
     test_artist = "DJ Test"
     test_title = "Testing The Night Away"
@@ -122,10 +123,7 @@ def test_apply_button_enabled_when_all_filenames_populated(qtbot: QtBot) -> None
     assert main_window.apply_button.isEnabled()
 
 
-def test_set_folder_path_label(qtbot: QtBot) -> None:
-
-    main_window = MainWindow()
-    qtbot.addWidget(main_window)
+def test_set_folder_path_label(qtbot: QtBot, main_window: MainWindow) -> None:
 
     test_folder_path = "/test/folder/path"
 
@@ -133,9 +131,8 @@ def test_set_folder_path_label(qtbot: QtBot) -> None:
     assert main_window.folder_entry_label.text() == test_folder_path
 
 
-def test_get_folder_path(qtbot: QtBot) -> None:
-    main_window = MainWindow()
-    qtbot.addWidget(main_window)
+def test_get_folder_path(qtbot: QtBot, main_window: MainWindow) -> None:
+
     test_folder_path = "/test/folder/path"
 
     # First check when the folder path hasn't been set yet

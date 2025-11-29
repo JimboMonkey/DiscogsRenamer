@@ -2,6 +2,7 @@ from PyQt6 import QtCore, QtWidgets
 
 from gui.main_window import MainWindow
 from token_dialog import TokenDialog
+from gui.about_messagebox import AboutMessageBox
 from token_manager import TokenManager
 from discogs_manager import DiscogsManager
 from auth_data_class import AuthenticationResult
@@ -47,6 +48,9 @@ class MainManager(QtCore.QObject):
             lambda: self.open_token_dialog(result)
         )
 
+        self._ui.toolbar.about_action.triggered.connect(
+            lambda: self.open_about_messagebox()
+        )
 
     def extract_digits(self, release_id_string: str) -> int | None:
         digits_string = "".join(
@@ -119,6 +123,9 @@ class MainManager(QtCore.QObject):
 
     def open_token_dialog(self, result: AuthenticationResult) -> None:
         _dialog = TokenDialog(result)
+
+    def open_about_messagebox(self) -> None:
+        _messagebox = AboutMessageBox()
 
     def _transfer_track_names(self):
         ticked_track_list = self._ui.release_listwidget.list_ticked_tracks()

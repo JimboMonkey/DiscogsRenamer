@@ -17,6 +17,20 @@ class Toolbar(QtWidgets.QToolBar):
             self,
         )
 
+        # Create a Settings action
+        self.settings_action = QtGui.QAction(
+            QtGui.QIcon("gui/icons/settings.png"),
+            "Settings",
+            self,
+        )
+
+        # Create an About action
+        self.about_action = QtGui.QAction(
+            QtGui.QIcon("gui/icons/about.png"),
+            "About the application",
+            self,
+        )
+
         # Create a file path label and set its font
         user_name_font = QtGui.QFont()
         user_name_font.setBold(True)
@@ -36,9 +50,11 @@ class Toolbar(QtWidgets.QToolBar):
         )
 
         # Add all the actions to the tool bar
-        self.addAction(self.authentication_action)
+        self.addAction(self.authentication_action)  # type: ignore[call-overload]
         self.addWidget(self.user_name)
         self.addWidget(toolbar_spacer)
+        self.addAction(self.settings_action)  # type: ignore[call-overload]
+        self.addAction(self.about_action)  # type: ignore[call-overload]
 
     # # Called externally to set the file path label
     # def set_file_path_label(self, file_path: Path) -> None:

@@ -12,7 +12,7 @@ class Toolbar(QtWidgets.QToolBar):
     def _init_ui(self) -> None:
         # Create a New File action
         self.authentication_action = QtGui.QAction(
-            QtGui.QIcon("gui/icons/user.png"),
+            QtGui.QIcon("gui/icons/user_authenticated.png"),
             "Authenticate against your Discogs account",
             self,
         )

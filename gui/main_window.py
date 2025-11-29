@@ -26,7 +26,8 @@ class MainWindow(QtWidgets.QMainWindow):
         folder_label = QtWidgets.QLabel("Folder")
 
         # Only allow release to be specified in form [r12345], r12345, or 12345
-        regex = QtCore.QRegularExpression(r"(?:^\d+$|^\[r\d+\]$|^r\d+$)")
+        regex = QtCore.QRegularExpression(r"(?:^[1-9]\d*$|^r[1-9]\d*$|^\[r[1-9]\d*\]$)")
+
         validator = QtGui.QRegularExpressionValidator(regex, self)
 
         release_number_label = QtWidgets.QLabel("Discogs Release Number")

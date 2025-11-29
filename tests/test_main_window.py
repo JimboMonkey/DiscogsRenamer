@@ -40,15 +40,32 @@ def test_release_lineedit_accepts_valid_inputs(
 @pytest.mark.parametrize(
     "invalid_input",
     [
-        "abcde",  # Only letters
-        "rabcde",  # r followed by letters
-        "[rabcde]",  # r followed by bracketed letters
-        "r12345abc",  # r followed by digits and letters
-        "[r12345abc]",  # r followed by bracketed digits and letters
-        "[r12345",  # r followed by unclosed bracket
-        "r12345]",  # r followed by unstarted bracket
-        "[r12 345]",  # r followed by bracketed digits with space
-        "[r!@#$%]",  # r followed by bracketed special characters
+        "abcde",
+        "rabcde",
+        "[rabcde]",
+        "r12345abc",
+        "[r12345abc]",
+        "[r12345",
+        "r12345]",
+        "[r12 345]",
+        "[r!@#$%]",
+        "01234",
+        "r01234",
+        "[r01234]",
+    ],
+    ids=[
+        "only_letters",
+        "r_followed_by_letters",
+        "bracketed_r_followed_by_letters",
+        "r_followed_by_digits_and_letters",
+        "bracketed_r_followed_by_digits_and_letters",
+        "r_followed_by_unclosed_bracket",
+        "r_followed_by_unstarted_bracket",
+        "bracketed_r_followed_by_digits_with_space",
+        "bracketed_r_followed_by_special_characters",
+        "leading_zero",
+        "r_followed_by_leading_zero",
+        "bracketed_r_followed_by_leading_zero",
     ],
 )
 def test_release_lineedit_rejects_invalid_inputs(

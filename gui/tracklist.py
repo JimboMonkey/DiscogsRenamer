@@ -18,8 +18,12 @@ class Tracklist(QtWidgets.QListWidget):
         self._editable = editable
         super().__init__(parent)
 
+        # Only folder list items should be selectable and draggable
         if self._editable:
             self.setDragDropMode(QtWidgets.QListWidget.DragDropMode.InternalMove)
+        else:
+            self.setSelectionMode(QtWidgets.QAbstractItemView.SelectionMode.NoSelection)
+            self.setFocusPolicy(QtCore.Qt.FocusPolicy.NoFocus)
 
         self.model().rowsMoved.connect(self._number_and_shade)
 

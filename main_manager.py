@@ -2,6 +2,7 @@ from PyQt6 import QtCore, QtWidgets
 
 from gui.main_window import MainWindow
 from token_dialog import TokenDialog
+from settings_dialog import SettingsDialog
 from gui.about_messagebox import AboutMessageBox
 from token_manager import TokenManager
 from discogs_manager import DiscogsManager
@@ -46,6 +47,10 @@ class MainManager(QtCore.QObject):
         #    self.open_token_dialog(result)
         self._ui.toolbar.authentication_action.triggered.connect(
             lambda: self.open_token_dialog(result)
+        )
+
+        self._ui.toolbar.settings_action.triggered.connect(
+            lambda: self.open_settings_dialog()
         )
 
         self._ui.toolbar.about_action.triggered.connect(
@@ -123,6 +128,10 @@ class MainManager(QtCore.QObject):
 
     def open_token_dialog(self, result: AuthenticationResult) -> None:
         _dialog = TokenDialog(result)
+
+    def open_settings_dialog(self) -> None:
+        dialog = SettingsDialog()
+        dialog.show()
 
     def open_about_messagebox(self) -> None:
         _messagebox = AboutMessageBox()

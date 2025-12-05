@@ -2,7 +2,7 @@ from PyQt6 import QtWidgets, QtCore
 from typing import Optional
 
 
-class TracklistItem(QtWidgets.QWidget):
+class ListItemWidget(QtWidgets.QWidget):
     def __init__(self, parent: Optional[QtWidgets.QWidget] = None) -> None:
         super().__init__(parent)
 

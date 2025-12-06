@@ -4,6 +4,8 @@ from gui.tracklist import Tracklist
 from collections import deque
 from pathlib import Path
 
+from gui.filename_list_item import FilenameListItem
+
 
 @pytest.mark.parametrize(
     "new_filename_test_inputs, ticked_items, expected_response",
@@ -38,7 +40,11 @@ def test_check_all_new_filenames_filled(
 ) -> None:
     tracklist = Tracklist(editable=True)
 
-    test_tracklist = ["firsttrack", "secondtrack", "thirdtrack"]
+    test_tracklist = [
+        FilenameListItem("firsttrack"),
+        FilenameListItem("secondtrack"),
+        FilenameListItem("thirdtrack"),
+    ]
     tracklist.populate(test_tracklist)
     tracklist.apply_track_names(new_filename_test_inputs)
 
@@ -63,7 +69,11 @@ def test_check_all_new_filenames_filled(
         # all ticked → all paths returned
         (
             [True, True, True],
-            ["firsttrack", "secondtrack", "thirdtrack"],
+            [
+                FilenameListItem("firsttrack"),
+                FilenameListItem("secondtrack"),
+                FilenameListItem("thirdtrack"),
+            ],
             deque(["First", "Second", "Third"]),
             [
                 ("1", Path("firsttrack"), Path("First")),
@@ -74,14 +84,22 @@ def test_check_all_new_filenames_filled(
         # none ticked → None
         (
             [False, False, False],
-            ["firsttrack", "secondtrack", "thirdtrack"],
+            [
+                FilenameListItem("firsttrack"),
+                FilenameListItem("secondtrack"),
+                FilenameListItem("thirdtrack"),
+            ],
             deque(["First", "Second", "Third"]),
             None,
         ),
         # partial ticked → only ticked ones returned
         (
             [True, False, True],
-            ["firsttrack", "secondtrack", "thirdtrack"],
+            [
+                FilenameListItem("firsttrack"),
+                FilenameListItem("secondtrack"),
+                FilenameListItem("thirdtrack"),
+            ],
             deque(["First", "Second", "Third"]),
             [
                 ("1", Path("firsttrack"), Path("First")),

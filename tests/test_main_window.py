@@ -4,6 +4,8 @@ from pytestqt.qtbot import QtBot
 from collections import deque
 from pathlib import Path
 
+from gui.filename_list_item import FilenameListItem
+
 import pytest
 
 
@@ -151,7 +153,11 @@ def test_apply_button_enabled_when_all_filenames_populated(qtbot: QtBot) -> None
     main_window = main_manager._ui
     qtbot.addWidget(main_window)
 
-    test_tracklist = ["One", "Two", "Three"]
+    test_tracklist = [
+        FilenameListItem("One"),
+        FilenameListItem("Two"),
+        FilenameListItem("Three"),
+    ]
     test_new_filenames = deque(["1", "2", "3"])
     main_window.folder_listwidget.populate(test_tracklist)
 

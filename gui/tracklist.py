@@ -1,10 +1,10 @@
 from PyQt6 import QtWidgets, QtCore
 
-from typing import Optional
+from typing import Optional, Sequence
 from collections import deque
 from pathlib import Path
 
-from gui.tracklist_item import TracklistItem
+from gui.list_item_widget import ListItemWidget
 
 
 class Tracklist(QtWidgets.QListWidget):
@@ -27,33 +27,26 @@ class Tracklist(QtWidgets.QListWidget):
 
         self.model().rowsMoved.connect(self._number_and_shade)
 
-    def populate(self, track_list: list[str]) -> None:
+    def populate(self, item_list: Sequence[QtWidgets.QListWidgetItem]) -> None:
         # Clear any existing items from the list
         self.clear()
 
         # For each track name in the list...
-        for track in track_list:
+        for item in item_list:
 
             # Create and configure the custom widget
-            tracklist_item = TracklistItem()
-            tracklist_item.set_original_filename(track)
-            tracklist_item._checkbox.stateChanged.connect(self.count_ticks)
-            tracklist_item._checkbox.stateChanged.connect(
+            widget = item.create_widget()
+
+            self.addItem(item)
+            self.setItemWidget(item, widget)
+            widget._new_filename.setVisible(self._editable)
+            widget._checkbox.stateChanged.connect(self.count_ticks)
+            widget._checkbox.stateChanged.connect(
                 self.check_all_ticked_new_filenames_filled
             )
-            tracklist_item._new_filename.textChanged.connect(
+            widget._new_filename.textChanged.connect(
                 self.check_all_ticked_new_filenames_filled
             )
-
-            # Create a QListWidgetItem and add it to the list
-            list_widget_item = QtWidgets.QListWidgetItem()
-            list_widget_item.setSizeHint(tracklist_item.sizeHint())
-            tracklist_item._new_filename.setVisible(self._editable)
-
-            self.addItem(list_widget_item)
-
-            # Embed the custom widget into the item
-            self.setItemWidget(list_widget_item, tracklist_item)
 
         # Update the track numbers and shading
         self._number_and_shade()
@@ -64,14 +57,14 @@ class Tracklist(QtWidgets.QListWidget):
         zfill_width = len(str(number_of_tracks))
         for index in range(number_of_tracks):
             tracklist_item = self.itemWidget(self.item(index))
-            if isinstance(tracklist_item, TracklistItem):
-                tracklist_item.set_track_number(str(index + 1).zfill(zfill_width))
 
-                if index % 2 == 1:
-                    shaded = True
-                else:
-                    shaded = False
-                tracklist_item.set_shaded(shaded)
+            tracklist_item.set_track_number(str(index + 1).zfill(zfill_width))
+
+            if index % 2 == 1:
+                shaded = True
+            else:
+                shaded = False
+            tracklist_item.set_shaded(shaded)
 
     def list_ticked_tracks(self) -> deque[str] | None:
 
@@ -79,9 +72,8 @@ class Tracklist(QtWidgets.QListWidget):
 
         for index in range(self.count()):
             tracklist_item = self.itemWidget(self.item(index))
-            if isinstance(tracklist_item, TracklistItem):
-                if tracklist_item.is_ticked():
-                    ticked_tracks.append(tracklist_item.get_original_filename())
+            if tracklist_item.is_ticked():
+                ticked_tracks.append(tracklist_item.get_original_filename())
 
         return ticked_tracks
 
@@ -90,7 +82,7 @@ class Tracklist(QtWidgets.QListWidget):
 
         for index in range(self.count()):
             tracklist_item = self.itemWidget(self.item(index))
-            if isinstance(tracklist_item, TracklistItem):
+            if isinstance(tracklist_item, ListItemWidget):
                 if tracklist_item.is_ticked():
                     ticked_tracks.append(
                         (
@@ -104,7 +96,7 @@ class Tracklist(QtWidgets.QListWidget):
     def apply_track_names(self, release_tracklist: deque[str] | None) -> None:
         for index in range(self.count()):
             tracklist_item = self.itemWidget(self.item(index))
-            if isinstance(tracklist_item, TracklistItem):
+            if isinstance(tracklist_item, ListItemWidget):
                 if not release_tracklist:
                     break
                 if tracklist_item.is_ticked():
@@ -114,7 +106,7 @@ class Tracklist(QtWidgets.QListWidget):
         tick_count = 0
         for index in range(self.count()):
             tracklist_item = self.itemWidget(self.item(index))
-            if isinstance(tracklist_item, TracklistItem):
+            if isinstance(tracklist_item, ListItemWidget):
                 if tracklist_item.is_ticked():
                     tick_count = tick_count + 1
         self.tick_count.emit(tick_count)

@@ -1,6 +1,9 @@
-from discogs_client import Client, Release, Track
+from discogs_client import Client, Release, Track, Artist
 
 from token_manager import TokenManager
+from gui.release_list_item import ReleaseListItem
+
+from typing import List
 
 
 class DiscogsManager:
@@ -32,6 +35,34 @@ class DiscogsManager:
     def get_track_titles(self, tracklist: list[Track]) -> list[str]:
         return [track.title for track in tracklist]
 
+    def get_track_artists(self, track: Track) -> list[Artist]:
+        return list(track.artists)
+
+    def format_track_artists(self, track_artists: list[Artist]) -> str:
+        track_artists_parts: List[str] = []
+        for artist in track_artists:
+            # Include join only if it's non-empty
+            if artist.join:
+                track_artists_parts.append(f"{artist.name} {artist.join}")
+            else:
+                track_artists_parts.append(f"{artist.name}")
+        return " ".join(track_artists_parts)
+
+    def get_track_artists_and_titles(
+        self, tracklist: list[Track]
+    ) -> list[ReleaseListItem]:
+        artists_and_titles: List[ReleaseListItem] = []
+        for track in tracklist:
+            track_title = str(track.title)
+            unformatted_track_artists = self.get_track_artists(track)
+            formatted_track_artists = self.format_track_artists(
+                unformatted_track_artists
+            )
+
+            release_list_item = ReleaseListItem(formatted_track_artists, track_title)
+            artists_and_titles.append(release_list_item)
+
+        return artists_and_titles
 
 # release
 # <Release 654888 'Illclectica'>

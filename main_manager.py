@@ -1,6 +1,7 @@
 from PyQt6 import QtCore, QtWidgets
 
 from gui.main_window import MainWindow
+from gui.filename_list_item import FilenameListItem
 from token_dialog import TokenDialog
 from settings_dialog import SettingsDialog
 from gui.about_messagebox import AboutMessageBox
@@ -106,7 +107,7 @@ class MainManager(QtCore.QObject):
         self._ui.folder_listwidget.populate(file_list)
 
     # Return a sorted list of audio files in a folder
-    def _list_audio_files_in_folder(self, folder_path: Path) -> List[str]:
+    def _list_audio_files_in_folder(self, folder_path: Path) -> List[FilenameListItem]:
 
         audio_file_extensions = [
             "*.mp3",
@@ -120,7 +121,7 @@ class MainManager(QtCore.QObject):
             "*.aac",
         ]
         return [
-            str(audio_file.name)
+            FilenameListItem(audio_file.name)
             for extension in audio_file_extensions
             for audio_file in sorted(folder_path.glob(extension))
             if audio_file.is_file()

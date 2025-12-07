@@ -99,6 +99,8 @@ class Tracklist(QtWidgets.QListWidget):
             if isinstance(tracklist_item, ListItemWidget):
                 if not release_tracklist:
                     break
+                # Clear the lineedit first
+                tracklist_item.set_new_filename("")
                 if tracklist_item.is_ticked():
                     tracklist_item.set_new_filename(release_tracklist.popleft())
 

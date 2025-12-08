@@ -1,19 +1,16 @@
 from PyQt6 import QtWidgets
 
 from gui.list_item_widget import ListItemWidget
+from track_data import TrackData
 
 
 class ReleaseListItem(QtWidgets.QListWidgetItem):
-    def __init__(self, track_artists: str, track_title: str) -> None:
+    def __init__(self, track_data: TrackData) -> None:
         super().__init__()
-        self.track_artists = track_artists
-        self.track_title = track_title
+        self.track_data = track_data
 
     def create_widget(self) -> QtWidgets.QWidget:
         widget = ListItemWidget()
-        if self.track_artists:
-            widget.set_original_filename(f"{self.track_artists} - {self.track_title}")
-        else:
-            widget.set_original_filename(f"{self.track_title}")
+        widget.set_original_filename(self.track_data.original_filename())
         self.setSizeHint(widget.sizeHint())
         return widget

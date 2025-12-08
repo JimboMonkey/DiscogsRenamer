@@ -2,6 +2,8 @@ from discogs_client import Client, Release, Track, Artist
 
 from token_manager import TokenManager
 from gui.release_list_item import ReleaseListItem
+from release_data import ReleaseData
+from track_data import TrackData
 
 from typing import List
 
@@ -49,9 +51,13 @@ class DiscogsManager:
         return " ".join(track_artists_parts)
 
     def get_track_artists_and_titles(
-        self, tracklist: list[Track]
+        self, release: Release, tracklist: list[Track]
     ) -> list[ReleaseListItem]:
         artists_and_titles: List[ReleaseListItem] = []
+        release_data = ReleaseData(
+            release_artists=self.get_release_artists(release),
+            release_title=self.get_release_title(release),
+        )
         for track in tracklist:
             track_title = str(track.title)
             unformatted_track_artists = self.get_track_artists(track)
@@ -59,7 +65,13 @@ class DiscogsManager:
                 unformatted_track_artists
             )
 
-            release_list_item = ReleaseListItem(formatted_track_artists, track_title)
+            track_data = TrackData(
+                release=release_data,
+                track_artists=formatted_track_artists,
+                track_title=track_title,
+            )
+
+            release_list_item = ReleaseListItem(track_data)
             artists_and_titles.append(release_list_item)
 
         return artists_and_titles

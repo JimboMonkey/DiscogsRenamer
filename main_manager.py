@@ -75,7 +75,7 @@ class MainManager(QtCore.QObject):
             title = self._discogs_manager.get_release_title(release)
             tracklist = self._discogs_manager.get_tracklist(release)
             track_data_list = self._discogs_manager.get_track_artists_and_titles(
-                tracklist
+                release, tracklist
             )
             self._ui.update_release_artist_title_label(artist, title)
             self._ui.release_listwidget.populate(track_data_list)

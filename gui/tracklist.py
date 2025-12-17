@@ -6,6 +6,7 @@ from pathlib import Path
 
 from gui.list_item_widget import ListItemWidget
 from track_data import TrackData
+from gui.utils import format_filename, extract_file_extension
 
 
 class Tracklist(QtWidgets.QListWidget):
@@ -95,7 +96,9 @@ class Tracklist(QtWidgets.QListWidget):
                     )
         return ticked_tracks if ticked_tracks else None
 
-    def apply_track_names(self, release_tracklist: deque[str] | None) -> None:
+    def apply_track_names(
+        self, release_tracklist: deque[TrackData] | None, format_str: str
+    ) -> None:
         for index in range(self.count()):
             tracklist_item = self.itemWidget(self.item(index))
             if isinstance(tracklist_item, ListItemWidget):
@@ -104,7 +107,16 @@ class Tracklist(QtWidgets.QListWidget):
                 # Clear the lineedit first
                 tracklist_item.set_new_filename("")
                 if tracklist_item.is_ticked():
-                    tracklist_item.set_new_filename(release_tracklist.popleft())
+                    new_filename = format_filename(
+                        format_str,
+                        release_tracklist.popleft(),
+                        tracklist_item.get_track_number(),
+                    )
+                    file_extension = extract_file_extension(
+                        tracklist_item.get_original_filename()
+                    )
+                    full_new_path = new_filename + file_extension
+                    tracklist_item.set_new_filename(full_new_path)
 
     def count_ticks(self) -> None:
         tick_count = 0

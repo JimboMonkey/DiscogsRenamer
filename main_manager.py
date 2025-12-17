@@ -140,8 +140,9 @@ class MainManager(QtCore.QObject):
         _messagebox = AboutMessageBox()
 
     def _transfer_track_names(self):
+        format_str = self._settings.get("filename_format")
         ticked_track_list = self._ui.release_listwidget.list_ticked_tracks()
-        self._ui.folder_listwidget.apply_track_names(ticked_track_list)
+        self._ui.folder_listwidget.apply_track_names(ticked_track_list, format_str)
 
     def _apply_new_names(self) -> None:
         list_of_track_renaming_info = (

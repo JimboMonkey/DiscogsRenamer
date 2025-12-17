@@ -5,6 +5,7 @@ from collections import deque
 from pathlib import Path
 
 from gui.list_item_widget import ListItemWidget
+from track_data import TrackData
 
 
 class Tracklist(QtWidgets.QListWidget):
@@ -66,14 +67,15 @@ class Tracklist(QtWidgets.QListWidget):
                 shaded = False
             tracklist_item.set_shaded(shaded)
 
-    def list_ticked_tracks(self) -> deque[str] | None:
+    def list_ticked_tracks(self) -> deque[TrackData] | None:
 
-        ticked_tracks: deque[str] = deque()
+        ticked_tracks: deque[TrackData] = deque()
 
         for index in range(self.count()):
             tracklist_item = self.itemWidget(self.item(index))
-            if tracklist_item.is_ticked():
-                ticked_tracks.append(tracklist_item.get_original_filename())
+            if isinstance(tracklist_item, ListItemWidget):
+                if tracklist_item.is_ticked():
+                    ticked_tracks.append(self.item(index).track_data)
 
         return ticked_tracks
 

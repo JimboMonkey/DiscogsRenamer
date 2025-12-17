@@ -1,5 +1,6 @@
 from PyQt6 import QtCore, QtWidgets
 
+from app_settings import AppSettings
 from gui.main_window import MainWindow
 from gui.filename_list_item import FilenameListItem
 from token_dialog import TokenDialog
@@ -19,6 +20,7 @@ from functools import partial
 class MainManager(QtCore.QObject):
 
     def __init__(self) -> None:
+        self._settings = AppSettings()
         # Create the main GUI window
         self._ui = MainWindow()
         token_manager = TokenManager()
@@ -131,7 +133,7 @@ class MainManager(QtCore.QObject):
         _dialog = TokenDialog(result)
 
     def open_settings_dialog(self) -> None:
-        dialog = SettingsDialog()
+        dialog = SettingsDialog(self._settings)
         dialog.show()
 
     def open_about_messagebox(self) -> None:

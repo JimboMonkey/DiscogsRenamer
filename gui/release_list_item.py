@@ -11,6 +11,7 @@ class ReleaseListItem(QtWidgets.QListWidgetItem):
 
     def create_widget(self) -> QtWidgets.QWidget:
         widget = ListItemWidget()
+        widget.set_track_number(self.track_data.track_position)
         widget.set_original_filename(self.track_data.original_filename())
         self.setSizeHint(widget.sizeHint())
         return widget

@@ -6,6 +6,7 @@ from release_data import ReleaseData
 @dataclass
 class TrackData:
     release: ReleaseData
+    track_position: str
     track_artists: str
     track_title: str
 

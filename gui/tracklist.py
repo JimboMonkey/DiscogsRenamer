@@ -5,6 +5,7 @@ from collections import deque
 from pathlib import Path
 
 from gui.list_item_widget import ListItemWidget
+from gui.filename_list_item import FilenameListItem
 from track_data import TrackData
 from gui.utils import format_filename, extract_file_extension
 
@@ -58,10 +59,10 @@ class Tracklist(QtWidgets.QListWidget):
         number_of_tracks = self.count()
         zfill_width = len(str(number_of_tracks))
         for index in range(number_of_tracks):
-            tracklist_item = self.itemWidget(self.item(index))
-
-            tracklist_item.set_track_number(str(index + 1).zfill(zfill_width))
-
+            list_item = self.item(index)
+            tracklist_item = self.itemWidget(list_item)
+            if isinstance(list_item, FilenameListItem):
+                tracklist_item.set_track_number(str(index + 1).zfill(zfill_width))
             if index % 2 == 1:
                 shaded = True
             else:

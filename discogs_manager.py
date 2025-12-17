@@ -59,6 +59,7 @@ class DiscogsManager:
             release_title=self.get_release_title(release),
         )
         for track in tracklist:
+            track_position = str(track.position)
             track_title = str(track.title)
             unformatted_track_artists = self.get_track_artists(track)
             formatted_track_artists = self.format_track_artists(
@@ -67,6 +68,7 @@ class DiscogsManager:
 
             track_data = TrackData(
                 release=release_data,
+                track_position=track_position,
                 track_artists=formatted_track_artists,
                 track_title=track_title,
             )

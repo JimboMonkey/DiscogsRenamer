@@ -4,6 +4,22 @@ from pytestqt.qtbot import QtBot
 from main_manager import MainManager
 
 
+def test_list_audio_files_in_folder(qtbot: QtBot, tmp_path: Path) -> None:
+    main_manager = MainManager()
+
+    test_filenames = ["track_1.mp3", "track_2.MP3", "README", "text_file.txt"]
+
+    for filename in test_filenames:
+        (tmp_path / filename).touch()
+
+    audio_file_list = main_manager._list_audio_files_in_folder(tmp_path)
+
+    assert [item.original_filename for item in audio_file_list] == [
+        "track_1.mp3",
+        "track_2.MP3",
+    ]
+
+
 def test_rename_files(qtbot: QtBot, tmp_path: Path) -> None:
 
     main_manager = MainManager()

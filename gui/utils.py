@@ -29,4 +29,4 @@ def format_filename(template: str, track_data: TrackData, track_num: str) -> str
 
 def extract_file_extension(file_path: str) -> str:
     _, file_extension = os.path.splitext(file_path)
-    return file_extension
+    return file_extension.lower()

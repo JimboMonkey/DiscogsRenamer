@@ -112,21 +112,21 @@ class MainManager(QtCore.QObject):
     def _list_audio_files_in_folder(self, folder_path: Path) -> List[FilenameListItem]:
 
         audio_file_extensions = [
-            "*.mp3",
-            "*.wav",
-            "*.flac",
-            "*.m4a",
-            "*.ogg",
-            "*.aiff",
-            "*.alac",
-            "*.wma",
-            "*.aac",
+            ".mp3",
+            ".wav",
+            ".flac",
+            ".m4a",
+            ".ogg",
+            ".aiff",
+            ".alac",
+            ".wma",
+            ".aac",
         ]
         return [
             FilenameListItem(audio_file.name)
-            for extension in audio_file_extensions
-            for audio_file in sorted(folder_path.glob(extension))
+            for audio_file in sorted(folder_path.iterdir())
             if audio_file.is_file()
+            and audio_file.suffix.lower() in audio_file_extensions
         ]
 
     def open_token_dialog(self, result: AuthenticationResult) -> None:

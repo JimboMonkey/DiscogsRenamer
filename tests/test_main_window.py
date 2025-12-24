@@ -148,6 +148,15 @@ def test_update_release_artist_title_label(main_window: MainWindow) -> None:
     assert label.text() == f"{test_artist} - {test_title}"
 
 
+def test_update_folder_name_label(main_window: MainWindow) -> None:
+
+    test_folder_name = "DJ Test - Testing The Night Away"
+
+    label = main_window.folder_name_label
+    main_window.update_folder_name_label(test_folder_name)
+    assert label.text() == test_folder_name
+
+
 def test_apply_button_enabled_when_all_filenames_populated(qtbot: QtBot) -> None:
     main_manager = MainManager()
     main_window = main_manager._ui

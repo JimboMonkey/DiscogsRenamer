@@ -45,6 +45,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.file_browser_button = QtWidgets.QPushButton("Browse")
         self.folder_entry_label = QtWidgets.QLabel()
+        self.folder_name_label = QtWidgets.QLabel()
 
         release_entry_layout = QtWidgets.QHBoxLayout()
         release_entry_layout.addWidget(release_number_label)
@@ -87,6 +88,7 @@ class MainWindow(QtWidgets.QMainWindow):
         folder_layout = QtWidgets.QVBoxLayout()
         folder_layout.addWidget(folder_label)
         folder_layout.addLayout(folder_entry_layout)
+        folder_layout.addWidget(self.folder_name_label)
         folder_layout.addWidget(self.folder_listwidget)
 
         listwidget_layout = QtWidgets.QHBoxLayout()
@@ -144,6 +146,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def update_release_artist_title_label(self, artist: str, title: str) -> None:
         self.release_artist_title_label.setText(f"{artist} - {title}")
+
+    def update_folder_name_label(self, folder_name: str) -> None:
+        self.folder_name_label.setText(folder_name)
 
     def set_folder_path_label(self, folder_path: str) -> None:
         self.folder_entry_label.setText(folder_path)

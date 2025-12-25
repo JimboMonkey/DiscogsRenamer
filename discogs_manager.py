@@ -5,8 +5,6 @@ from gui.release_list_item import ReleaseListItem
 from release_data import ReleaseData
 from track_data import TrackData
 
-from typing import List
-
 
 class DiscogsManager:
     def __init__(self):
@@ -41,7 +39,7 @@ class DiscogsManager:
         return list(track.artists)
 
     def format_track_artists(self, track_artists: list[Artist]) -> str:
-        track_artists_parts: List[str] = []
+        track_artists_parts: list[str] = []
         for artist in track_artists:
             # Include join only if it's non-empty
             if artist.join:
@@ -53,7 +51,7 @@ class DiscogsManager:
     def get_track_artists_and_titles(
         self, release: Release, tracklist: list[Track]
     ) -> list[ReleaseListItem]:
-        artists_and_titles: List[ReleaseListItem] = []
+        artists_and_titles: list[ReleaseListItem] = []
         release_data = ReleaseData(
             release_artists=self.get_release_artists(release),
             release_title=self.get_release_title(release),

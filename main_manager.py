@@ -13,7 +13,6 @@ from auth_data_class import AuthenticationResult
 from pathlib import Path
 from os.path import expanduser
 import os
-from typing import List, Tuple
 from functools import partial
 
 
@@ -110,7 +109,7 @@ class MainManager(QtCore.QObject):
         self._ui.folder_listwidget.populate(file_list)
 
     # Return a sorted list of audio files in a folder
-    def _list_audio_files_in_folder(self, folder_path: Path) -> List[FilenameListItem]:
+    def _list_audio_files_in_folder(self, folder_path: Path) -> list[FilenameListItem]:
 
         audio_file_extensions = [
             ".mp3",
@@ -153,7 +152,7 @@ class MainManager(QtCore.QObject):
             self._rename_files(list_of_track_renaming_info)
 
     def _rename_files(
-        self, list_of_file_renaming_info: list[Tuple[str, Path, Path]]
+        self, list_of_file_renaming_info: list[tuple[str, Path, Path]]
     ) -> None:
 
         folder_path: Path | None = self._ui.get_folder_path()

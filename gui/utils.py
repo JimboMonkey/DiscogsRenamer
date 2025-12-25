@@ -19,7 +19,9 @@ def format_filename(template: str, track_data: TrackData, track_num: str) -> str
     flat_dict = to_dict(track_data)
     flat_dict["track_num"] = track_num
     safe = (
-        template.replace("%release_track_num", "{track_position}")
+        template.replace("%release_artists", "{release_artists}")
+        .replace("%release_title", "{release_title}")
+        .replace("%release_track_num", "{track_position}")
         .replace("%artist", "{track_artists}")
         .replace("%title", "{track_title}")
         .replace("%num", "{track_num}")

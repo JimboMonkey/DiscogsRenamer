@@ -1,5 +1,7 @@
 from PyQt6 import QtWidgets
 
+from gui.invalid_char_tableview import InvalidCharTableView
+
 
 class SettingsDialogGui(QtWidgets.QDialog):
 
@@ -17,13 +19,10 @@ class SettingsDialogGui(QtWidgets.QDialog):
         self.format_lineedit.setPlaceholderText("%number - %artist - %title")
         self.format_lineedit.setMinimumWidth(200)
 
-        slash_replacement_label = QtWidgets.QLabel(
-            "Character to replace slashes (/ or \\)"
+        invalid_character_replacement_label = QtWidgets.QLabel(
+            "Invalid Filename Character Replacements:"
         )
-
-        slash_replacement_linedit = QtWidgets.QLineEdit()
-        slash_replacement_linedit.setPlaceholderText(",")
-        slash_replacement_linedit.setMinimumWidth(200)
+        invalid_char_table = InvalidCharTableView()
 
         zero_fill_checkbox = QtWidgets.QCheckBox("Zero-fill track numbers")
         zero_fill_checkbox.setChecked(True)
@@ -39,15 +38,12 @@ class SettingsDialogGui(QtWidgets.QDialog):
         format_layout.addWidget(format_label)
         format_layout.addWidget(self.format_lineedit)
 
-        slash_replacement_layout = QtWidgets.QHBoxLayout()
-        slash_replacement_layout.addWidget(slash_replacement_label)
-        slash_replacement_layout.addWidget(slash_replacement_linedit)
-
         vertical_layout = QtWidgets.QVBoxLayout()
         vertical_layout.addLayout(format_layout)
-        vertical_layout.addLayout(slash_replacement_layout)
         vertical_layout.addWidget(zero_fill_checkbox)
         vertical_layout.addWidget(misnumbering_warning_checkbox)
+        vertical_layout.addWidget(invalid_character_replacement_label)
+        vertical_layout.addWidget(invalid_char_table)
         vertical_layout.addWidget(self.close_button)
 
         self.setLayout(vertical_layout)

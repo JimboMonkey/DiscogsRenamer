@@ -1,6 +1,8 @@
 from app_settings import AppSettings
 from gui.settings_dialog_gui import SettingsDialogGui
 
+from filename_rules import get_platform_invalid_characters
+
 
 class SettingsDialog:
 
@@ -8,7 +10,9 @@ class SettingsDialog:
 
         self._settings = settings
         self._ui = SettingsDialogGui()
-        self.set_filename_format()
+        self._ui.invalid_char_table.set_data(
+            self.load_invalid_char_replacements(settings)
+        )
 
         self._init_connections()
 

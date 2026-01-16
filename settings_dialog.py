@@ -1,4 +1,4 @@
-from app_settings import AppSettings
+from settings_protocol import SettingsProtocol
 from gui.settings_dialog_gui import SettingsDialogGui
 
 from filename_rules import get_platform_invalid_characters
@@ -6,7 +6,7 @@ from filename_rules import get_platform_invalid_characters
 
 class SettingsDialog:
 
-    def __init__(self, settings: AppSettings) -> None:
+    def __init__(self, settings: SettingsProtocol) -> None:
 
         self._settings = settings
         self._ui = SettingsDialogGui()

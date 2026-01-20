@@ -87,3 +87,6 @@ class InvalidCharModel(QtCore.QAbstractTableModel):
                 | QtCore.Qt.ItemFlag.ItemIsEditable
             )
         return QtCore.Qt.ItemFlag.ItemIsSelectable | QtCore.Qt.ItemFlag.ItemIsEnabled
+
+    def get_data(self) -> list[tuple[str, str]]:
+        return [(row["character"], row["replacement"]) for row in self._rows]

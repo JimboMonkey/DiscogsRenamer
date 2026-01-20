@@ -23,6 +23,7 @@ class SettingsDialog:
     def _init_connections(self) -> None:
         self._ui.close_button.clicked.connect(self._ui.close_dialog)
         self._ui.close_button.clicked.connect(self.save_settings)
+        self._ui.close_button.clicked.connect(self.get_invalid_char_replacements)
 
     def set_filename_format(self) -> None:
         self._ui.format_lineedit.setText(self._settings.get("filename_format"))
@@ -30,5 +31,11 @@ class SettingsDialog:
     def get_filename_format(self) -> str:
         return self._ui.format_lineedit.text()
 
+    def get_invalid_char_replacements(self) -> list[tuple[str, str]]:
+        return self._ui.invalid_char_table.model().get_data()
+
     def save_settings(self) -> None:
         self._settings.set("filename_format", self.get_filename_format())
+        self._settings.set(
+            "invalid_char_replacements", self.get_invalid_char_replacements()
+        )

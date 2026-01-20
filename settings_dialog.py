@@ -21,6 +21,7 @@ class SettingsDialog:
 
     # Link GUI widgets to the functions
     def _init_connections(self) -> None:
+        self._ui.restore_defaults_button.clicked.connect(self.restore_defaults)
         self._ui.close_button.clicked.connect(self._ui.close_dialog)
         self._ui.close_button.clicked.connect(self.save_settings)
         self._ui.close_button.clicked.connect(self.get_invalid_char_replacements)
@@ -39,3 +40,8 @@ class SettingsDialog:
         self._settings.set(
             "invalid_char_replacements", self.get_invalid_char_replacements()
         )
+
+    def restore_defaults(self) -> None:
+        self._ui.format_lineedit.setText("%num - %track_title")
+        self._ui.invalid_char_table.set_data(get_platform_invalid_characters())
+

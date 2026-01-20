@@ -17,12 +17,12 @@ class SettingsDialogGui(QtWidgets.QDialog):
 
         self.format_lineedit = QtWidgets.QLineEdit()
         self.format_lineedit.setPlaceholderText("%number - %artist - %title")
-        self.format_lineedit.setMinimumWidth(200)
+        self.format_lineedit.setMinimumWidth(400)
 
         invalid_character_replacement_label = QtWidgets.QLabel(
             "Invalid Filename Character Replacements:"
         )
-        invalid_char_table = InvalidCharTableView()
+        self.invalid_char_table = InvalidCharTableView()
 
         zero_fill_checkbox = QtWidgets.QCheckBox("Zero-fill track numbers")
         zero_fill_checkbox.setChecked(True)
@@ -32,7 +32,12 @@ class SettingsDialogGui(QtWidgets.QDialog):
         )
         misnumbering_warning_checkbox.setChecked(True)
 
+        self.restore_defaults_button = QtWidgets.QPushButton("Restore Defaults")
         self.close_button = QtWidgets.QPushButton("Close")
+
+        button_layout = QtWidgets.QHBoxLayout()
+        button_layout.addWidget(self.restore_defaults_button)
+        button_layout.addWidget(self.close_button)
 
         format_layout = QtWidgets.QHBoxLayout()
         format_layout.addWidget(format_label)
@@ -43,8 +48,8 @@ class SettingsDialogGui(QtWidgets.QDialog):
         vertical_layout.addWidget(zero_fill_checkbox)
         vertical_layout.addWidget(misnumbering_warning_checkbox)
         vertical_layout.addWidget(invalid_character_replacement_label)
-        vertical_layout.addWidget(invalid_char_table)
-        vertical_layout.addWidget(self.close_button)
+        vertical_layout.addWidget(self.invalid_char_table)
+        vertical_layout.addLayout(button_layout)
 
         self.setLayout(vertical_layout)
 

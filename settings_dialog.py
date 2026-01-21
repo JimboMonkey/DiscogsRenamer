@@ -10,6 +10,7 @@ class SettingsDialog:
 
         self._settings = settings
         self._ui = SettingsDialogGui()
+        self._ui.format_lineedit.setText(self.load_filename_format(settings))
         self._ui.invalid_char_table.set_data(
             self.load_invalid_char_replacements(settings)
         )
@@ -45,3 +46,21 @@ class SettingsDialog:
         self._ui.format_lineedit.setText("%num - %track_title")
         self._ui.invalid_char_table.set_data(get_platform_invalid_characters())
 
+    def load_filename_format(self, store: SettingsProtocol) -> str:
+        raw = store.get("filename_format")
+
+        # No entry → use defaults
+        if raw is None:
+            return "%num - %track_title"
+        return raw
+
+    def load_invalid_char_replacements(
+        self, store: SettingsProtocol
+    ) -> list[tuple[str, str]]:
+        raw = store.get("invalid_char_replacements")
+
+        # No entry → use defaults
+        if raw is None:
+            return get_platform_invalid_characters()
+
+        return raw

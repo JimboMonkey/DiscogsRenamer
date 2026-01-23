@@ -3,26 +3,50 @@ from pytestqt.qtbot import QtBot
 from gui.tracklist import Tracklist
 from collections import deque
 from pathlib import Path
+from typing import Callable
 
 from gui.filename_list_item import FilenameListItem
+from gui.release_list_item import ReleaseListItem
+from track_data import TrackData
+from release_data import ReleaseData
+
+
+@pytest.fixture
+def release_data() -> ReleaseData:
+    return ReleaseData(
+        release_artists="A Tribe Called Test",
+        release_title="Testify",
+    )
+
+
+@pytest.fixture
+def make_new_filename_inputs(release_data: ReleaseData):
+    def _make(titles: list[str]):
+        items = []
+        for i, title in enumerate(titles, start=1):
+            items.append(
+                ReleaseListItem(
+                    TrackData(
+                        release=release_data,
+                        track_position=str(i),
+                        track_artists="A Tribe Called Test",
+                        track_title=title,
+                    )
+                )
+            )
+        return deque(items)
+
+    return _make
 
 
 @pytest.mark.parametrize(
-    "new_filename_test_inputs, ticked_items, expected_response",
+    "titles, ticked_items, expected_response",
     [
-        (
-            deque(["First", "Second", "Third"]),
-            [True, True, True],
-            True,
-        ),
-        (deque(["First", "", "Third"]), [True, True, True], False),
-        (
-            deque(["First", " ", "Third"]),
-            [True, True, True],
-            False,
-        ),
-        (deque(["First", " ", "Third"]), [True, False, True], True),
-        (deque(["First", "Second", "Third"]), [False, False, False], False),
+        (["First", "Second", "Third"], [True, True, True], True),
+        (["First", "", "Third"], [True, True, True], False),
+        (["First", " ", "Third"], [True, True, True], False),
+        (["First", " ", "Third"], [True, False, True], True),
+        (["First", "Second", "Third"], [False, False, False], False),
     ],
     ids=[
         "all filled, all ticked",
@@ -34,10 +58,17 @@ from gui.filename_list_item import FilenameListItem
 )
 def test_check_all_new_filenames_filled(
     qtbot: QtBot,
-    new_filename_test_inputs: deque[str],
+    make_new_filename_inputs: Callable[[list[str]], deque[ReleaseListItem]],
+    titles: list[str],
     ticked_items: list[bool],
     expected_response: bool,
-) -> None:
+):
+    new_filename_test_inputs = make_new_filename_inputs(titles)
+
+    # ticked_tracks: deque[TrackData] = deque()
+    # ticked_tracks.append(self.item(index).track_data)
+
+    release_tracklist = Tracklist(editable=False)
     tracklist = Tracklist(editable=True)
 
     test_tracklist = [
@@ -45,13 +76,19 @@ def test_check_all_new_filenames_filled(
         FilenameListItem("secondtrack"),
         FilenameListItem("thirdtrack"),
     ]
+    release_tracklist.populate(new_filename_test_inputs)
     tracklist.populate(test_tracklist)
-    tracklist.apply_track_names(new_filename_test_inputs)
 
     # Tick only the specified items
     for index in range(tracklist.count()):
+        rtracklist_item = release_tracklist.itemWidget(release_tracklist.item(index))
+        rtracklist_item._checkbox.setChecked(ticked_items[index])
         tracklist_item = tracklist.itemWidget(tracklist.item(index))
         tracklist_item._checkbox.setChecked(ticked_items[index])
+
+    ticked_track_list = release_tracklist.list_ticked_tracks()
+
+    tracklist.apply_track_names(ticked_track_list, "%title")
 
     # qtbot provides a SignalBlocker to capture emissions
     with qtbot.waitSignal(
@@ -61,67 +98,3 @@ def test_check_all_new_filenames_filled(
 
     # blocker.args holds the emitted arguments
     assert blocker.args == [expected_response]
-
-
-@pytest.mark.parametrize(
-    "ticked_indices, original_filenames, new_filenames, expected",
-    [
-        # all ticked → all paths returned
-        (
-            [True, True, True],
-            [
-                FilenameListItem("firsttrack"),
-                FilenameListItem("secondtrack"),
-                FilenameListItem("thirdtrack"),
-            ],
-            deque(["First", "Second", "Third"]),
-            [
-                ("1", Path("firsttrack"), Path("First")),
-                ("2", Path("secondtrack"), Path("Second")),
-                ("3", Path("thirdtrack"), Path("Third")),
-            ],
-        ),
-        # none ticked → None
-        (
-            [False, False, False],
-            [
-                FilenameListItem("firsttrack"),
-                FilenameListItem("secondtrack"),
-                FilenameListItem("thirdtrack"),
-            ],
-            deque(["First", "Second", "Third"]),
-            None,
-        ),
-        # partial ticked → only ticked ones returned
-        (
-            [True, False, True],
-            [
-                FilenameListItem("firsttrack"),
-                FilenameListItem("secondtrack"),
-                FilenameListItem("thirdtrack"),
-            ],
-            deque(["First", "Second", "Third"]),
-            [
-                ("1", Path("firsttrack"), Path("First")),
-                ("3", Path("thirdtrack"), Path("Third")),
-            ],
-        ),
-    ],
-    ids=["all ticked", "none ticked", "partially ticked"],
-)
-def test_list_track_renaming_info(
-    qtbot: QtBot, ticked_indices, original_filenames, new_filenames, expected
-):
-    tracklist = Tracklist(editable=True)
-    qtbot.addWidget(tracklist)
-    tracklist.populate(original_filenames)
-    tracklist._number_and_shade()
-    tracklist.apply_track_names(new_filenames)
-
-    # Tick only the specified indices
-    for i, tick in enumerate(ticked_indices):
-        tracklist_item = tracklist.itemWidget(tracklist.item(i))
-        tracklist_item._checkbox.setChecked(tick)
-
-    result = tracklist.list_track_renaming_info()
-    assert result == expected

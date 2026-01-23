@@ -4,7 +4,10 @@ from pytestqt.qtbot import QtBot
 from collections import deque
 from pathlib import Path
 
+from release_data import ReleaseData
+from track_data import TrackData
 from gui.filename_list_item import FilenameListItem
+from gui.release_list_item import ReleaseListItem
 
 import pytest
 
@@ -163,18 +166,54 @@ def test_apply_button_enabled_when_all_filenames_populated(qtbot: QtBot) -> None
     qtbot.addWidget(main_window)
 
     test_tracklist = [
-        FilenameListItem("One"),
-        FilenameListItem("Two"),
-        FilenameListItem("Three"),
+        FilenameListItem("01 - Untitled.mp3"),
+        FilenameListItem("02 - Untitled.mp3"),
+        FilenameListItem("03 - Untitled.mp3"),
     ]
-    test_new_filenames = deque(["1", "2", "3"])
+
+    release_data = ReleaseData(
+        release_artists="DJ Test & The Testers",
+        release_title="Testing The Night Away",
+    )
+
+    ticked_tracks: deque[TrackData] = deque()
+
+    test_new_filenames = [
+        ReleaseListItem(
+            TrackData(
+                release=release_data,
+                track_position="1",
+                track_artists="Kanye Test",
+                track_title="Through The Test",
+            )
+        ),
+        ReleaseListItem(
+            TrackData(
+                release=release_data,
+                track_position="2",
+                track_artists="Testlife",
+                track_title="I Love To Test",
+            )
+        ),
+        ReleaseListItem(
+            TrackData(
+                release=release_data,
+                track_position="3",
+                track_artists="The Chemical Brothers",
+                track_title="The Test",
+            )
+        ),
+    ]
+    for entry in test_new_filenames:
+        ticked_tracks.append(entry.track_data)
+
     main_window.folder_listwidget.populate(test_tracklist)
 
     # Initially, the button should be disabled
     assert not main_window.apply_button.isEnabled()
 
     # Simulate valid input
-    main_window.folder_listwidget.apply_track_names(test_new_filenames)
+    main_window.folder_listwidget.apply_track_names(ticked_tracks, "%track_title")
     assert main_window.apply_button.isEnabled()
 
 

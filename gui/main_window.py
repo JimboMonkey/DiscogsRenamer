@@ -4,13 +4,19 @@ from pathlib import Path
 
 from gui.toolbar import Toolbar
 from gui.tracklist import Tracklist
+from auth_manager import AuthManager
 
 from constants import APP_NAME
 
 
 class MainWindow(QtWidgets.QMainWindow):
-    def __init__(self, parent: Optional[QtWidgets.QWidget] = None) -> None:
+    def __init__(
+        self,
+        auth_manager: AuthManager,
+        parent: Optional[QtWidgets.QWidget] = None,
+    ) -> None:
         super().__init__(parent)
+        self._auth_manager = auth_manager
         self._init_ui()
 
     def _init_ui(self) -> None:
@@ -20,7 +26,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.setWindowTitle(APP_NAME)
 
-        self.toolbar = Toolbar()
+        self.toolbar = Toolbar(self._auth_manager)
 
         release_label = QtWidgets.QLabel("Release")
         folder_label = QtWidgets.QLabel("Folder")

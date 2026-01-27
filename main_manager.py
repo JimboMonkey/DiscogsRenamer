@@ -2,6 +2,7 @@ from PyQt6 import QtCore, QtWidgets
 
 from app_settings import AppSettings
 from gui.main_window import MainWindow
+from auth_manager import AuthManager
 from gui.filename_list_item import FilenameListItem
 from token_dialog import TokenDialog
 from settings_dialog import SettingsDialog
@@ -20,8 +21,9 @@ class MainManager(QtCore.QObject):
 
     def __init__(self) -> None:
         self._settings = AppSettings()
+        auth_manager = AuthManager()
         # Create the main GUI window
-        self._ui = MainWindow()
+        self._ui = MainWindow(auth_manager)
         token_manager = TokenManager()
         self._discogs_manager = DiscogsManager()
         super(MainManager, self).__init__()

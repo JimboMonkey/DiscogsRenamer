@@ -27,7 +27,9 @@ class TokenDialogGui(QtWidgets.QDialog):
         self._token_label = QtWidgets.QLabel("Token")
         self.token_lineedit = QtWidgets.QLineEdit()
         self.save_button = QtWidgets.QPushButton("Save")
+        self.save_button.setToolTip("Save the token")
         self.close_button = QtWidgets.QPushButton("Close")
+        self.close_button.setToolTip("Close the window")
         self._response_label = QtWidgets.QLabel()
 
         # Initially disable the save button

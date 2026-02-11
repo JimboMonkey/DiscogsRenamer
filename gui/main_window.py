@@ -38,6 +38,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         release_number_label = QtWidgets.QLabel("Discogs Release Number")
         self.load_release_button = QtWidgets.QPushButton("Load Release")
+        self.load_release_button.setToolTip("Load release data from Discogs")
         self.load_release_button.setEnabled(False)
         self.release_lineedit = QtWidgets.QLineEdit()
         self.release_lineedit.setPlaceholderText(
@@ -50,6 +51,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.release_artist_title_label = QtWidgets.QLabel()
 
         self.file_browser_button = QtWidgets.QPushButton("Browse")
+        self.file_browser_button.setToolTip("Browse music folders on this computer")
         self.folder_entry_label = QtWidgets.QLabel()
         self.folder_name_label = QtWidgets.QLabel()
 
@@ -64,9 +66,13 @@ class MainWindow(QtWidgets.QMainWindow):
         )
 
         self.transfer_button = QtWidgets.QPushButton(">>>>")
+        self.transfer_button.setToolTip(
+            "Set new filenames using the loaded Discogs data"
+        )
         self.transfer_button.setEnabled(False)
 
         self.apply_button = QtWidgets.QPushButton("Apply")
+        self.apply_button.setToolTip("Rename the files using the new filenames")
         self.apply_button.setEnabled(False)
 
         self.tick_count = QtWidgets.QLabel()

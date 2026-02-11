@@ -2,6 +2,12 @@ from pathlib import Path
 from pytestqt.qtbot import QtBot
 
 from main_manager import MainManager
+from release_data import ReleaseData
+from track_data import TrackData
+
+from collections import deque
+
+import pytest
 
 
 def test_list_audio_files_in_folder(qtbot: QtBot, tmp_path: Path) -> None:
@@ -52,3 +58,51 @@ def test_rename_files(qtbot: QtBot, tmp_path: Path) -> None:
 
     for original_path in original_paths:
         assert not original_path.exists()
+
+
+@pytest.fixture
+def release_data() -> ReleaseData:
+    return ReleaseData(
+        release_artists="A Tribe Called Test",
+        release_title="Testify",
+    )
+
+
+def test_sanitise_trackdata(qtbot: QtBot, release_data: ReleaseData) -> None:
+    main_manager = MainManager()
+
+    track_data = deque(
+        [
+            TrackData(
+                release=release_data,
+                track_position="1",
+                track_artists='<>:"/\\|?*',
+                track_title='<>:"/\\|?*',
+            )
+        ]
+    )
+
+    INVALID_CHARS_REPLACEMENTS: list[tuple[str, str]] = [
+        ("<", "("),
+        (">", ")"),
+        (":", ""),
+        ('"', ""),
+        ("/", ","),
+        ("\\", ","),
+        ("|", ","),
+        ("?", ""),
+        ("*", ""),
+    ]
+    sanitised_track_data: deque[TrackData] = main_manager._sanitise_trackdata(
+        track_data, INVALID_CHARS_REPLACEMENTS
+    )
+
+    assert isinstance(sanitised_track_data, deque)
+    assert all(isinstance(item, TrackData) for item in sanitised_track_data)
+
+    expected = "(),,,"
+
+    sanitised_track = sanitised_track_data.pop()
+
+    assert sanitised_track.track_artists == expected
+    assert sanitised_track.track_title == expected

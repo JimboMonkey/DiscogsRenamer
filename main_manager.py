@@ -15,6 +15,7 @@ from pathlib import Path
 from os.path import expanduser
 import os
 from functools import partial
+from collections import deque
 
 
 class MainManager(QtCore.QObject):
@@ -143,8 +144,41 @@ class MainManager(QtCore.QObject):
 
     def _transfer_track_names(self):
         format_str = self._settings.get("filename_format")
+        char_replacements = self._settings.get("invalid_char_replacements")
+
         ticked_track_list = self._ui.release_listwidget.list_ticked_tracks()
-        self._ui.folder_listwidget.apply_track_names(ticked_track_list, format_str)
+
+        sanitised_ticked_track_list = self._sanitise_trackdata(
+            ticked_track_list, char_replacements
+        )
+
+        self._ui.folder_listwidget.apply_track_names(
+            sanitised_ticked_track_list, format_str
+        )
+
+    def _sanitise_trackdata(
+        self,
+        track_data: deque[TrackData],
+        INVALID_CHARS_REPLACEMENTS: list[tuple[str, str]],
+    ) -> deque[TrackData]:
+
+        sanitised_track_data: deque[TrackData] = deque()
+
+        sanitised_table = str.maketrans(dict(INVALID_CHARS_REPLACEMENTS))
+
+        for track in track_data:
+            sanitised_track_artists = track.track_artists.translate(sanitised_table)
+            sanitised_track_title = track.track_title.translate(sanitised_table)
+
+            sanitised_track = TrackData(
+                release=track.release,
+                track_position=track.track_position,
+                track_artists=sanitised_track_artists,
+                track_title=sanitised_track_title,
+            )
+
+            sanitised_track_data.append(sanitised_track)
+        return sanitised_track_data
 
     def _apply_new_names(self) -> None:
         list_of_track_renaming_info = (

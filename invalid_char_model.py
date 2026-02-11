@@ -1,11 +1,16 @@
-from PyQt6 import QtCore
+from PyQt6 import QtCore, QtWidgets
 
 from typing import Any
 
 
 class InvalidCharModel(QtCore.QAbstractTableModel):
-    def __init__(self, invalid_chars: list[tuple[str, str]]) -> None:
+    def __init__(
+        self,
+        invalid_chars: list[tuple[str, str]],
+        parent_widget: QtWidgets.QWidget | None = None,
+    ) -> None:
         super().__init__()
+        self.parent_widget = parent_widget
         self._rows = [
             {"character": char, "replacement": default}
             for char, default in invalid_chars
@@ -73,6 +78,29 @@ class InvalidCharModel(QtCore.QAbstractTableModel):
         role: int = QtCore.Qt.ItemDataRole.EditRole,
     ) -> bool:
         if role == QtCore.Qt.ItemDataRole.EditRole and index.column() == 1:
+
+            # Build a list of the invalid characters listed in first column
+            invalid_chars = {row["character"] for row in self._rows}
+
+            # Reject replacement characters which appear in
+            # the first column or which are more than one character long
+            if value in invalid_chars:
+                QtWidgets.QMessageBox.warning(
+                    self.parent_widget,
+                    "Invalid Replacement Character",
+                    "Replacement character cannot be an invalid character",
+                )
+                return False
+
+            # Reject replacement characters which are more than one character long
+            if len(value) > 1:
+                QtWidgets.QMessageBox.warning(
+                    self.parent_widget,
+                    "Invalid Replacement Character",
+                    "Replacement character must be a single character or blank",
+                )
+                return False
+
             self._rows[index.row()]["replacement"] = value
             self.dataChanged.emit(index, index)
             return True

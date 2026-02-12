@@ -34,7 +34,7 @@ class SettingsDialogGui(QtWidgets.QDialog):
 
         self.restore_defaults_button = QtWidgets.QPushButton("Restore Defaults")
         self.restore_defaults_button.setToolTip("Restore default settings")
-        self.close_button = QtWidgets.QPushButton("Save & Close")
+        self.close_button = QtWidgets.QPushButton("Save && Close")
         self.close_button.setToolTip("Save the settings and close the window")
 
         button_layout = QtWidgets.QHBoxLayout()

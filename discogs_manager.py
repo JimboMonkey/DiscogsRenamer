@@ -58,21 +58,22 @@ class DiscogsManager:
         )
         for track in tracklist:
             track_position = str(track.position)
-            track_title = str(track.title)
-            unformatted_track_artists = self.get_track_artists(track)
-            formatted_track_artists = self.format_track_artists(
-                unformatted_track_artists
-            )
+            if track_position:
+                track_title = str(track.title)
+                unformatted_track_artists = self.get_track_artists(track)
+                formatted_track_artists = self.format_track_artists(
+                    unformatted_track_artists
+                )
 
-            track_data = TrackData(
-                release=release_data,
-                track_position=track_position,
-                track_artists=formatted_track_artists,
-                track_title=track_title,
-            )
+                track_data = TrackData(
+                    release=release_data,
+                    track_position=track_position,
+                    track_artists=formatted_track_artists,
+                    track_title=track_title,
+                )
 
-            release_list_item = ReleaseListItem(track_data)
-            artists_and_titles.append(release_list_item)
+                release_list_item = ReleaseListItem(track_data)
+                artists_and_titles.append(release_list_item)
 
         return artists_and_titles
 

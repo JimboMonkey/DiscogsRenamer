@@ -5,6 +5,7 @@ from pathlib import Path
 from gui.toolbar import Toolbar
 from gui.tracklist import Tracklist
 from auth_manager import AuthManager
+from app_settings import AppSettings
 
 from constants import APP_NAME
 
@@ -13,10 +14,12 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(
         self,
         auth_manager: AuthManager,
+        settings: AppSettings,
         parent: Optional[QtWidgets.QWidget] = None,
     ) -> None:
         super().__init__(parent)
         self._auth_manager = auth_manager
+        self._settings = settings
         self._init_ui()
 
     def _init_ui(self) -> None:
@@ -88,8 +91,8 @@ class MainWindow(QtWidgets.QMainWindow):
         folder_entry_layout.addWidget(self.file_browser_button)
         folder_entry_layout.addWidget(self.folder_entry_label)
 
-        self.release_listwidget = Tracklist(editable=False)
-        self.folder_listwidget = Tracklist(editable=True)
+        self.release_listwidget = Tracklist(editable=False, settings=self._settings)
+        self.folder_listwidget = Tracklist(editable=True, settings=self._settings)
 
         release_layout = QtWidgets.QVBoxLayout()
         release_layout.addWidget(release_label)

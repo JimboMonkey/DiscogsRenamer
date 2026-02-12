@@ -38,6 +38,7 @@ class SettingsDialog:
 
     def save_settings(self) -> None:
         self._settings.set("filename_format", self.get_filename_format())
+        self._settings.set("zero_fill_enabled", self._ui.zero_fill_checkbox.isChecked())
         self._settings.set(
             "invalid_char_replacements", self.get_invalid_char_replacements()
         )

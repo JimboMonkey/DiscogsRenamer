@@ -4,6 +4,7 @@ from typing import Optional, Sequence
 from collections import deque
 from pathlib import Path
 
+from app_settings import AppSettings
 from gui.list_item_widget import ListItemWidget
 from gui.filename_list_item import FilenameListItem
 from track_data import TrackData
@@ -16,9 +17,13 @@ class Tracklist(QtWidgets.QListWidget):
     all_ticked_new_filenames_filled = QtCore.pyqtSignal(bool)
 
     def __init__(
-        self, editable: bool, parent: Optional[QtWidgets.QWidget] = None
+        self,
+        editable: bool,
+        settings: AppSettings | None = None,
+        parent: Optional[QtWidgets.QWidget] = None,
     ) -> None:
         self._editable = editable
+        self._settings = settings
         super().__init__(parent)
 
         # Only folder list items should be selectable and draggable
@@ -57,7 +62,9 @@ class Tracklist(QtWidgets.QListWidget):
 
     def _number_and_shade(self):
         number_of_tracks = self.count()
-        zfill_width = len(str(number_of_tracks))
+        zfill_width = (
+            len(str(number_of_tracks)) if self._settings.get("zero_fill_enabled") else 0
+        )
         for index in range(number_of_tracks):
             list_item = self.item(index)
             tracklist_item = self.itemWidget(list_item)

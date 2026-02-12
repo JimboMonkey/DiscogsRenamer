@@ -24,8 +24,8 @@ class SettingsDialogGui(QtWidgets.QDialog):
         )
         self.invalid_char_table = InvalidCharTableView()
 
-        zero_fill_checkbox = QtWidgets.QCheckBox("Zero-fill track numbers")
-        zero_fill_checkbox.setChecked(True)
+        self.zero_fill_checkbox = QtWidgets.QCheckBox("Zero-fill folder track numbers")
+        self.zero_fill_checkbox.setChecked(True)
 
         misnumbering_warning_checkbox = QtWidgets.QCheckBox(
             "Warn about track misnumbering"
@@ -47,7 +47,7 @@ class SettingsDialogGui(QtWidgets.QDialog):
 
         vertical_layout = QtWidgets.QVBoxLayout()
         vertical_layout.addLayout(format_layout)
-        vertical_layout.addWidget(zero_fill_checkbox)
+        vertical_layout.addWidget(self.zero_fill_checkbox)
         vertical_layout.addWidget(misnumbering_warning_checkbox)
         vertical_layout.addWidget(invalid_character_replacement_label)
         vertical_layout.addWidget(self.invalid_char_table)

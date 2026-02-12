@@ -24,7 +24,7 @@ class MainManager(QtCore.QObject):
         self._settings = AppSettings()
         auth_manager = AuthManager()
         # Create the main GUI window
-        self._ui = MainWindow(auth_manager)
+        self._ui = MainWindow(auth_manager, self._settings)
         token_manager = TokenManager()
         self._discogs_manager = DiscogsManager()
         super(MainManager, self).__init__()

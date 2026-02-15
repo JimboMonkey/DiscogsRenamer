@@ -2,6 +2,7 @@ from PyQt6 import QtWidgets, QtCore
 from typing import Optional
 
 from gui.utils import make_filename_validator
+from filename_rules import MAX_FILENAME_LENGTH
 
 
 class ListItemWidget(QtWidgets.QWidget):
@@ -13,6 +14,7 @@ class ListItemWidget(QtWidgets.QWidget):
         # Create the display widgets
         self._original_filename = QtWidgets.QLabel()
         self._new_filename = QtWidgets.QLineEdit()
+        self._new_filename.setMaxLength(MAX_FILENAME_LENGTH)
         self._new_filename.setValidator(make_filename_validator())
         self._checkbox = QtWidgets.QCheckBox()
         self._checkbox.setChecked(True)

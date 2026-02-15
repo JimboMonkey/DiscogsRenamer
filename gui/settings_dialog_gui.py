@@ -1,6 +1,7 @@
 from PyQt6 import QtWidgets
 
 from gui.invalid_char_tableview import InvalidCharTableView
+from filename_rules import MAX_FILENAME_LENGTH
 
 
 class SettingsDialogGui(QtWidgets.QDialog):
@@ -16,6 +17,7 @@ class SettingsDialogGui(QtWidgets.QDialog):
         format_label = QtWidgets.QLabel("Filename format:")
 
         self.format_lineedit = QtWidgets.QLineEdit()
+        self.format_lineedit.setMaxLength(MAX_FILENAME_LENGTH)
         self.format_lineedit.setPlaceholderText("%number - %artist - %title")
         self.format_lineedit.setMinimumWidth(400)
 

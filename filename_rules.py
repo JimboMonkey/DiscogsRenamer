@@ -15,6 +15,8 @@ INVALID_CHARS_REPLACEMENTS = [
     ("*", ""),
 ]
 
+MAX_FILENAME_LENGTH = 255
+
 
 # Return a shallow copy to avoid risk of mutation
 def get_invalid_filename_characters() -> list[tuple[str, str]]:

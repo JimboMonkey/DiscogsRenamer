@@ -9,6 +9,7 @@ from gui.list_item_widget import ListItemWidget
 from gui.filename_list_item import FilenameListItem
 from track_data import TrackData
 from gui.utils import format_filename, extract_file_extension
+from filename_rules import MAX_FILENAME_LENGTH
 
 
 class Tracklist(QtWidgets.QListWidget):
@@ -24,6 +25,7 @@ class Tracklist(QtWidgets.QListWidget):
     ) -> None:
         self._editable = editable
         self._settings = settings
+        self.parent_widget = parent
         super().__init__(parent)
 
         # Only folder list items should be selectable and draggable
@@ -124,6 +126,16 @@ class Tracklist(QtWidgets.QListWidget):
                         tracklist_item.get_original_filename()
                     )
                     full_new_path = new_filename + file_extension
+                    if len(full_new_path) > MAX_FILENAME_LENGTH:
+                        allowed_base_length = MAX_FILENAME_LENGTH - len(file_extension)
+                        truncated_base = new_filename[:allowed_base_length]
+                        full_new_path = truncated_base + file_extension
+                        QtWidgets.QMessageBox.warning(
+                            self.parent_widget,
+                            "Filename too long",
+                            f"The filename for track {index+1} is longer than the \
+                                {MAX_FILENAME_LENGTH} character limit so has been truncated",
+                        )
                     tracklist_item.set_new_filename(full_new_path)
 
     def count_ticks(self) -> None:

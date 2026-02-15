@@ -1,6 +1,9 @@
-import sys
-
-WINDOWS_INVALID_CHARS_REPLACEMENTS = [
+# These are mostly only invalid filename characters on Windows
+# systems, with only the forward slash applying to Unix systems
+# However I've decided to not make the list platform dependent
+# to make smoother cross platform shares of tracks easier and
+# the fact that most characters are rarely used in filenames anyway
+INVALID_CHARS_REPLACEMENTS = [
     ("<", "("),
     (">", ")"),
     (":", ""),
@@ -11,11 +14,5 @@ WINDOWS_INVALID_CHARS_REPLACEMENTS = [
     ("?", ""),
     ("*", ""),
 ]
-UNIX_INVALID_CHARS_REPLACEMENTS = [("/", ",")]
-
-
-def get_platform_invalid_characters() -> list[tuple[str, str]]:
-    if sys.platform.startswith("win"):
-        return WINDOWS_INVALID_CHARS_REPLACEMENTS
-    else:
-        return WINDOWS_INVALID_CHARS_REPLACEMENTS  # UNIX_INVALID_CHARS_REPLACEMENTS
+def get_invalid_filename_characters() -> list[tuple[str, str]]:
+    return INVALID_CHARS_REPLACEMENTS

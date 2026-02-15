@@ -1,7 +1,7 @@
 from settings_protocol import SettingsProtocol
 from gui.settings_dialog_gui import SettingsDialogGui
 
-from filename_rules import get_platform_invalid_characters
+from filename_rules import get_invalid_filename_characters
 from gui.utils import make_filename_validator
 
 
@@ -47,7 +47,7 @@ class SettingsDialog:
 
     def restore_defaults(self) -> None:
         self._ui.format_lineedit.setText("%num - %track_title")
-        self._ui.invalid_char_table.set_data(get_platform_invalid_characters())
+        self._ui.invalid_char_table.set_data(get_invalid_filename_characters())
 
     def load_filename_format(self, store: SettingsProtocol) -> str:
         raw = store.get("filename_format")
@@ -64,6 +64,6 @@ class SettingsDialog:
 
         # No entry → use defaults
         if raw is None:
-            return get_platform_invalid_characters()
+            return get_invalid_filename_characters()
 
         return raw

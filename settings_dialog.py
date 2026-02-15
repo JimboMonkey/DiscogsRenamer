@@ -2,6 +2,7 @@ from settings_protocol import SettingsProtocol
 from gui.settings_dialog_gui import SettingsDialogGui
 
 from filename_rules import get_platform_invalid_characters
+from gui.utils import make_filename_validator
 
 
 class SettingsDialog:
@@ -11,6 +12,7 @@ class SettingsDialog:
         self._settings = settings
         self._ui = SettingsDialogGui()
         self._ui.format_lineedit.setText(self.load_filename_format(settings))
+        self._ui.format_lineedit.setValidator(make_filename_validator())
         self._ui.invalid_char_table.set_data(
             self.load_invalid_char_replacements(settings)
         )

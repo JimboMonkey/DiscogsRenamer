@@ -2,7 +2,6 @@ import pytest
 from pytestqt.qtbot import QtBot
 from gui.tracklist import Tracklist
 from collections import deque
-from pathlib import Path
 from typing import Callable
 
 from app_settings import AppSettings

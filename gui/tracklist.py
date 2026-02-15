@@ -4,7 +4,7 @@ from typing import Optional, Sequence
 from collections import deque
 from pathlib import Path
 
-from app_settings import AppSettings
+from settings_protocol import SettingsProtocol
 from gui.list_item_widget import ListItemWidget
 from gui.filename_list_item import FilenameListItem
 from track_data import TrackData
@@ -19,7 +19,7 @@ class Tracklist(QtWidgets.QListWidget):
     def __init__(
         self,
         editable: bool,
-        settings: AppSettings | None = None,
+        settings: SettingsProtocol | None = None,
         parent: Optional[QtWidgets.QWidget] = None,
     ) -> None:
         self._editable = editable

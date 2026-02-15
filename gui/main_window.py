@@ -5,7 +5,7 @@ from pathlib import Path
 from gui.toolbar import Toolbar
 from gui.tracklist import Tracklist
 from auth_manager import AuthManager
-from app_settings import AppSettings
+from settings_protocol import SettingsProtocol
 
 from constants import APP_NAME
 
@@ -14,7 +14,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(
         self,
         auth_manager: AuthManager,
-        settings: AppSettings,
+        settings: SettingsProtocol,
         parent: Optional[QtWidgets.QWidget] = None,
     ) -> None:
         super().__init__(parent)

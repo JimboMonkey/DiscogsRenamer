@@ -4,6 +4,8 @@ from pytestqt.qtbot import QtBot
 from collections import deque
 from pathlib import Path
 
+from app_settings import AppSettings
+from settings_protocol import SettingsProtocol
 from release_data import ReleaseData
 from track_data import TrackData
 from auth_manager import AuthManager
@@ -14,13 +16,22 @@ import pytest
 
 
 @pytest.fixture
+def app_settings() -> SettingsProtocol:
+    return AppSettings()
+
+
+@pytest.fixture
 def auth_manager() -> AuthManager:
     return AuthManager()
 
 
 @pytest.fixture
-def main_window(qtbot: QtBot, auth_manager: AuthManager) -> MainWindow:
-    window = MainWindow(auth_manager)
+def main_window(
+    qtbot: QtBot,
+    auth_manager: AuthManager,
+    app_settings: SettingsProtocol,
+) -> MainWindow:
+    window = MainWindow(auth_manager, app_settings)
     qtbot.add_widget(window)
     return window
 

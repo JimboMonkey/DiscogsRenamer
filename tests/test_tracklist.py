@@ -5,10 +5,17 @@ from collections import deque
 from pathlib import Path
 from typing import Callable
 
+from app_settings import AppSettings
+from settings_protocol import SettingsProtocol
 from gui.filename_list_item import FilenameListItem
 from gui.release_list_item import ReleaseListItem
 from track_data import TrackData
 from release_data import ReleaseData
+
+
+@pytest.fixture
+def app_settings() -> SettingsProtocol:
+    return AppSettings()
 
 
 @pytest.fixture
@@ -62,14 +69,15 @@ def test_check_all_new_filenames_filled(
     titles: list[str],
     ticked_items: list[bool],
     expected_response: bool,
+    app_settings: SettingsProtocol,
 ):
     new_filename_test_inputs = make_new_filename_inputs(titles)
 
     # ticked_tracks: deque[TrackData] = deque()
     # ticked_tracks.append(self.item(index).track_data)
 
-    release_tracklist = Tracklist(editable=False)
-    tracklist = Tracklist(editable=True)
+    release_tracklist = Tracklist(editable=False, settings=app_settings)
+    tracklist = Tracklist(editable=True, settings=app_settings)
 
     test_tracklist = [
         FilenameListItem("firsttrack"),

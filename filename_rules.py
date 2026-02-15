@@ -14,5 +14,8 @@ INVALID_CHARS_REPLACEMENTS = [
     ("?", ""),
     ("*", ""),
 ]
+
+
+# Return a shallow copy to avoid risk of mutation
 def get_invalid_filename_characters() -> list[tuple[str, str]]:
-    return INVALID_CHARS_REPLACEMENTS
+    return list(INVALID_CHARS_REPLACEMENTS)

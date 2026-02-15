@@ -2,7 +2,7 @@ from PyQt6 import QtCore, QtGui
 from dataclasses import is_dataclass, asdict
 import os
 
-from filename_rules import WINDOWS_INVALID_CHARS_REPLACEMENTS
+from filename_rules import get_invalid_filename_characters
 from track_data import TrackData
 
 
@@ -37,9 +37,10 @@ def extract_file_extension(file_path: str) -> str:
 
 
 def make_filename_validator():
+    invalid_characters_list = get_invalid_filename_characters()
     invalid_characters = "".join(
         QtCore.QRegularExpression.escape(character)
-        for character, _ in WINDOWS_INVALID_CHARS_REPLACEMENTS
+        for character, _ in invalid_characters_list
     )
     regex = QtCore.QRegularExpression(f"[^{invalid_characters}]*")
     return QtGui.QRegularExpressionValidator(regex)

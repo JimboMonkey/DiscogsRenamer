@@ -1,4 +1,5 @@
 from discogs_client import Client, Release, Track, Artist
+from discogs_client.exceptions import HTTPError, AuthorizationError
 
 from token_manager import TokenManager
 from gui.release_list_item import ReleaseListItem
@@ -16,12 +17,19 @@ class DiscogsManager:
             print("No token found. Please set a valid token.")
 
     def get_release(self, release_id: int) -> Release | None:
+        release = None
         try:
             release = self._client.release(release_id)
-            return release
-        except Exception as e:
-            print(f"Failed to fetch release {release_id}: {e}")
+            # A Release object is always returned even if empty
+            # To capture a failed fetch, the exception needs to
+            # be forced by calling for non-existent data
+            _ = release.title
+        except AuthorizationError:
+            # Subclass of HTTPError, so must be handled first
             return None
+        except HTTPError:
+            return None
+        return release
 
     def get_release_artists(self, release: Release) -> str:
         return release.artists_sort

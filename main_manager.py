@@ -83,6 +83,10 @@ class MainManager(QtCore.QObject):
             )
             self._ui.update_release_artist_title_label(artist, title)
             self._ui.release_listwidget.populate(track_data_list)
+        else:
+            self._ui.release_listwidget.set_tracklist_label(
+                f"Failed to fetch release {release_id} \n Check the code is correct"
+            )
 
     # Open Folder dialog and return the selected path
     def _open_dialog(self) -> str:

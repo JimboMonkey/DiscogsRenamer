@@ -31,15 +31,57 @@ class Tracklist(QtWidgets.QListWidget):
         # Only folder list items should be selectable and draggable
         if self._editable:
             self.setDragDropMode(QtWidgets.QListWidget.DragDropMode.InternalMove)
+            initial_label_text = "Select a folder of audio files"
         else:
             self.setSelectionMode(QtWidgets.QAbstractItemView.SelectionMode.NoSelection)
             self.setFocusPolicy(QtCore.Qt.FocusPolicy.NoFocus)
+            initial_label_text = "Specify a Discogs release number"
+
+        # Label to display list state messages
+        self._tracklist_label = QtWidgets.QLabel(initial_label_text)
+        self._tracklist_label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self._tracklist_label.setStyleSheet("color: #888;")
+        self._tracklist_label.setAttribute(
+            QtCore.Qt.WidgetAttribute.WA_TransparentForMouseEvents
+        )
+        # Set parent to viewport so it sits inside the scroll area
+        self._tracklist_label.setParent(self.viewport())
+        self.viewport().installEventFilter(self)
 
         self.model().rowsMoved.connect(self._number_and_shade)
+        # Set label visibility when list content changes
+        self.model().rowsInserted.connect(self.set_label_visibility)
+        self.model().rowsRemoved.connect(self.set_label_visibility)
+        self.model().modelReset.connect(self.set_label_visibility)
+
+    # Keep label sized correctly
+    def eventFilter(self, object: QtCore.QObject | None, event: QtCore.QEvent | None):
+        if object is self.viewport() and event.type() == QtCore.QEvent.Type.Resize:
+            self._tracklist_label.resize(self.viewport().size())
+
+            # Scale font based on height
+            font = self._tracklist_label.font()
+            font.setPixelSize(max(10, self._tracklist_label.height() // 25))
+            self._tracklist_label.setFont(font)
+
+            # Event wasn't consumed
+            return False
+
+        return super().eventFilter(object, event)
+
+    # Set label visibility when list content changes
+    def set_label_visibility(self):
+        self._tracklist_label.setVisible(self.count() == 0)
 
     def populate(self, item_list: Sequence[QtWidgets.QListWidgetItem]) -> None:
         # Clear any existing items from the list
         self.clear()
+
+        if not item_list:
+            if self._editable:
+                self._tracklist_label.setText("Selected folder contains no audio files")
+            else:
+                self._tracklist_label.setText("Failed to fetch release")
 
         # For each track name in the list...
         for item in item_list:
@@ -61,6 +103,9 @@ class Tracklist(QtWidgets.QListWidget):
         # Update the track numbers and shading
         self._number_and_shade()
         self.count_ticks()
+
+    def set_tracklist_label(self, label_text: str) -> None:
+        self._tracklist_label.setText(label_text)
 
     def _number_and_shade(self):
         number_of_tracks = self.count()

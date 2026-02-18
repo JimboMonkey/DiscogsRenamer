@@ -1,7 +1,6 @@
 from settings_protocol import SettingsProtocol
 from gui.settings_dialog_gui import SettingsDialogGui
 
-from filename_rules import get_invalid_filename_characters
 from gui.utils import make_filename_validator
 from app_settings import DEFAULT_SETTINGS
 
@@ -26,19 +25,12 @@ class SettingsDialog:
         self._ui.restore_defaults_button.clicked.connect(self.restore_defaults)
         self._ui.close_button.clicked.connect(self._ui.close_dialog)
         self._ui.close_button.clicked.connect(self.save_settings)
-        self._ui.close_button.clicked.connect(self.get_invalid_char_replacements)
-
-    def set_filename_format(self) -> None:
-        self._ui.format_lineedit.setText(self._settings.get("filename_format"))
-
-    def get_filename_format(self) -> str:
-        return self._ui.format_lineedit.text()
 
     def get_invalid_char_replacements(self) -> list[tuple[str, str]]:
         return self._ui.invalid_char_table.model().get_data()
 
     def save_settings(self) -> None:
-        self._settings.set("filename_format", self.get_filename_format())
+        self._settings.set("filename_format", self._ui.format_lineedit.text())
         self._settings.set("zero_fill_enabled", self._ui.zero_fill_checkbox.isChecked())
         self._settings.set(
             "invalid_char_replacements", self.get_invalid_char_replacements()

@@ -1,13 +1,13 @@
+from PyQt6 import QtWidgets
 from pathlib import Path
 from pytestqt.qtbot import QtBot
+from pytest import MonkeyPatch, fixture
 
 from main_manager import MainManager
 from release_data import ReleaseData
 from track_data import TrackData
 
 from collections import deque
-
-import pytest
 
 
 def test_list_audio_files_in_folder(qtbot: QtBot, tmp_path: Path) -> None:
@@ -26,7 +26,13 @@ def test_list_audio_files_in_folder(qtbot: QtBot, tmp_path: Path) -> None:
     ]
 
 
-def test_rename_files(qtbot: QtBot, tmp_path: Path) -> None:
+def test_rename_files(monkeypatch: MonkeyPatch, qtbot: QtBot, tmp_path: Path) -> None:
+
+    # Create dummy QMessageBox which simulates an OK click
+    def dummy_qmessagebox(*args: object, **kwargs: object):
+        return QtWidgets.QMessageBox.StandardButton.Ok
+
+    monkeypatch.setattr(QtWidgets.QMessageBox, "information", dummy_qmessagebox)
 
     main_manager = MainManager()
     main_window = main_manager._ui
@@ -58,7 +64,7 @@ def test_rename_files(qtbot: QtBot, tmp_path: Path) -> None:
         assert not original_path.exists()
 
 
-@pytest.fixture
+@fixture
 def release_data() -> ReleaseData:
     return ReleaseData(
         release_artists="A Tribe Called Test",

@@ -35,12 +35,15 @@ class SettingsDialogGui(QtWidgets.QDialog):
         )
         misnumbering_warning_checkbox.setChecked(True)
 
+        self.cancel_button = QtWidgets.QPushButton("Cancel")
+        self.cancel_button.setToolTip("Close the window")
         self.restore_defaults_button = QtWidgets.QPushButton("Restore Defaults")
         self.restore_defaults_button.setToolTip("Restore default settings")
         self.close_button = QtWidgets.QPushButton("Save && Close")
         self.close_button.setToolTip("Save the settings and close the window")
 
         button_layout = QtWidgets.QHBoxLayout()
+        button_layout.addWidget(self.cancel_button)
         button_layout.addWidget(self.restore_defaults_button)
         button_layout.addWidget(self.close_button)
 

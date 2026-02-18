@@ -25,6 +25,7 @@ class SettingsDialog:
 
     # Link GUI widgets to the functions
     def _init_connections(self) -> None:
+        self._ui.cancel_button.clicked.connect(self._ui.close_dialog)
         self._ui.restore_defaults_button.clicked.connect(self.restore_defaults)
         self._ui.close_button.clicked.connect(self._ui.close_dialog)
         self._ui.close_button.clicked.connect(self.save_settings)

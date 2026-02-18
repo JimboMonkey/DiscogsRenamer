@@ -12,11 +12,8 @@ class SettingsDialog:
 
         self._settings = settings
         self._ui = SettingsDialogGui()
-        self._ui.format_lineedit.setText(self.load_filename_format(settings))
         self._ui.format_lineedit.setValidator(make_filename_validator())
-        self._ui.invalid_char_table.set_data(
-            self.load_invalid_char_replacements(settings)
-        )
+        self._set_gui_values()
 
         self._init_connections()
 
@@ -54,21 +51,9 @@ class SettingsDialog:
             DEFAULT_SETTINGS["invalid_char_replacements"]
         )
 
-    def load_filename_format(self, store: SettingsProtocol) -> str:
-        raw = store.get("filename_format")
-
-        # No entry → use defaults
-        if raw is None:
-            return "%num - %track_title"
-        return raw
-
-    def load_invalid_char_replacements(
-        self, store: SettingsProtocol
-    ) -> list[tuple[str, str]]:
-        raw = store.get("invalid_char_replacements")
-
-        # No entry → use defaults
-        if raw is None:
-            return get_invalid_filename_characters()
-
-        return raw
+    def _set_gui_values(self) -> None:
+        self._ui.format_lineedit.setText(self._settings.get("filename_format"))
+        self._ui.zero_fill_checkbox.setChecked(self._settings.get("zero_fill_enabled"))
+        self._ui.invalid_char_table.set_data(
+            self._settings.get("invalid_char_replacements")
+        )

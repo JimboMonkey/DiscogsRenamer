@@ -2,6 +2,7 @@ from pytestqt.qtbot import QtBot
 from typing import Any
 
 from settings_dialog import SettingsDialog
+from app_settings import DEFAULT_SETTINGS
 
 
 def test_get_filename_format(qtbot: QtBot) -> None:
@@ -19,13 +20,21 @@ def test_get_filename_format(qtbot: QtBot) -> None:
 
 class FakeSettings:
     def __init__(self):
-        self.store = {}
+        self._store = {}
 
     def get(self, key: str):
-        return self.store.get(key)
+        default = DEFAULT_SETTINGS.get(key)
+
+        # If the default is a bool, enforce boolean type
+        if isinstance(default, bool):
+            value = self._store.get(key, default)
+            return bool(value)
+
+        # Everything else: return stored or default
+        return self._store.get(key, default)
 
     def set(self, key: str, value: Any):
-        self.store[key] = value
+        self._store[key] = value
 
 
 def test_get_invalid_char_replacements(qtbot: QtBot) -> None:

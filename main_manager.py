@@ -10,6 +10,7 @@ from gui.about_messagebox import AboutMessageBox
 from token_manager import TokenManager
 from discogs_manager import DiscogsManager
 from auth_data_class import AuthenticationResult
+from track_data import TrackData
 
 from pathlib import Path
 from os.path import expanduser

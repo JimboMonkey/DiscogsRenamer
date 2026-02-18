@@ -16,17 +16,19 @@ from os.path import expanduser
 import os
 from functools import partial
 from collections import deque
+from typing import Optional
 
 
 class MainManager(QtCore.QObject):
 
-    def __init__(self) -> None:
+    def __init__(self, parent: Optional[QtWidgets.QWidget] = None) -> None:
         self._settings = AppSettings()
         auth_manager = AuthManager()
         # Create the main GUI window
         self._ui = MainWindow(auth_manager, self._settings)
         token_manager = TokenManager()
         self._discogs_manager = DiscogsManager()
+        self.parent_widget = parent
         super(MainManager, self).__init__()
 
         # Connect signals and slots
@@ -212,3 +214,8 @@ class MainManager(QtCore.QObject):
                     full_original_file_path,
                     full_new_file_path.with_suffix(file_extension),
                 )
+            QtWidgets.QMessageBox.information(
+                self.parent_widget,
+                "Rename Complete",
+                f"Files of {folder_path} renamed successfully",
+            )

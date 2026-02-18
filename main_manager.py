@@ -219,3 +219,4 @@ class MainManager(QtCore.QObject):
                 "Rename Complete",
                 f"Files of {folder_path} renamed successfully",
             )
+            self._read_folder_contents(folder_path)

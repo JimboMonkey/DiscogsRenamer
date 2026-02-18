@@ -199,17 +199,15 @@ class MainManager(QtCore.QObject):
 
         if folder_path:
             for file_info in list_of_file_renaming_info:
-                track_number = file_info[0]
                 original_filename = file_info[1]
                 new_filename = file_info[2]
                 full_original_file_path = folder_path / original_filename
                 _, file_extension = os.path.splitext(full_original_file_path)
-                full_prefix = Path(track_number + " - " + str(new_filename))
+                full_prefix = Path(str(new_filename))
 
                 full_new_file_path = folder_path / full_prefix.with_suffix(
                     file_extension
                 )
-                print(full_original_file_path, full_new_file_path)
                 os.rename(
                     full_original_file_path,
                     full_new_file_path.with_suffix(file_extension),

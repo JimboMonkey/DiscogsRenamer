@@ -43,9 +43,7 @@ def test_rename_files(qtbot: QtBot, tmp_path: Path) -> None:
     original_paths = [tmp_path / info[1] for info in file_renaming_info]
 
     # Create Path objects for new file names
-    new_paths = [
-        tmp_path / Path(info[0] + " - " + info[2].name) for info in file_renaming_info
-    ]
+    new_paths = [tmp_path / Path(info[2].name) for info in file_renaming_info]
 
     # Create dummy files in tmp_path
     for pair in file_renaming_info:

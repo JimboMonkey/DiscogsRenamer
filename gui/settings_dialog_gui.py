@@ -22,6 +22,17 @@ class SettingsDialogGui(QtWidgets.QDialog):
         self.format_lineedit.setPlaceholderText(DEFAULT_SETTINGS["filename_format"])
         self.format_lineedit.setMinimumWidth(400)
 
+        format_specifier_list_label = QtWidgets.QLabel(
+            "<table>"
+            "<tr><td style='padding-right: 20px;'><strong>%ra</strong></td><td>Release artist</td></tr>"
+            "<tr><td style='padding-right: 20px;'><strong>%rt</strong></td><td>Release title</td></tr>"
+            "<tr><td style='padding-right: 20px;'><strong>%rn</strong></td><td>Release track number</td></tr>"
+            "<tr><td style='padding-right: 20px;'><strong>%ta</strong></td><td>Track artist</td></tr>"
+            "<tr><td style='padding-right: 20px;'><strong>%tt</strong></td><td>Track title</td></tr>"
+            "<tr><td style='padding-right: 20px;'><strong>%fn</strong></td><td>Folder track number</td></tr>"
+            "</table>"
+        )
+
         invalid_character_replacement_label = QtWidgets.QLabel(
             "Invalid Filename Character Replacements:"
         )
@@ -47,12 +58,13 @@ class SettingsDialogGui(QtWidgets.QDialog):
         button_layout.addWidget(self.restore_defaults_button)
         button_layout.addWidget(self.close_button)
 
-        format_layout = QtWidgets.QHBoxLayout()
-        format_layout.addWidget(format_label)
-        format_layout.addWidget(self.format_lineedit)
+        filename_format_layout = QtWidgets.QGridLayout()
+        filename_format_layout.addWidget(format_label, 0, 0)
+        filename_format_layout.addWidget(self.format_lineedit, 0, 1)
+        filename_format_layout.addWidget(format_specifier_list_label, 1, 1)
 
         vertical_layout = QtWidgets.QVBoxLayout()
-        vertical_layout.addLayout(format_layout)
+        vertical_layout.addLayout(filename_format_layout)
         vertical_layout.addWidget(self.zero_fill_checkbox)
         vertical_layout.addWidget(misnumbering_warning_checkbox)
         vertical_layout.addWidget(invalid_character_replacement_label)

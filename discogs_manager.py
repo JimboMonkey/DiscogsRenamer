@@ -33,8 +33,8 @@ class DiscogsManager:
             return None
         return release
 
-    def get_release_artists(self, release: Release) -> str:
-        return release.artists_sort
+    def get_release_artists(self, release: Release) -> list[Artist]:
+        return list(release.artists)
 
     def get_release_title(self, release: Release) -> str:
         return release.title
@@ -48,21 +48,28 @@ class DiscogsManager:
     def remove_artist_numerical_suffix(self, track_artists: str) -> str:
         return re.sub(r"\s*\(\d+\)", "", track_artists)
 
+    def format_artists(self, track_artists: list[Artist]) -> str:
         track_artists_parts: list[str] = []
         for artist in track_artists:
+            artist_without_suffix = self.remove_artist_numerical_suffix(
+                str(artist.name)
+            )
             # Include join only if it's non-empty
             if artist.join:
-                track_artists_parts.append(f"{artist.name} {artist.join}")
+                track_artists_parts.append(f"{artist_without_suffix} {artist.join}")
             else:
-                track_artists_parts.append(f"{artist.name}")
+                track_artists_parts.append(f"{artist_without_suffix}")
         return " ".join(track_artists_parts)
 
     def get_track_artists_and_titles(
         self, release: Release, tracklist: list[Track]
     ) -> list[ReleaseListItem]:
         artists_and_titles: list[ReleaseListItem] = []
+        unformatted_release_artists = self.get_release_artists(release)
+        formatted_release_artists = self.format_artists(unformatted_release_artists)
+
         release_data = ReleaseData(
-            release_artists=self.get_release_artists(release),
+            release_artists=formatted_release_artists,
             release_title=self.get_release_title(release),
         )
         for track in tracklist:
@@ -70,9 +77,9 @@ class DiscogsManager:
             if track_position:
                 track_title = str(track.title)
                 unformatted_track_artists = self.get_track_artists(track)
-                formatted_track_artists = self.format_track_artists(
-                    unformatted_track_artists
-                )
+                formatted_track_artists = self.format_artists(unformatted_track_artists)
+                if not formatted_track_artists:
+                    formatted_track_artists = release_data.release_artists
 
                 track_data = TrackData(
                     release=release_data,
@@ -85,8 +92,3 @@ class DiscogsManager:
                 artists_and_titles.append(release_list_item)
 
         return artists_and_titles
-
-# release
-# <Release 654888 'Illclectica'>
-# [<Track '1' 'Hole In The Sky'>, <Track '2' 'Scars'>, <Track '3' 'Light Shower'>, <Track '4' "Nicola's Song">, <Track '5' 'Dream Keepa'>, <Track '6' 'Kaos'>, <Track '7' 'No No'>, <Track '8' 'Maybe'>, <Track '9' 'Pacify'>, <Track '10' 'Unsticking'>, <Track '11' 'Tongue Kung Fu'>, <Track '12' 'Wan, Chu'>]
-# [<Artist 23863 'Roger Robinson'>]

@@ -78,13 +78,18 @@ class MainManager(QtCore.QObject):
         if release_id:
             release = self._discogs_manager.get_release(release_id)
         if release is not None:
-            artist = self._discogs_manager.get_release_artists(release)
+            unformatted_release_artists = self._discogs_manager.get_release_artists(
+                release
+            )
+            formatted_release_artists = self._discogs_manager.format_artists(
+                unformatted_release_artists
+            )
             title = self._discogs_manager.get_release_title(release)
             tracklist = self._discogs_manager.get_tracklist(release)
             track_data_list = self._discogs_manager.get_track_artists_and_titles(
                 release, tracklist
             )
-            self._ui.update_release_artist_title_label(artist, title)
+            self._ui.update_release_artist_title_label(formatted_release_artists, title)
             self._ui.release_listwidget.populate(track_data_list)
         else:
             self._ui.release_listwidget.set_tracklist_label(

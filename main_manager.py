@@ -122,6 +122,7 @@ class MainManager(QtCore.QObject):
         self._ui.update_folder_name_label(folder_path.name)
         file_list = self._list_audio_files_in_folder(folder_path)
         self._ui.folder_listwidget.populate(file_list)
+        self._ui.apply_button_enabled(False)
 
     # Return a sorted list of audio files in a folder
     def _list_audio_files_in_folder(self, folder_path: Path) -> list[FilenameListItem]:

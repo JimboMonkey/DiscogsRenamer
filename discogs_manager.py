@@ -6,6 +6,8 @@ from gui.release_list_item import ReleaseListItem
 from release_data import ReleaseData
 from track_data import TrackData
 
+import re
+
 
 class DiscogsManager:
     def __init__(self):
@@ -43,7 +45,9 @@ class DiscogsManager:
     def get_track_artists(self, track: Track) -> list[Artist]:
         return list(track.artists)
 
-    def format_track_artists(self, track_artists: list[Artist]) -> str:
+    def remove_artist_numerical_suffix(self, track_artists: str) -> str:
+        return re.sub(r"\s*\(\d+\)", "", track_artists)
+
         track_artists_parts: list[str] = []
         for artist in track_artists:
             # Include join only if it's non-empty

@@ -53,7 +53,7 @@ def test_get_tracklist(mock_discogs_release: Release) -> None:
 def test_get_release_artists(mock_discogs_release: Release) -> None:
     discogs_manager = DiscogsManager()
     artists = discogs_manager.get_release_artists(mock_discogs_release)
-    assert artists == "DJ Mock"
+    assert artists == ["DJ Mock"]
 
 
 def test_get_release_title(mock_discogs_release: Release) -> None:

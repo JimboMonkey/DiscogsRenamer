@@ -95,7 +95,7 @@ def test_check_all_new_filenames_filled(
 
     ticked_track_list = release_tracklist.list_ticked_tracks()
 
-    tracklist.apply_track_names(ticked_track_list, "%title")
+    tracklist.apply_track_names(ticked_track_list, "%tt")
 
     # qtbot provides a SignalBlocker to capture emissions
     with qtbot.waitSignal(

@@ -85,6 +85,7 @@ class MainWindow(QtWidgets.QMainWindow):
         middle_layout.addStretch(1)
         middle_layout.addWidget(self.transfer_button)
         middle_layout.addWidget(self.tick_count)
+        middle_layout.addWidget(self.apply_button)
         middle_layout.addStretch(1)
 
         folder_entry_layout = QtWidgets.QHBoxLayout()
@@ -114,9 +115,6 @@ class MainWindow(QtWidgets.QMainWindow):
         vertical_layout = QtWidgets.QVBoxLayout()
         vertical_layout.addWidget(self.toolbar)
         vertical_layout.addLayout(listwidget_layout)
-        vertical_layout.addWidget(
-            self.apply_button, alignment=QtCore.Qt.AlignmentFlag.AlignRight
-        )
 
         # Set the listwidget layout as the layout for the window
         central_widget = QtWidgets.QWidget(self)

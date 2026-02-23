@@ -31,8 +31,18 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.toolbar = Toolbar(self._auth_manager)
 
-        release_label = QtWidgets.QLabel("Release")
-        folder_label = QtWidgets.QLabel("Folder")
+        heading_font = QtGui.QFont()
+        heading_font.setPointSize(16)
+        heading_font.setBold(True)
+
+        display_font = QtGui.QFont()
+        display_font.setPointSize(12)
+
+        release_label = QtWidgets.QLabel("Discogs Release")
+        folder_label = QtWidgets.QLabel("Local Folder")
+
+        release_label.setFont(heading_font)
+        folder_label.setFont(heading_font)
 
         # Only allow release to be specified in form [r12345], r12345, or 12345
         regex = QtCore.QRegularExpression(r"(?:^[1-9]\d*$|^r[1-9]\d*$|^\[r[1-9]\d*\]$)")
@@ -66,11 +76,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.release_lineedit.textChanged.connect(self.load_release_button_enabled)
 
         self.release_artist_title_label = QtWidgets.QLabel()
+        self.release_artist_title_label.setFont(display_font)
 
         self.file_browser_button = QtWidgets.QPushButton("Browse")
         self.file_browser_button.setToolTip("Browse music folders on this computer")
         self.folder_entry_label = QtWidgets.QLabel()
         self.folder_name_label = QtWidgets.QLabel()
+        self.folder_name_label.setFont(display_font)
 
         release_entry_layout = QtWidgets.QHBoxLayout()
         release_entry_layout.addWidget(release_number_label)

@@ -29,9 +29,9 @@ class InvalidCharModel(QtCore.QAbstractTableModel):
             and orientation == QtCore.Qt.Orientation.Horizontal
         ):
             if section == 0:
-                return "Invalid Character"
+                return "Invalid Filename Character"
             if section == 1:
-                return "Replacement"
+                return "Replacement Character"
         return None
 
     # Required implementation of abstract method

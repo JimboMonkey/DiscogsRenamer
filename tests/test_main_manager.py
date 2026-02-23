@@ -29,7 +29,9 @@ def test_list_audio_files_in_folder(qtbot: QtBot, tmp_path: Path) -> None:
 def test_rename_files(monkeypatch: MonkeyPatch, qtbot: QtBot, tmp_path: Path) -> None:
 
     # Create dummy QMessageBox which simulates an OK click
-    def dummy_qmessagebox(*args: object, **kwargs: object):
+    def dummy_qmessagebox(
+        *args: object, **kwargs: object
+    ) -> QtWidgets.QMessageBox.StandardButton:
         return QtWidgets.QMessageBox.StandardButton.Ok
 
     monkeypatch.setattr(QtWidgets.QMessageBox, "information", dummy_qmessagebox)

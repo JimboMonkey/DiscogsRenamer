@@ -36,7 +36,7 @@ def extract_file_extension(file_path: str) -> str:
     return file_extension.lower()
 
 
-def make_filename_validator():
+def make_filename_validator() -> QtGui.QRegularExpressionValidator:
     invalid_characters_list = get_invalid_filename_characters()
     invalid_characters = "".join(
         QtCore.QRegularExpression.escape(character)

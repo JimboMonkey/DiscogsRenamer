@@ -11,6 +11,6 @@ import pytest
         ("/test/dir/test_README", ""),
     ],
 )
-def test_extract_file_extension(test_path: str, expected_response: str):
+def test_extract_file_extension(test_path: str, expected_response: str) -> None:
     file_extension = extract_file_extension(test_path)
     assert file_extension == expected_response

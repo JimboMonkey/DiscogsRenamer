@@ -13,7 +13,7 @@ def auth_manager() -> AuthManager:
     return AuthManager()
 
 
-def test_set_user_authenticated_icon(qtbot: QtBot, auth_manager: AuthManager):
+def test_set_user_authenticated_icon(qtbot: QtBot, auth_manager: AuthManager) -> None:
     toolbar = Toolbar(auth_manager)
     qtbot.addWidget(toolbar)
 

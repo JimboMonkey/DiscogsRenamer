@@ -58,7 +58,7 @@ def test_token_lineedit_rejects_non_alphanumeric_input(
 
 
 # Ensure save button is only enabled when text is entered
-def test_save_button_enabled_by_text(qtbot: QtBot):
+def test_save_button_enabled_by_text(qtbot: QtBot) -> None:
     dialog = TokenDialogGui()
     qtbot.addWidget(dialog)
 

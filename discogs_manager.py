@@ -10,7 +10,7 @@ import re
 
 
 class DiscogsManager:
-    def __init__(self):
+    def __init__(self) -> None:
         token_manager = TokenManager()
         token = token_manager.load_token()
         if token:

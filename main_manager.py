@@ -155,7 +155,7 @@ class MainManager(QtCore.QObject):
     def open_about_messagebox(self) -> None:
         _messagebox = AboutMessageBox()
 
-    def _transfer_track_names(self):
+    def _transfer_track_names(self) -> None:
         format_str = self._settings.get("filename_format")
         char_replacements = self._settings.get("invalid_char_replacements")
 

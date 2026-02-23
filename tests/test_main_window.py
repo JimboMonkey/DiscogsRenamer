@@ -104,7 +104,7 @@ def test_release_lineedit_rejects_invalid_inputs(
 
 
 # Ensure load release button is only enabled when valid text is entered
-def test_load_release_button_enabled_by_text(main_window: MainWindow):
+def test_load_release_button_enabled_by_text(main_window: MainWindow) -> None:
 
     line_edit = main_window.release_lineedit
     button = main_window.load_release_button

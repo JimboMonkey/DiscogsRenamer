@@ -3,12 +3,13 @@ from unittest.mock import patch
 from discogs_manager import DiscogsManager
 from discogs_client import Release, Track, Client
 from discogs_client.exceptions import HTTPError
+from collections.abc import Generator
 
 
 # DiscogsManager won't attempt to make a client if
 # there is no token, so patch a mock_token to every test
 @pytest.fixture(autouse=True)
-def patch_load_token():
+def patch_load_token() -> Generator[None, None, None]:
     with patch("discogs_manager.TokenManager.load_token", return_value="mock_token"):
         yield
 

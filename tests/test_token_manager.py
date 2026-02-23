@@ -14,7 +14,7 @@ def token_manager() -> TokenManager:
     return TokenManager()
 
 
-def _delete_test_token():
+def _delete_test_token() -> None:
     try:
         keyring.delete_password(APP_NAME, TOKEN_KEY)
     except PasswordDeleteError:
@@ -35,7 +35,7 @@ def test_load_token_returns_correct_value(
     assert token_manager.load_token() == set_test_token_for_load
 
 
-def test_load_token_returns_none_if_missing(token_manager: TokenManager):
+def test_load_token_returns_none_if_missing(token_manager: TokenManager) -> None:
     _delete_test_token()
     assert token_manager.load_token() is None
 

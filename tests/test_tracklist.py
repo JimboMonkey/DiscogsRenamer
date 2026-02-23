@@ -26,8 +26,10 @@ def release_data() -> ReleaseData:
 
 
 @pytest.fixture
-def make_new_filename_inputs(release_data: ReleaseData):
-    def _make(titles: list[str]):
+def make_new_filename_inputs(
+    release_data: ReleaseData,
+) -> Callable[[list[str]], deque[ReleaseListItem]]:
+    def _make(titles: list[str]) -> deque[ReleaseListItem]:
         items = []
         for i, title in enumerate(titles, start=1):
             items.append(

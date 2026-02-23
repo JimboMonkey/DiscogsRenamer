@@ -6,10 +6,10 @@ from app_settings import DEFAULT_SETTINGS
 
 
 class FakeSettings:
-    def __init__(self):
+    def __init__(self) -> None:
         self._store = {}
 
-    def get(self, key: str):
+    def get(self, key: str) -> str | bool | list[tuple[str, str]]:
         default = DEFAULT_SETTINGS.get(key)
 
         # If the default is a bool, enforce boolean type
@@ -20,7 +20,7 @@ class FakeSettings:
         # Everything else: return stored or default
         return self._store.get(key, default)
 
-    def set(self, key: str, value: Any):
+    def set(self, key: str, value: Any) -> None:
         self._store[key] = value
 
 

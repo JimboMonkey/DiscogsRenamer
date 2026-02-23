@@ -36,7 +36,7 @@ class SettingsDialog:
             "invalid_char_replacements", self.get_invalid_char_replacements()
         )
 
-    def restore_defaults(self):
+    def restore_defaults(self) -> None:
         self._ui.format_lineedit.setText(DEFAULT_SETTINGS["filename_format"])
         self._ui.zero_fill_checkbox.setChecked(DEFAULT_SETTINGS["zero_fill_enabled"])
         self._ui.invalid_char_table.set_data(

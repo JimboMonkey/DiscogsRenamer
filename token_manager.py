@@ -17,7 +17,9 @@ class TokenManager:
     # Verify a token by checking if it authenticates
     # Return a message to display on the token entry dialog
     def verify_token(self, token: str | None) -> AuthenticationResult:
-        def result(state: bool, username: str | None, message: str):
+        def result(
+            state: bool, username: str | None, message: str
+        ) -> AuthenticationResult:
             return AuthenticationResult(state, username, message)
 
         if not token:

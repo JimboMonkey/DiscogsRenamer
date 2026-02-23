@@ -5,7 +5,7 @@ from constants import APP_NAME
 
 class AboutMessageBox(QtWidgets.QMessageBox):
 
-    def __init__(self, parent: Optional[QtWidgets.QWidget] = None):
+    def __init__(self, parent: Optional[QtWidgets.QWidget] = None) -> None:
         super().__init__(parent)
 
         self._init_ui()

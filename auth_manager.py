@@ -4,7 +4,7 @@ from PyQt6 import QtCore
 class AuthManager(QtCore.QObject):
     user_changed = QtCore.pyqtSignal(object)
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self._user: str | None = None
 
@@ -12,6 +12,6 @@ class AuthManager(QtCore.QObject):
     def user(self) -> str | None:
         return self._user
 
-    def set_user(self, user: str | None):
+    def set_user(self, user: str | None) -> None:
         self._user = user
         self.user_changed.emit(user)

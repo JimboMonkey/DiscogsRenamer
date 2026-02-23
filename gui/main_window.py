@@ -149,7 +149,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.showMaximized()
 
-    def clear_release_lineedit(self):
+    def clear_release_lineedit(self) -> None:
         self.release_lineedit.clear()
 
     # Enable the load release button only if
@@ -174,12 +174,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.update_tick_count_label()
         self.compare_counts()
 
-    def update_tick_count_label(self):
+    def update_tick_count_label(self) -> None:
         self.tick_count.setText(
             f"{self.ticked_release_tracks} vs {self.ticked_folder_tracks} \n selected"
         )
 
-    def compare_counts(self):
+    def compare_counts(self) -> None:
         if self.ticked_release_tracks == self.ticked_folder_tracks and (
             self.ticked_release_tracks != 0 or self.ticked_folder_tracks != 0
         ):

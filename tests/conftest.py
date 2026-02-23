@@ -23,7 +23,7 @@ def mock_discogs_release() -> MagicMock:
 
 
 @pytest.fixture(autouse=True)
-def mock_keyring(monkeypatch: pytest.MonkeyPatch):
+def mock_keyring(monkeypatch: pytest.MonkeyPatch) -> None:
     mock_keyring: dict[tuple[str, str], str] = {}
 
     def mock_set_password(service_name: str, username: str, password: str) -> None:

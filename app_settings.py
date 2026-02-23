@@ -12,10 +12,10 @@ DEFAULT_SETTINGS = {
 
 
 class AppSettings:
-    def __init__(self):
+    def __init__(self) -> None:
         self._settings = QtCore.QSettings("Jimbomonkey Productions", APP_NAME)
 
-    def get(self, key: str):
+    def get(self, key: str) -> str | bool | list[tuple[str, str]]:
         default = DEFAULT_SETTINGS.get(key)
 
         # If the default is a bool, ask QSettings to return a bool
@@ -24,6 +24,6 @@ class AppSettings:
 
         return self._settings.value(key, default)
 
-    def set(self, key: str, value: Any):
+    def set(self, key: str, value: Any) -> None:
         self._settings.setValue(key, value)
         self._settings.sync()

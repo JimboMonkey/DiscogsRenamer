@@ -6,7 +6,7 @@ from main_manager import MainManager
 
 
 # Start the application
-def main():
+def main() -> None:
     application = QApplication(sys.argv)
 
     main_manager = MainManager()

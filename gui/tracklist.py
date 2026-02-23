@@ -55,7 +55,9 @@ class Tracklist(QtWidgets.QListWidget):
         self.model().modelReset.connect(self.set_label_visibility)
 
     # Keep label sized correctly
-    def eventFilter(self, object: QtCore.QObject | None, event: QtCore.QEvent | None):
+    def eventFilter(
+        self, object: QtCore.QObject | None, event: QtCore.QEvent | None
+    ) -> bool:
         if object is self.viewport() and event.type() == QtCore.QEvent.Type.Resize:
             self._tracklist_label.resize(self.viewport().size())
 
@@ -70,7 +72,7 @@ class Tracklist(QtWidgets.QListWidget):
         return super().eventFilter(object, event)
 
     # Set label visibility when list content changes
-    def set_label_visibility(self):
+    def set_label_visibility(self) -> None:
         self._tracklist_label.setVisible(self.count() == 0)
 
     def populate(self, item_list: Sequence[QtWidgets.QListWidgetItem]) -> None:
@@ -107,7 +109,7 @@ class Tracklist(QtWidgets.QListWidget):
     def set_tracklist_label(self, label_text: str) -> None:
         self._tracklist_label.setText(label_text)
 
-    def _number_and_shade(self):
+    def _number_and_shade(self) -> None:
         number_of_tracks = self.count()
         zfill_width = (
             len(str(number_of_tracks)) if self._settings.get("zero_fill_enabled") else 0

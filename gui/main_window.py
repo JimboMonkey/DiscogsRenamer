@@ -44,6 +44,20 @@ class MainWindow(QtWidgets.QMainWindow):
         self.load_release_button.setToolTip("Load release data from Discogs")
         self.load_release_button.setEnabled(False)
         self.release_lineedit = QtWidgets.QLineEdit()
+
+        self.clear_action = QtGui.QAction(
+            QtGui.QIcon("gui/icons/clear.svg"), "Clear", self
+        )
+        self.clear_action.triggered.connect(self.clear_release_lineedit)
+        self.clear_action.setToolTip("Clear this field")
+
+        self.release_lineedit.addAction(
+            self.clear_action, QtWidgets.QLineEdit.ActionPosition.TrailingPosition
+        )
+        # Action must be set invisible after being added
+        # to the lineedit otherwise it becomes visible again
+        self.clear_action.setVisible(False)
+
         self.release_lineedit.setPlaceholderText(
             "Enter the Discogs release number you wish to load eg [r180865] or 180865"
         )
@@ -123,6 +137,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.showMaximized()
 
+    def clear_release_lineedit(self):
+        self.release_lineedit.clear()
+
     # Enable the load release button only if
     # there is valid text in the line edit
     def load_release_button_enabled(self) -> None:
@@ -131,6 +148,7 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             enabled = False
         self.load_release_button.setEnabled(enabled)
+        self.clear_action.setVisible(enabled)
 
     def apply_button_enabled(self, enabled: bool) -> None:
         self.apply_button.setEnabled(enabled)

@@ -21,6 +21,9 @@ class SettingsDialog:
 
     # Link GUI widgets to the functions
     def _init_connections(self) -> None:
+        self._ui.initial_folder_button.clicked.connect(
+            self._ui.open_initial_folder_dialog
+        )
         self._ui.cancel_button.clicked.connect(self._ui.close_dialog)
         self._ui.restore_defaults_button.clicked.connect(self.restore_defaults)
         self._ui.close_button.clicked.connect(self._ui.close_dialog)
@@ -37,6 +40,10 @@ class SettingsDialog:
             self._ui.misnumbering_warning_checkbox.isChecked(),
         )
         self._settings.set(
+            "initial_folder",
+            self._ui.initial_folder_lineedit.text(),
+        )
+        self._settings.set(
             "invalid_char_replacements", self.get_invalid_char_replacements()
         )
 
@@ -46,6 +53,7 @@ class SettingsDialog:
         self._ui.misnumbering_warning_checkbox.setChecked(
             DEFAULT_SETTINGS["highlight_track_misnumbering"]
         )
+        self._ui.initial_folder_lineedit.setText(DEFAULT_SETTINGS["initial_folder"])
         self._ui.invalid_char_table.set_data(
             DEFAULT_SETTINGS["invalid_char_replacements"]
         )
@@ -56,6 +64,7 @@ class SettingsDialog:
         self._ui.misnumbering_warning_checkbox.setChecked(
             self._settings.get("highlight_track_misnumbering")
         )
+        self._ui.initial_folder_lineedit.setText(self._settings.get("initial_folder"))
         self._ui.invalid_char_table.set_data(
             self._settings.get("invalid_char_replacements")
         )

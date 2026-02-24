@@ -1,9 +1,21 @@
-from PyQt6 import QtCore, QtGui
+from PyQt6 import QtCore, QtGui, QtWidgets
 from dataclasses import is_dataclass, asdict
 import os
 
 from filename_rules import get_invalid_filename_characters
 from track_data import TrackData
+
+
+def open_folder_dialog(parent: QtWidgets.QWidget | None, initial_folder: str) -> str:
+    return QtWidgets.QFileDialog.getExistingDirectory(
+        parent,
+        "Select Folder",
+        initial_folder,
+        options=(
+            QtWidgets.QFileDialog.Option.ShowDirsOnly
+            | QtWidgets.QFileDialog.Option.DontUseNativeDialog
+        ),
+    )
 
 
 def to_dict(obj) -> dict:

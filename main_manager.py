@@ -11,9 +11,9 @@ from token_manager import TokenManager
 from discogs_manager import DiscogsManager
 from auth_data_class import AuthenticationResult
 from track_data import TrackData
+from gui.utils import open_folder_dialog
 
 from pathlib import Path
-from os.path import expanduser
 import os
 from functools import partial
 from collections import deque
@@ -96,19 +96,9 @@ class MainManager(QtCore.QObject):
                 f"Failed to fetch release {release_id} \n Check the code is correct"
             )
 
-    # Open Folder dialog and return the selected path
-    def _open_dialog(self) -> str:
-        return QtWidgets.QFileDialog.getExistingDirectory(
-            self._ui,
-            "Select Folder",
-            expanduser("."),
-            options=QtWidgets.QFileDialog.Option.ShowDirsOnly
-            | QtWidgets.QFileDialog.Option.DontUseNativeDialog,
-        )
-
     # Use the standard open dialog box to get the file path of a folder
     def _show_open_dialog(self) -> None:
-        folder_path = self._open_dialog()
+        folder_path = open_folder_dialog(self._ui, self._settings.get("initial_folder"))
 
         # Check for file validity here so that cancelling
         # the open dialog doesn't set a blank path

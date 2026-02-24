@@ -1,8 +1,10 @@
 from PyQt6 import QtWidgets
+from pathlib import Path
 
 from gui.invalid_char_tableview import InvalidCharTableView
 from filename_rules import MAX_FILENAME_LENGTH
 from app_settings import DEFAULT_SETTINGS
+from gui.utils import open_folder_dialog
 
 
 class SettingsDialogGui(QtWidgets.QDialog):
@@ -46,6 +48,17 @@ class SettingsDialogGui(QtWidgets.QDialog):
         )
         self.misnumbering_warning_checkbox.setChecked(True)
 
+        initial_folder_label = QtWidgets.QLabel("Initial folder path")
+        self.initial_folder_lineedit = QtWidgets.QLineEdit()
+        self.initial_folder_lineedit.setText(str(DEFAULT_SETTINGS["initial_folder"]))
+        self.initial_folder_lineedit.setReadOnly(True)
+        self.initial_folder_button = QtWidgets.QPushButton("Select")
+
+        initial_folder_layout = QtWidgets.QHBoxLayout()
+        initial_folder_layout.addWidget(initial_folder_label)
+        initial_folder_layout.addWidget(self.initial_folder_lineedit)
+        initial_folder_layout.addWidget(self.initial_folder_button)
+
         self.cancel_button = QtWidgets.QPushButton("Cancel")
         self.cancel_button.setToolTip("Close the window")
         self.restore_defaults_button = QtWidgets.QPushButton("Restore Defaults")
@@ -67,11 +80,20 @@ class SettingsDialogGui(QtWidgets.QDialog):
         vertical_layout.addLayout(filename_format_layout)
         vertical_layout.addWidget(self.zero_fill_checkbox)
         vertical_layout.addWidget(self.misnumbering_warning_checkbox)
+        vertical_layout.addLayout(initial_folder_layout)
         vertical_layout.addWidget(invalid_character_replacement_label)
         vertical_layout.addWidget(self.invalid_char_table)
         vertical_layout.addLayout(button_layout)
 
         self.setLayout(vertical_layout)
+
+    def open_initial_folder_dialog(self) -> None:
+        folder_path = open_folder_dialog(self, self.initial_folder_lineedit.text())
+
+        # Check for file validity here so that cancelling
+        # the open dialog doesn't set a blank path
+        if (folder_path) and (Path(folder_path).exists()):
+            self.initial_folder_lineedit.setText(str(Path(folder_path)))
 
     # Close the dialog
     def close_dialog(self) -> None:

@@ -1,5 +1,6 @@
 from PyQt6 import QtCore
 from typing import Any
+from pathlib import Path
 
 from constants import APP_NAME
 from filename_rules import INVALID_CHARS_REPLACEMENTS
@@ -8,6 +9,7 @@ DEFAULT_SETTINGS = {
     "filename_format": "%fn - %ta - %tt",
     "zero_fill_enabled": True,
     "highlight_track_misnumbering": True,
+    "initial_folder": str(Path.home()),
     "invalid_char_replacements": INVALID_CHARS_REPLACEMENTS,
 }
 

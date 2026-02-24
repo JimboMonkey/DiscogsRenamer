@@ -111,9 +111,11 @@ class Tracklist(QtWidgets.QListWidget):
 
     def _number_and_shade(self) -> None:
         number_of_tracks = self.count()
-        zfill_width = (
-            len(str(number_of_tracks)) if self._settings.get("zero_fill_enabled") else 0
-        )
+        if self._settings.get("zero_fill_enabled"):
+            zfill_width = max(2, len(str(number_of_tracks)))
+        else:
+            zfill_width = 0
+
         for index in range(number_of_tracks):
             list_item = self.item(index)
             tracklist_item = self.itemWidget(list_item)

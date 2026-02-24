@@ -38,6 +38,14 @@ class ListItemWidget(QtWidgets.QWidget):
         self.horizontal_layout.addWidget(self._checkbox)
         self.setLayout(self.horizontal_layout)
 
+    def set_matched_text_colour(self, matched_state: bool):
+        if matched_state:
+            stylesheet = "color: black;"
+        else:
+            stylesheet = "color: red;"
+        self._track_number.setStyleSheet(stylesheet)
+        self._original_filename.setStyleSheet(stylesheet)
+
     def set_track_number(self, text: str) -> None:
         self._track_number.setText(text)
 

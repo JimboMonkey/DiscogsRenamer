@@ -3,6 +3,7 @@ from PyQt6 import QtWidgets, QtCore
 from typing import Optional, Sequence
 from collections import deque
 from pathlib import Path
+import re, os
 
 from settings_protocol import SettingsProtocol
 from gui.list_item_widget import ListItemWidget
@@ -83,10 +84,10 @@ class Tracklist(QtWidgets.QListWidget):
             if self._editable:
                 self._tracklist_label.setText("Selected folder contains no audio files")
             else:
-                self._tracklist_label.setText("Failed to fetch release")
+        matched_track_position = True
 
         # For each track name in the list...
-        for item in item_list:
+        for track_position, item in enumerate(item_list, start=1):
 
             # Create and configure the custom widget
             widget = item.create_widget()
@@ -101,10 +102,34 @@ class Tracklist(QtWidgets.QListWidget):
             widget._new_filename.textChanged.connect(
                 self.check_all_ticked_new_filenames_filled
             )
+            if isinstance(item, FilenameListItem):
+                if not self.contains_track_position(
+                    track_position, item.original_filename
+                ):
+                    matched_track_position = False
 
         # Update the track numbers and shading
         self._number_and_shade()
         self.count_ticks()
+        if (
+            self._settings.get("highlight_track_misnumbering")
+            and not matched_track_position
+        ):
+            QtWidgets.QMessageBox.warning(
+                self.parent_widget,
+                "Check track order",
+                f"The order of the files doesn't match their track positions\n\n"
+                "This usually happens when track numbers in filenames aren't zero-padded, causing entries like track 10 to appear immediately after track 1.\n\n"
+                "You may need to reorder the list manually by dragging and dropping the tracks. Any mismatched items have been highlighted in red.",
+            )
+
+    def contains_track_position(self, track_position: int, text: str) -> bool:
+        # Don't include file extension as it may contain numbers (eg mp3)
+        file_name, _ = os.path.splitext(text)
+        # Match track position allowing any number of leading zeroes,
+        # but only when it is not part of a larger number
+        regex_pattern = rf"(?<!\d)0*{track_position}(?!\d)"
+        return bool(re.search(regex_pattern, file_name))
 
     def set_tracklist_label(self, label_text: str) -> None:
         self._tracklist_label.setText(label_text)
@@ -121,6 +146,11 @@ class Tracklist(QtWidgets.QListWidget):
             tracklist_item = self.itemWidget(list_item)
             if isinstance(list_item, FilenameListItem):
                 tracklist_item.set_track_number(str(index + 1).zfill(zfill_width))
+                if self._settings.get("highlight_track_misnumbering"):
+                    matched_state = self.contains_track_position(
+                        index + 1, list_item.original_filename
+                    )
+                    tracklist_item.set_matched_text_colour(matched_state)
             if index % 2 == 1:
                 shaded = True
             else:

@@ -41,10 +41,10 @@ class SettingsDialogGui(QtWidgets.QDialog):
         self.zero_fill_checkbox = QtWidgets.QCheckBox("Zero-fill folder track numbers")
         self.zero_fill_checkbox.setChecked(True)
 
-        misnumbering_warning_checkbox = QtWidgets.QCheckBox(
-            "Warn about track misnumbering"
+        self.misnumbering_warning_checkbox = QtWidgets.QCheckBox(
+            "Highlight track misnumbering"
         )
-        misnumbering_warning_checkbox.setChecked(True)
+        self.misnumbering_warning_checkbox.setChecked(True)
 
         self.cancel_button = QtWidgets.QPushButton("Cancel")
         self.cancel_button.setToolTip("Close the window")
@@ -66,7 +66,7 @@ class SettingsDialogGui(QtWidgets.QDialog):
         vertical_layout = QtWidgets.QVBoxLayout()
         vertical_layout.addLayout(filename_format_layout)
         vertical_layout.addWidget(self.zero_fill_checkbox)
-        vertical_layout.addWidget(misnumbering_warning_checkbox)
+        vertical_layout.addWidget(self.misnumbering_warning_checkbox)
         vertical_layout.addWidget(invalid_character_replacement_label)
         vertical_layout.addWidget(self.invalid_char_table)
         vertical_layout.addLayout(button_layout)

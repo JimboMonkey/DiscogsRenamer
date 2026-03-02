@@ -84,6 +84,10 @@ class Tracklist(QtWidgets.QListWidget):
             if self._editable:
                 self._tracklist_label.setText("Selected folder contains no audio files")
             else:
+                self._tracklist_label.setText(
+                    "Failed to fetch release\n This release may have been deleted from Discogs"
+                )
+
         matched_track_position = True
 
         # For each track name in the list...

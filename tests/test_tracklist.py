@@ -81,9 +81,9 @@ def test_check_all_new_filenames_filled(
     tracklist = Tracklist(editable=True, settings=app_settings)
 
     test_tracklist = [
-        FilenameListItem("firsttrack"),
-        FilenameListItem("secondtrack"),
-        FilenameListItem("thirdtrack"),
+        FilenameListItem("1 - firsttrack"),
+        FilenameListItem("2 - secondtrack"),
+        FilenameListItem("3 - thirdtrack"),
     ]
     release_tracklist.populate(new_filename_test_inputs)
     tracklist.populate(test_tracklist)

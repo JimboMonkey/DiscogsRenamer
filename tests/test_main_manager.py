@@ -42,9 +42,9 @@ def test_rename_files(monkeypatch: MonkeyPatch, qtbot: QtBot, tmp_path: Path) ->
     main_window.set_folder_path_label(str(tmp_path))
 
     file_renaming_info = [
-        ("1", Path("firsttrack.mp3"), Path("First.mp3")),
-        ("2", Path("secondtrack.mp3"), Path("Second.mp3")),
-        ("3", Path("thirdtrack.mp3"), Path("Third.mp3")),
+        ("1", Path("1 - firsttrack.mp3"), Path("1 - First.mp3")),
+        ("2", Path("2 - secondtrack.mp3"), Path("2 - Second.mp3")),
+        ("3", Path("3 - thirdtrack.mp3"), Path("3 - Third.mp3")),
     ]
 
     # Create Path objects for original file names

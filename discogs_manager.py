@@ -1,7 +1,6 @@
 from discogs_client import Client, Release, Track, Artist
 from discogs_client.exceptions import HTTPError, AuthorizationError
 
-from token_manager import TokenManager
 from gui.release_list_item import ReleaseListItem
 from release_data import ReleaseData
 from track_data import TrackData
@@ -11,12 +10,7 @@ import re
 
 class DiscogsManager:
     def __init__(self) -> None:
-        token_manager = TokenManager()
-        token = token_manager.load_token()
-        if token:
-            self._client = Client("DiscogsRenamer/1.0", user_token=token)
-        else:
-            print("No token found. Please set a valid token.")
+        self._client = Client("DiscogsRenamer/1.0")
 
     def get_release(self, release_id: int) -> Release | None:
         release = None

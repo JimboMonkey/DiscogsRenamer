@@ -20,21 +20,3 @@ def mock_discogs_release() -> MagicMock:
         MagicMock(spec_set=Track, title="Track 3"),
     ]
     return mock_release
-
-
-@pytest.fixture(autouse=True)
-def mock_keyring(monkeypatch: pytest.MonkeyPatch) -> None:
-    mock_keyring: dict[tuple[str, str], str] = {}
-
-    def mock_set_password(service_name: str, username: str, password: str) -> None:
-        mock_keyring[(service_name, username)] = password
-
-    def mock_get_password(service_name: str, username: str) -> Optional[str]:
-        return mock_keyring.get((service_name, username))
-
-    def mock_delete_password(service_name: str, username: str) -> Optional[str]:
-        return mock_keyring.pop((service_name, username), None)
-
-    monkeypatch.setattr("keyring.set_password", mock_set_password)
-    monkeypatch.setattr("keyring.get_password", mock_get_password)
-    monkeypatch.setattr("keyring.delete_password", mock_delete_password)

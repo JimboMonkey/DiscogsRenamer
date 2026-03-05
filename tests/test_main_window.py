@@ -8,7 +8,6 @@ from app_settings import AppSettings
 from settings_protocol import SettingsProtocol
 from release_data import ReleaseData
 from track_data import TrackData
-from auth_manager import AuthManager
 from gui.filename_list_item import FilenameListItem
 from gui.release_list_item import ReleaseListItem
 
@@ -21,17 +20,11 @@ def app_settings() -> SettingsProtocol:
 
 
 @pytest.fixture
-def auth_manager() -> AuthManager:
-    return AuthManager()
-
-
-@pytest.fixture
 def main_window(
     qtbot: QtBot,
-    auth_manager: AuthManager,
     app_settings: SettingsProtocol,
 ) -> MainWindow:
-    window = MainWindow(auth_manager, app_settings)
+    window = MainWindow(app_settings)
     qtbot.add_widget(window)
     return window
 

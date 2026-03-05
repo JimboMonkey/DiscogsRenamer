@@ -2,14 +2,10 @@ from PyQt6 import QtCore, QtWidgets
 
 from app_settings import AppSettings
 from gui.main_window import MainWindow
-from auth_manager import AuthManager
 from gui.filename_list_item import FilenameListItem
-from token_dialog import TokenDialog
 from settings_dialog import SettingsDialog
 from gui.about_messagebox import AboutMessageBox
-from token_manager import TokenManager
 from discogs_manager import DiscogsManager
-from auth_data_class import AuthenticationResult
 from track_data import TrackData
 from gui.utils import open_folder_dialog
 
@@ -24,10 +20,8 @@ class MainManager(QtCore.QObject):
 
     def __init__(self, parent: Optional[QtWidgets.QWidget] = None) -> None:
         self._settings = AppSettings()
-        auth_manager = AuthManager()
         # Create the main GUI window
-        self._ui = MainWindow(auth_manager, self._settings)
-        token_manager = TokenManager()
+        self._ui = MainWindow(self._settings)
         self._discogs_manager = DiscogsManager()
         self.parent_widget = parent
         super(MainManager, self).__init__()
@@ -47,15 +41,6 @@ class MainManager(QtCore.QObject):
             self._ui.apply_button_enabled
         )
         self._ui.apply_button.pressed.connect(self._apply_new_names)
-
-        token = token_manager.load_token()
-        # result: AuthenticationResult = token_manager.verify_token(token)
-        result = AuthenticationResult(False, None, "Authentication failed")
-        # if not result.status:
-        #    self.open_token_dialog(result)
-        self._ui.toolbar.authentication_action.triggered.connect(
-            lambda: self.open_token_dialog(result)
-        )
 
         self._ui.toolbar.settings_action.triggered.connect(
             lambda: self.open_settings_dialog()
@@ -134,9 +119,6 @@ class MainManager(QtCore.QObject):
             if audio_file.is_file()
             and audio_file.suffix.lower() in audio_file_extensions
         ]
-
-    def open_token_dialog(self, result: AuthenticationResult) -> None:
-        _dialog = TokenDialog(result)
 
     def open_settings_dialog(self) -> None:
         dialog = SettingsDialog(self._settings)

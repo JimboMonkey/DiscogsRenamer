@@ -2,8 +2,8 @@ from PyQt6 import QtWidgets, QtGui, QtCore
 from typing import Optional
 from pathlib import Path
 
-from gui.toolbar import Toolbar
 from gui.tracklist import Tracklist
+from gui.action_button import ActionButton
 from settings_protocol import SettingsProtocol
 
 from constants import APP_NAME
@@ -25,8 +25,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ticked_folder_tracks = 0
 
         self.setWindowTitle(APP_NAME)
-
-        self.toolbar = Toolbar()
 
         heading_font = QtGui.QFont()
         heading_font.setPointSize(16)
@@ -124,10 +122,33 @@ class MainWindow(QtWidgets.QMainWindow):
         release_layout.addWidget(self.release_artist_title_label)
         release_layout.addWidget(self.release_listwidget)
 
+        # Create action buttons for Settings and About
+        self.settings_action = QtGui.QAction(
+            QtGui.QIcon("gui/icons/settings.png"), "Settings", self
+        )
+        self.settings_button = ActionButton(self.settings_action)
+
+        self.about_action = QtGui.QAction(
+            QtGui.QIcon("gui/icons/about.png"), "About", self
+        )
+        self.about_button = ActionButton(self.about_action)
+
         folder_layout = QtWidgets.QVBoxLayout()
         folder_layout.addWidget(folder_label)
         folder_layout.addLayout(folder_entry_layout)
         folder_layout.addWidget(self.folder_name_label)
+
+        toolbar_button_layout = QtWidgets.QHBoxLayout()
+        toolbar_button_layout.addWidget(self.settings_button)
+        toolbar_button_layout.addWidget(self.about_button)
+        toolbar_button_layout.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop)
+
+        folder_toolbar_layout = QtWidgets.QHBoxLayout()
+        folder_toolbar_layout.addLayout(folder_layout)
+        folder_toolbar_layout.addLayout(toolbar_button_layout)
+
+        folder_layout = QtWidgets.QVBoxLayout()
+        folder_layout.addLayout(folder_toolbar_layout)
         folder_layout.addWidget(self.folder_listwidget)
 
         listwidget_layout = QtWidgets.QHBoxLayout()
@@ -135,13 +156,9 @@ class MainWindow(QtWidgets.QMainWindow):
         listwidget_layout.addLayout(middle_layout)
         listwidget_layout.addLayout(folder_layout)
 
-        vertical_layout = QtWidgets.QVBoxLayout()
-        vertical_layout.addWidget(self.toolbar)
-        vertical_layout.addLayout(listwidget_layout)
-
         # Set the listwidget layout as the layout for the window
         central_widget = QtWidgets.QWidget(self)
-        central_widget.setLayout(vertical_layout)
+        central_widget.setLayout(listwidget_layout)
         self.setCentralWidget(central_widget)
 
         self.showMaximized()

@@ -42,13 +42,10 @@ class MainManager(QtCore.QObject):
         )
         self._ui.apply_button.pressed.connect(self._apply_new_names)
 
-        self._ui.toolbar.settings_action.triggered.connect(
-            lambda: self.open_settings_dialog()
-        )
+        self._ui.settings_action.triggered.connect(lambda: self.open_settings_dialog())
 
-        self._ui.toolbar.about_action.triggered.connect(
-            lambda: self.open_about_messagebox()
-        )
+        self._ui.about_action.triggered.connect(lambda: self.open_about_messagebox())
+
 
     def extract_digits(self, release_id_string: str) -> int | None:
         digits_string = "".join(

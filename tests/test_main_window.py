@@ -184,6 +184,7 @@ def test_apply_button_enabled_when_all_filenames_populated(qtbot: QtBot) -> None
     release_data = ReleaseData(
         release_artists="DJ Test & The Testers",
         release_title="Testing The Night Away",
+        sub_tracks=False,
     )
 
     ticked_tracks: deque[TrackData] = deque()

@@ -5,3 +5,4 @@ from dataclasses import dataclass
 class ReleaseData:
     release_artists: str
     release_title: str
+    sub_tracks: bool

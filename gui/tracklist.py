@@ -7,6 +7,7 @@ import re, os
 
 from settings_protocol import SettingsProtocol
 from gui.list_item_widget import ListItemWidget
+from gui.release_list_item import ReleaseListItem
 from gui.filename_list_item import FilenameListItem
 from track_data import TrackData
 from gui.utils import format_filename, extract_file_extension
@@ -89,6 +90,7 @@ class Tracklist(QtWidgets.QListWidget):
                 )
 
         matched_track_position = True
+        contains_sub_tracks = False
 
         # For each track name in the list...
         for track_position, item in enumerate(item_list, start=1):
@@ -106,6 +108,11 @@ class Tracklist(QtWidgets.QListWidget):
             widget._new_filename.textChanged.connect(
                 self.check_all_ticked_new_filenames_filled
             )
+
+            if isinstance(item, ReleaseListItem):
+                if item.track_data.release.sub_tracks:
+                    contains_sub_tracks = True
+
             if isinstance(item, FilenameListItem):
                 if not self.contains_track_position(
                     track_position, item.original_filename
@@ -126,6 +133,26 @@ class Tracklist(QtWidgets.QListWidget):
                 "This usually happens when track numbers in filenames aren't zero-padded, causing entries like track 10 to appear immediately after track 1.\n\n"
                 "You may need to reorder the list manually by dragging and dropping the tracks. Any mismatched items have been highlighted in red.",
             )
+
+        if contains_sub_tracks:
+            messagebox = QtWidgets.QMessageBox(self.parent_widget)
+            messagebox.setIcon(QtWidgets.QMessageBox.Icon.Warning)
+            messagebox.setWindowTitle("Release contains subtracks")
+            messagebox.setTextFormat(QtCore.Qt.TextFormat.RichText)
+            messagebox.setText(
+                "This release contains subtracks. Discogs does not yet provide full subtrack data through their API, "
+                "so some track names may not be loaded by this application.<br><br>"
+                "If you would like to see subtrack support added, please consider raising a support request with Discogs "
+                "so they know that it is important to you.<br><br>"
+                "You can submit a “Feature requests / suggestions” ticket here:<br><br>"
+                "<a href='https://support.discogs.com/hc/en-us/requests/new'>https://support.discogs.com/hc/en-us/requests/new</a>"
+            )
+
+            # Enable clickable links
+            messagebox.setTextInteractionFlags(
+                QtCore.Qt.TextInteractionFlag.TextBrowserInteraction
+            )
+            messagebox.exec()
 
     def contains_track_position(self, track_position: int, text: str) -> bool:
         # Don't include file extension as it may contain numbers (eg mp3)

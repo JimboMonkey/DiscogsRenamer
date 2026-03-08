@@ -71,6 +71,7 @@ def release_data() -> ReleaseData:
     return ReleaseData(
         release_artists="A Tribe Called Test",
         release_title="Testify",
+        sub_tracks=False,
     )
 
 

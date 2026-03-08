@@ -42,6 +42,9 @@ class DiscogsManager:
     def remove_artist_numerical_suffix(self, track_artists: str) -> str:
         return re.sub(r"\s*\(\d+\)", "", track_artists)
 
+    def contains_sub_tracks(self, tracklist: list[Track]) -> bool:
+        return any(track.data.get("sub_tracks") for track in tracklist)
+
     def format_artists(self, track_artists: list[Artist]) -> str:
         track_artists_parts: list[str] = []
         for artist in track_artists:
@@ -65,6 +68,7 @@ class DiscogsManager:
         release_data = ReleaseData(
             release_artists=formatted_release_artists,
             release_title=self.get_release_title(release),
+            sub_tracks=self.contains_sub_tracks(tracklist),
         )
         for track in tracklist:
             track_position = str(track.position)

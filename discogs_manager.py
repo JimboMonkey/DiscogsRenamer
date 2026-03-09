@@ -4,13 +4,16 @@ from discogs_client.exceptions import HTTPError, AuthorizationError
 from gui.release_list_item import ReleaseListItem
 from release_data import ReleaseData
 from track_data import TrackData
+from constants import APP_NAME, APP_VERSION
 
 import re
 
 
 class DiscogsManager:
     def __init__(self) -> None:
-        self._client = Client("DiscogsRenamer/1.0")
+        self._client = Client(
+            f"{APP_NAME}/{APP_VERSION} +https://github.com/JimboMonkey/DiscogsRenamer"
+        )
 
     def get_release(self, release_id: int) -> Release | None:
         release = None

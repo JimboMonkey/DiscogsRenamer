@@ -25,6 +25,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ticked_folder_tracks = 0
 
         self.setWindowTitle(APP_NAME)
+        self.setWindowIcon(QtGui.QIcon("gui/icons/disc.svg"))
 
         heading_font = QtGui.QFont()
         heading_font.setPointSize(16)

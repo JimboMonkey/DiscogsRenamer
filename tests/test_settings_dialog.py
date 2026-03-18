@@ -1,8 +1,8 @@
 from pytestqt.qtbot import QtBot
 from typing import Any
 
-from gui.dialogs.settings_dialog import SettingsDialog
-from core.app_settings import DEFAULT_SETTINGS
+from discogsrenamer.gui.dialogs.settings_dialog import SettingsDialog
+from discogsrenamer.core.app_settings import DEFAULT_SETTINGS
 
 
 class FakeSettings:

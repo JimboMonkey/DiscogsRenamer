@@ -2,7 +2,7 @@ import sys
 
 from PyQt6.QtWidgets import QApplication
 
-from core.main_manager import MainManager
+from discogsrenamer.core.main_manager import MainManager
 
 
 # Start the application

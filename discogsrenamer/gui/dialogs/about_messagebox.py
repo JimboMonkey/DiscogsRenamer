@@ -1,6 +1,6 @@
 from PyQt6 import QtWidgets, QtSvgWidgets, QtCore
 from typing import Optional
-from core.constants import APP_NAME, APP_VERSION
+from discogsrenamer.core.constants import APP_NAME, APP_VERSION
 
 
 class AboutMessageBox(QtWidgets.QMessageBox):
@@ -36,7 +36,7 @@ class AboutMessageBox(QtWidgets.QMessageBox):
             "<a href='https://www.gnu.org/licenses/gpl-3.0.html'>https://www.gnu.org/licenses/gpl-3.0.html</a><br>"
         )
 
-        gplv3_logo = QtSvgWidgets.QSvgWidget("gui/icons/gplv3_logo.svg")
+        gplv3_logo = QtSvgWidgets.QSvgWidget("discogsrenamer/gui/icons/gplv3_logo.svg")
         gplv3_logo.setFixedSize(QtCore.QSize(180, 88))
 
         contents_container = QtWidgets.QWidget()

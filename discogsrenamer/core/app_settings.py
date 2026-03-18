@@ -2,8 +2,8 @@ from PyQt6 import QtCore
 from typing import Any
 from pathlib import Path
 
-from core.constants import APP_NAME
-from core.filename_rules import INVALID_CHARS_REPLACEMENTS
+from discogsrenamer.core.constants import APP_NAME
+from discogsrenamer.core.filename_rules import INVALID_CHARS_REPLACEMENTS
 
 DEFAULT_SETTINGS = {
     "filename_format": "%fn - %ta - %tt",

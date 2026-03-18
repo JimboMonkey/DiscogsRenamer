@@ -1,15 +1,15 @@
 import pytest
 from pytestqt.qtbot import QtBot
-from gui.widgets.tracklist import Tracklist
+from discogsrenamer.gui.widgets.tracklist import Tracklist
 from collections import deque
 from typing import Callable
 
-from core.app_settings import AppSettings
-from core.settings_protocol import SettingsProtocol
-from gui.widgets.filename_list_item import FilenameListItem
-from gui.widgets.release_list_item import ReleaseListItem
-from core.models.track_data import TrackData
-from core.models.release_data import ReleaseData
+from discogsrenamer.core.app_settings import AppSettings
+from discogsrenamer.core.settings_protocol import SettingsProtocol
+from discogsrenamer.gui.widgets.filename_list_item import FilenameListItem
+from discogsrenamer.gui.widgets.release_list_item import ReleaseListItem
+from discogsrenamer.core.models.track_data import TrackData
+from discogsrenamer.core.models.release_data import ReleaseData
 
 
 @pytest.fixture

@@ -1,10 +1,10 @@
 from PyQt6 import QtWidgets
 from pathlib import Path
 
-from gui.widgets.invalid_char_tableview import InvalidCharTableView
-from core.filename_rules import MAX_FILENAME_LENGTH
-from core.app_settings import DEFAULT_SETTINGS
-from gui.utils import open_folder_dialog
+from discogsrenamer.gui.widgets.invalid_char_tableview import InvalidCharTableView
+from discogsrenamer.core.filename_rules import MAX_FILENAME_LENGTH
+from discogsrenamer.core.app_settings import DEFAULT_SETTINGS
+from discogsrenamer.gui.utils import open_folder_dialog
 
 
 class SettingsDialogGui(QtWidgets.QDialog):

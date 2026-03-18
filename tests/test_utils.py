@@ -1,4 +1,4 @@
-from gui.utils import extract_file_extension
+from discogsrenamer.gui.utils import extract_file_extension
 
 import pytest
 

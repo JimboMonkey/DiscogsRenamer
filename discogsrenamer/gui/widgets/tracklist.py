@@ -5,13 +5,13 @@ from collections import deque
 from pathlib import Path
 import re, os
 
-from core.settings_protocol import SettingsProtocol
-from gui.widgets.list_item_widget import ListItemWidget
-from gui.widgets.release_list_item import ReleaseListItem
-from gui.widgets.filename_list_item import FilenameListItem
-from core.models.track_data import TrackData
-from gui.utils import format_filename, extract_file_extension
-from core.filename_rules import MAX_FILENAME_LENGTH
+from discogsrenamer.core.settings_protocol import SettingsProtocol
+from discogsrenamer.gui.widgets.list_item_widget import ListItemWidget
+from discogsrenamer.gui.widgets.release_list_item import ReleaseListItem
+from discogsrenamer.gui.widgets.filename_list_item import FilenameListItem
+from discogsrenamer.core.models.track_data import TrackData
+from discogsrenamer.gui.utils import format_filename, extract_file_extension
+from discogsrenamer.core.filename_rules import MAX_FILENAME_LENGTH
 
 
 class Tracklist(QtWidgets.QListWidget):

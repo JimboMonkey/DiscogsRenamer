@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from core.models.release_data import ReleaseData
+from discogsrenamer.core.models.release_data import ReleaseData
 
 
 @dataclass

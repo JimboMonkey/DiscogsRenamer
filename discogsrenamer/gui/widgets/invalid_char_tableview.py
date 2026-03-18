@@ -1,7 +1,7 @@
 from PyQt6 import QtWidgets, QtCore
 
 from typing import Optional
-from core.models.invalid_char_model import InvalidCharModel
+from discogsrenamer.core.models.invalid_char_model import InvalidCharModel
 
 
 class InvalidCharTableView(QtWidgets.QTableView):

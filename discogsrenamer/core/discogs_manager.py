@@ -1,10 +1,10 @@
 from discogs_client import Client, Release, Track, Artist
 from discogs_client.exceptions import HTTPError, AuthorizationError
 
-from gui.widgets.release_list_item import ReleaseListItem
-from core.models.release_data import ReleaseData
-from core.models.track_data import TrackData
-from core.constants import APP_NAME, APP_VERSION
+from discogsrenamer.gui.widgets.release_list_item import ReleaseListItem
+from discogsrenamer.core.models.release_data import ReleaseData
+from discogsrenamer.core.models.track_data import TrackData
+from discogsrenamer.core.constants import APP_NAME, APP_VERSION
 
 import re
 

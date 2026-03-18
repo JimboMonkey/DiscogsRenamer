@@ -1,15 +1,15 @@
-from core.main_manager import MainManager
-from gui.main_window import MainWindow
+from discogsrenamer.core.main_manager import MainManager
+from discogsrenamer.gui.main_window import MainWindow
 from pytestqt.qtbot import QtBot
 from collections import deque
 from pathlib import Path
 
-from core.app_settings import AppSettings
-from core.settings_protocol import SettingsProtocol
-from core.models.release_data import ReleaseData
-from core.models.track_data import TrackData
-from gui.widgets.filename_list_item import FilenameListItem
-from gui.widgets.release_list_item import ReleaseListItem
+from discogsrenamer.core.app_settings import AppSettings
+from discogsrenamer.core.settings_protocol import SettingsProtocol
+from discogsrenamer.core.models.release_data import ReleaseData
+from discogsrenamer.core.models.track_data import TrackData
+from discogsrenamer.gui.widgets.filename_list_item import FilenameListItem
+from discogsrenamer.gui.widgets.release_list_item import ReleaseListItem
 
 import pytest
 

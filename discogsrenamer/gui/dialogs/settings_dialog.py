@@ -1,8 +1,8 @@
-from core.settings_protocol import SettingsProtocol
-from gui.dialogs.settings_dialog_gui import SettingsDialogGui
+from discogsrenamer.core.settings_protocol import SettingsProtocol
+from discogsrenamer.gui.dialogs.settings_dialog_gui import SettingsDialogGui
 
-from gui.utils import make_filename_validator
-from core.app_settings import DEFAULT_SETTINGS
+from discogsrenamer.gui.utils import make_filename_validator
+from discogsrenamer.core.app_settings import DEFAULT_SETTINGS
 
 
 class SettingsDialog:

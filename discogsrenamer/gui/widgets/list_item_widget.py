@@ -1,8 +1,8 @@
 from PyQt6 import QtWidgets, QtCore
 from typing import Optional
 
-from gui.utils import make_filename_validator
-from core.filename_rules import MAX_FILENAME_LENGTH
+from discogsrenamer.gui.utils import make_filename_validator
+from discogsrenamer.core.filename_rules import MAX_FILENAME_LENGTH
 
 
 class ListItemWidget(QtWidgets.QWidget):

@@ -1,7 +1,7 @@
 from PyQt6 import QtWidgets
 
-from gui.widgets.list_item_widget import ListItemWidget
-from core.models.track_data import TrackData
+from discogsrenamer.gui.widgets.list_item_widget import ListItemWidget
+from discogsrenamer.core.models.track_data import TrackData
 
 
 class ReleaseListItem(QtWidgets.QListWidgetItem):

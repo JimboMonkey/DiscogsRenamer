@@ -1,4 +1,4 @@
-from gui.widgets.list_item_widget import ListItemWidget
+from discogsrenamer.gui.widgets.list_item_widget import ListItemWidget
 import pytest
 from pytestqt.qtbot import QtBot
 

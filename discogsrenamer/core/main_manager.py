@@ -1,13 +1,13 @@
 from PyQt6 import QtCore, QtWidgets
 
-from core.app_settings import AppSettings
-from gui.main_window import MainWindow
-from gui.widgets.filename_list_item import FilenameListItem
-from gui.dialogs.settings_dialog import SettingsDialog
-from gui.dialogs.about_messagebox import AboutMessageBox
-from core.discogs_manager import DiscogsManager
-from core.models.track_data import TrackData
-from gui.utils import open_folder_dialog
+from discogsrenamer.core.app_settings import AppSettings
+from discogsrenamer.gui.main_window import MainWindow
+from discogsrenamer.gui.widgets.filename_list_item import FilenameListItem
+from discogsrenamer.gui.dialogs.settings_dialog import SettingsDialog
+from discogsrenamer.gui.dialogs.about_messagebox import AboutMessageBox
+from discogsrenamer.core.discogs_manager import DiscogsManager
+from discogsrenamer.core.models.track_data import TrackData
+from discogsrenamer.gui.utils import open_folder_dialog
 
 from pathlib import Path
 import os

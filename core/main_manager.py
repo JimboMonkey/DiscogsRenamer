@@ -1,12 +1,12 @@
 from PyQt6 import QtCore, QtWidgets
 
-from app_settings import AppSettings
+from core.app_settings import AppSettings
 from gui.main_window import MainWindow
-from gui.filename_list_item import FilenameListItem
-from settings_dialog import SettingsDialog
-from gui.about_messagebox import AboutMessageBox
-from discogs_manager import DiscogsManager
-from track_data import TrackData
+from gui.widgets.filename_list_item import FilenameListItem
+from gui.dialogs.settings_dialog import SettingsDialog
+from gui.dialogs.about_messagebox import AboutMessageBox
+from core.discogs_manager import DiscogsManager
+from core.models.track_data import TrackData
 from gui.utils import open_folder_dialog
 
 from pathlib import Path
@@ -45,7 +45,6 @@ class MainManager(QtCore.QObject):
         self._ui.settings_action.triggered.connect(lambda: self.open_settings_dialog())
 
         self._ui.about_action.triggered.connect(lambda: self.open_about_messagebox())
-
 
     def extract_digits(self, release_id_string: str) -> int | None:
         digits_string = "".join(

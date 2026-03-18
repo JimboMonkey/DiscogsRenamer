@@ -1,6 +1,6 @@
 from PyQt6 import QtWidgets
 
-from gui.list_item_widget import ListItemWidget
+from gui.widgets.list_item_widget import ListItemWidget
 
 
 class FilenameListItem(QtWidgets.QListWidgetItem):

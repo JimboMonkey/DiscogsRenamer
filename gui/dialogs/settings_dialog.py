@@ -1,8 +1,8 @@
-from settings_protocol import SettingsProtocol
-from gui.settings_dialog_gui import SettingsDialogGui
+from core.settings_protocol import SettingsProtocol
+from gui.dialogs.settings_dialog_gui import SettingsDialogGui
 
 from gui.utils import make_filename_validator
-from app_settings import DEFAULT_SETTINGS
+from core.app_settings import DEFAULT_SETTINGS
 
 
 class SettingsDialog:

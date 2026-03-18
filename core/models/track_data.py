@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from release_data import ReleaseData
+from core.models.release_data import ReleaseData
 
 
 @dataclass

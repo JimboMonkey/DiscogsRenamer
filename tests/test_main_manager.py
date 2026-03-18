@@ -3,9 +3,9 @@ from pathlib import Path
 from pytestqt.qtbot import QtBot
 from pytest import MonkeyPatch, fixture
 
-from main_manager import MainManager
-from release_data import ReleaseData
-from track_data import TrackData
+from core.main_manager import MainManager
+from core.models.release_data import ReleaseData
+from core.models.track_data import TrackData
 
 from collections import deque
 

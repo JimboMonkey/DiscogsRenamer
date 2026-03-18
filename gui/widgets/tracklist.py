@@ -5,13 +5,13 @@ from collections import deque
 from pathlib import Path
 import re, os
 
-from settings_protocol import SettingsProtocol
-from gui.list_item_widget import ListItemWidget
-from gui.release_list_item import ReleaseListItem
-from gui.filename_list_item import FilenameListItem
-from track_data import TrackData
+from core.settings_protocol import SettingsProtocol
+from gui.widgets.list_item_widget import ListItemWidget
+from gui.widgets.release_list_item import ReleaseListItem
+from gui.widgets.filename_list_item import FilenameListItem
+from core.models.track_data import TrackData
 from gui.utils import format_filename, extract_file_extension
-from filename_rules import MAX_FILENAME_LENGTH
+from core.filename_rules import MAX_FILENAME_LENGTH
 
 
 class Tracklist(QtWidgets.QListWidget):

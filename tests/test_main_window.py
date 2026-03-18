@@ -1,15 +1,15 @@
-from main_manager import MainManager
+from core.main_manager import MainManager
 from gui.main_window import MainWindow
 from pytestqt.qtbot import QtBot
 from collections import deque
 from pathlib import Path
 
-from app_settings import AppSettings
-from settings_protocol import SettingsProtocol
-from release_data import ReleaseData
-from track_data import TrackData
-from gui.filename_list_item import FilenameListItem
-from gui.release_list_item import ReleaseListItem
+from core.app_settings import AppSettings
+from core.settings_protocol import SettingsProtocol
+from core.models.release_data import ReleaseData
+from core.models.track_data import TrackData
+from gui.widgets.filename_list_item import FilenameListItem
+from gui.widgets.release_list_item import ReleaseListItem
 
 import pytest
 

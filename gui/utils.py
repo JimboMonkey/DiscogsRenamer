@@ -2,8 +2,8 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from dataclasses import is_dataclass, asdict
 import os
 
-from filename_rules import get_invalid_filename_characters
-from track_data import TrackData
+from core.filename_rules import get_invalid_filename_characters
+from core.models.track_data import TrackData
 
 
 def open_folder_dialog(parent: QtWidgets.QWidget | None, initial_folder: str) -> str:

@@ -1,9 +1,9 @@
 from PyQt6 import QtWidgets
 from pathlib import Path
 
-from gui.invalid_char_tableview import InvalidCharTableView
-from filename_rules import MAX_FILENAME_LENGTH
-from app_settings import DEFAULT_SETTINGS
+from gui.widgets.invalid_char_tableview import InvalidCharTableView
+from core.filename_rules import MAX_FILENAME_LENGTH
+from core.app_settings import DEFAULT_SETTINGS
 from gui.utils import open_folder_dialog
 
 

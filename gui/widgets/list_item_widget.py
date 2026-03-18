@@ -2,7 +2,7 @@ from PyQt6 import QtWidgets, QtCore
 from typing import Optional
 
 from gui.utils import make_filename_validator
-from filename_rules import MAX_FILENAME_LENGTH
+from core.filename_rules import MAX_FILENAME_LENGTH
 
 
 class ListItemWidget(QtWidgets.QWidget):

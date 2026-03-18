@@ -2,11 +2,11 @@ from PyQt6 import QtWidgets, QtGui, QtCore
 from typing import Optional
 from pathlib import Path
 
-from gui.tracklist import Tracklist
-from gui.action_button import ActionButton
-from settings_protocol import SettingsProtocol
+from gui.widgets.tracklist import Tracklist
+from gui.widgets.action_button import ActionButton
+from core.settings_protocol import SettingsProtocol
 
-from constants import APP_NAME
+from core.constants import APP_NAME
 
 
 class MainWindow(QtWidgets.QMainWindow):

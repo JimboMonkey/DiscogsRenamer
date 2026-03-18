@@ -1,6 +1,6 @@
 from PyQt6 import QtWidgets, QtSvgWidgets, QtCore
 from typing import Optional
-from constants import APP_NAME, APP_VERSION
+from core.constants import APP_NAME, APP_VERSION
 
 
 class AboutMessageBox(QtWidgets.QMessageBox):

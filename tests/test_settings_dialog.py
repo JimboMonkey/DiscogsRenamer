@@ -1,8 +1,8 @@
 from pytestqt.qtbot import QtBot
 from typing import Any
 
-from settings_dialog import SettingsDialog
-from app_settings import DEFAULT_SETTINGS
+from gui.dialogs.settings_dialog import SettingsDialog
+from core.app_settings import DEFAULT_SETTINGS
 
 
 class FakeSettings:

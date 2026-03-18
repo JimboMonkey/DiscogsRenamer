@@ -1,15 +1,15 @@
 import pytest
 from pytestqt.qtbot import QtBot
-from gui.tracklist import Tracklist
+from gui.widgets.tracklist import Tracklist
 from collections import deque
 from typing import Callable
 
-from app_settings import AppSettings
-from settings_protocol import SettingsProtocol
-from gui.filename_list_item import FilenameListItem
-from gui.release_list_item import ReleaseListItem
-from track_data import TrackData
-from release_data import ReleaseData
+from core.app_settings import AppSettings
+from core.settings_protocol import SettingsProtocol
+from gui.widgets.filename_list_item import FilenameListItem
+from gui.widgets.release_list_item import ReleaseListItem
+from core.models.track_data import TrackData
+from core.models.release_data import ReleaseData
 
 
 @pytest.fixture

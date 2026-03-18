@@ -1,5 +1,5 @@
 from unittest.mock import patch
-from discogs_manager import DiscogsManager
+from core.discogs_manager import DiscogsManager
 from discogs_client import Release, Track, Client
 from discogs_client.exceptions import HTTPError
 
@@ -11,7 +11,7 @@ def test_get_release_success(
     mock_client.release.return_value = mock_discogs_release
     release_id = 12345
 
-    with (patch("discogs_manager.Client", return_value=mock_client),):
+    with (patch("core.discogs_manager.Client", return_value=mock_client),):
         discogs_manager = DiscogsManager()
         result = discogs_manager.get_release(release_id)
 
@@ -24,7 +24,7 @@ def test_get_release_failure(mock_discogs_client: Client) -> None:
     mock_client.release.side_effect = HTTPError("Failed to fetch release", 404)
     release_id = 54321
 
-    with (patch("discogs_manager.Client", return_value=mock_client),):
+    with (patch("core.discogs_manager.Client", return_value=mock_client),):
         discogs_manager = DiscogsManager()
         result = discogs_manager.get_release(release_id)
 

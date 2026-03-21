@@ -1,10 +1,17 @@
-# Python-generated files
+# Python bytecode
 __pycache__/
 *.py[oc]
+
+# Packaging metadata
+*.egg-info
+wheels/
+
+# Build artefacts
 build/
 dist/
-wheels/
-*.egg-info
+*.spec
 
 # Virtual environments
-.venv
+.venv/
+venv/
+

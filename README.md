@@ -5,6 +5,7 @@ A PyQt6-based desktop application that automates renaming audio files in a folde
 It retrieves release tracklisting data, allows you to match tracks to files, and applies consistent filename rules through a clean GUI.
 
 ## Features
+
 - Enter a Discogs release ID to fetch its tracklisting
 - Browse and select your local folder of audio tracks
 - The files being renamed can be reordered if needed
@@ -38,6 +39,40 @@ uv sync --all-groups
 
 This installs both the runtime and development dependencies defined in pyproject.toml.
 
+## Developer Setup (Windows)
+
+1. Install pipx (Python application manager)
+
+```powershell
+# In a PowerShell terminal
+.\scripts\setup-system.ps1
+```
+
+This installs pipx and updates your PATH.
+A new terminal is required for the PATH change to take effect.
+
+2. Install uv
+
+```powershell
+# In a new PowerShell terminal (to pick up the PATH update)
+pipx install uv
+```
+
+3. Create and activate a virtual environment
+
+```powershell
+uv venv
+.\.venv\Scripts\activate.ps1
+```
+
+4. Install project dependencies
+
+```powershell
+uv sync --all-groups
+```
+
+This installs both the runtime and development dependencies defined in pyproject.toml.
+
 ## Running the Application
 
 From the command line:
@@ -59,9 +94,11 @@ uv run pyinstaller --noconfirm --name DiscogsRenamer --windowed --onefile main.p
 This command produces a standalone executable in the dist/ directory.
 
 ## Contributing
+
 See `CONTRIBUTING.md` for guidelines on pull requests and testing requirements.
 
 ## License
+
 GPL-3.0. See `LICENSE` for details.
 
 

@@ -17,6 +17,7 @@ It retrieves release tracklisting data, allows you to match tracks to files, and
 1. Install system dependencies
 
 ```bash
+chmod +x scripts/setup-system.sh
 ./scripts/setup-system.sh
 ```
 This installs Python tooling (pipx, uv) and the system libraries required for running PyQt6 applications and building the project with PyInstaller.
@@ -24,6 +25,7 @@ This installs Python tooling (pipx, uv) and the system libraries required for ru
 2. Create and activate a virtual environment
 
 ```bash
+# In a new terminal (to pick up the uv path update)
 uv venv
 source .venv/bin/activate
 ```

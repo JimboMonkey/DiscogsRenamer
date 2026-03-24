@@ -87,8 +87,13 @@ From VS Code:
 
 ## Building a Standalone Executable
 
+PyInstaller uses different path separators for --add-data depending on the platform:
+
+* Linux / macOS: SRC:DEST
+* Windows: SRC;DEST
+
 ```bash
-uv run pyinstaller --noconfirm --name DiscogsRenamer --windowed --onefile main.py
+uv run pyinstaller --noconfirm --name DiscogsRenamer --windowed --onefile --add-data="discogsrenamer/gui/icons:discogsrenamer/gui/icons" main.py
 ```
 
 This command produces a standalone executable in the dist/ directory.

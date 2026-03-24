@@ -1,6 +1,8 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 from dataclasses import is_dataclass, asdict
 import os
+import sys
+from pathlib import Path
 
 from discogsrenamer.core.filename_rules import get_invalid_filename_characters
 from discogsrenamer.core.models.track_data import TrackData
@@ -56,3 +58,12 @@ def make_filename_validator() -> QtGui.QRegularExpressionValidator:
     )
     regex = QtCore.QRegularExpression(f"[^{invalid_characters}]*")
     return QtGui.QRegularExpressionValidator(regex)
+
+
+# Return absolute path to a resource
+def resource_path(relative_path: str) -> str:
+    if hasattr(sys, "_MEIPASS"):
+        base = Path(sys._MEIPASS)
+    else:
+        base = Path(__file__).resolve().parents[2]
+    return str(base / relative_path)

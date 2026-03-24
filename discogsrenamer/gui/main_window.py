@@ -7,6 +7,7 @@ from discogsrenamer.gui.widgets.action_button import ActionButton
 from discogsrenamer.core.settings_protocol import SettingsProtocol
 
 from discogsrenamer.core.constants import APP_NAME
+from discogsrenamer.gui.utils import resource_path
 
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -25,7 +26,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ticked_folder_tracks = 0
 
         self.setWindowTitle(APP_NAME)
-        self.setWindowIcon(QtGui.QIcon("discogsrenamer/gui/icons/disc.svg"))
+        self.setWindowIcon(
+            QtGui.QIcon(resource_path("discogsrenamer/gui/icons/disc.svg"))
+        )
 
         heading_font = QtGui.QFont()
         heading_font.setPointSize(16)
@@ -52,7 +55,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.release_lineedit = QtWidgets.QLineEdit()
 
         self.clear_action = QtGui.QAction(
-            QtGui.QIcon("discogsrenamer/gui/icons/clear.svg"), "Clear", self
+            QtGui.QIcon(resource_path("discogsrenamer/gui/icons/clear.svg")),
+            "Clear",
+            self,
         )
         self.clear_action.triggered.connect(self.clear_release_lineedit)
         self.clear_action.setToolTip("Clear this field")
@@ -125,12 +130,16 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Create action buttons for Settings and About
         self.settings_action = QtGui.QAction(
-            QtGui.QIcon("discogsrenamer/gui/icons/settings.svg"), "Settings", self
+            QtGui.QIcon(resource_path("discogsrenamer/gui/icons/settings.svg")),
+            "Settings",
+            self,
         )
         self.settings_button = ActionButton(self.settings_action)
 
         self.about_action = QtGui.QAction(
-            QtGui.QIcon("discogsrenamer/gui/icons/about.svg"), "About", self
+            QtGui.QIcon(resource_path("discogsrenamer/gui/icons/about.svg")),
+            "About",
+            self,
         )
         self.about_button = ActionButton(self.about_action)
 

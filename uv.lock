@@ -109,7 +109,6 @@ wheels = [
 
 [[package]]
 name = "discogsrenamer"
-version = "1.0.0"
 source = { virtual = "." }
 dependencies = [
     { name = "pyqt6" },

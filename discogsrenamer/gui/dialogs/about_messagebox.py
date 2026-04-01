@@ -1,6 +1,6 @@
 from PyQt6 import QtWidgets, QtSvgWidgets, QtCore
 from typing import Optional
-from discogsrenamer.core.constants import APP_NAME, APP_VERSION
+from discogsrenamer.core.constants import APP_NAME, APP_VERSION, COMPANY_NAME
 from discogsrenamer.gui.utils import resource_path
 
 
@@ -21,11 +21,11 @@ class AboutMessageBox(QtWidgets.QMessageBox):
         text_label.setFixedWidth(500)
         text_label.setText(
             f"<b><font size=6>{APP_NAME}</font></b><br>"
-            "<br><b><i>A Jimbomonkey Production</i>"
+            f"<br><b><i>{COMPANY_NAME}</i>"
             f"<br>Version {APP_VERSION}<br></b>"
             "<br>I welcome your feedback.  If you have any suggestions, notice a mistake, or experience any technical problems, please get in touch via this project's GitHub page"
             "<br><a href='https://github.com/JimboMonkey/DiscogsRenamer'>https://github.com/JimboMonkey/DiscogsRenamer</a><br>"
-            "<br>Copyright \u00a9 2025-2026 Jimbomonkey Productions<br>"
+            f"<br>Copyright \u00a9 2025-2026 {COMPANY_NAME}<br>"
             "<br>Button icons courtesy of <a href='https://uxwing.com'>UXWing</a><br>"
             "<br>Licensed under the GNU General Public License, version 3 (GPLv3). "
             "You are free to use, modify, and redistribute this software "

@@ -93,6 +93,9 @@ jobs:
           Terminal=false
           EOF
 
+          ls -R AppDir
+          cat -n AppDir/usr/share/applications/DiscogsRenamer.desktop
+
           # Install the icon
           cp discogsrenamer/gui/icons/DiscogsRenamer.png AppDir/usr/share/icons/hicolor/256x256/apps/DiscogsRenamer.png
 

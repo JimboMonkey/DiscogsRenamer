@@ -93,10 +93,10 @@ jobs:
           Terminal=false
           EOF
 
-          ls -R AppDir
-          cat -n AppDir/usr/share/applications/DiscogsRenamer.desktop
+          # Copy .desktop file to AppDir root
+          cp AppDir/usr/share/applications/DiscogsRenamer.desktop AppDir/
 
-          # Install the icon
+          # Copy the application icon to the share folder
           cp discogsrenamer/gui/icons/DiscogsRenamer.png AppDir/usr/share/icons/hicolor/256x256/apps/DiscogsRenamer.png
 
       - name: Download appimagetool

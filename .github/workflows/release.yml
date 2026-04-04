@@ -96,8 +96,9 @@ jobs:
           # Copy .desktop file to AppDir root
           cp AppDir/usr/share/applications/DiscogsRenamer.desktop AppDir/
 
-          # Copy the application icon to the share folder
+          # Copy the application icon to the share folder and the AppDir root
           cp discogsrenamer/gui/icons/DiscogsRenamer.png AppDir/usr/share/icons/hicolor/256x256/apps/DiscogsRenamer.png
+          cp discogsrenamer/gui/icons/DiscogsRenamer.png AppDir/DiscogsRenamer.png
 
       - name: Download appimagetool
         run: |

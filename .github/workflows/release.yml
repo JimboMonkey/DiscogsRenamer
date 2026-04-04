@@ -73,29 +73,28 @@ jobs:
 
           # Copy PyInstaller output
           cp -r dist/DiscogsRenamer/* AppDir/usr/bin/
-
+          
           # Create AppRun launcher
           cat > AppDir/AppRun << 'EOF'
-#!/bin/bash
-HERE="$(dirname "$(readlink -f "$0")")"
-exec "$HERE/usr/bin/DiscogsRenamer"
-EOF
+          #!/bin/bash
+          HERE="$(dirname "$(readlink -f "$0")")"
+          exec "$HERE/usr/bin/DiscogsRenamer"
+          EOF
           chmod +x AppDir/AppRun
 
           # Create .desktop file
           cat > AppDir/usr/share/applications/DiscogsRenamer.desktop << 'EOF'
-[Desktop Entry]
-Name=DiscogsRenamer
-Exec=AppRun
-Icon=DiscogsRenamer
-Type=Application
-Categories=Utility;
-Terminal=false
-EOF
+          [Desktop Entry]
+          Name=DiscogsRenamer
+          Exec=AppRun
+          Icon=DiscogsRenamer
+          Type=Application
+          Categories=Utility;
+          Terminal=false
+          EOF
 
           # Install the icon
           cp discogsrenamer/gui/icons/DiscogsRenamer.png AppDir/usr/share/icons/hicolor/256x256/apps/DiscogsRenamer.png
-
 
       - name: Download appimagetool
         run: |

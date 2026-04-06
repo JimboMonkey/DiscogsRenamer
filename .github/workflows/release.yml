@@ -153,6 +153,7 @@ jobs:
       - name: Build Windows Executable
         shell: cmd
         run: |
+          set PATH=%PATH%;%pythonLocation%\Scripts
           pyinstaller --noconfirm --clean ^
             --name DiscogsRenamer ^
             --windowed ^

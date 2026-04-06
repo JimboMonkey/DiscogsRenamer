@@ -147,10 +147,11 @@ jobs:
 
       - name: Extract version from git tag
         id: get_version
-        shell: bash
-        run: echo "version=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+        shell: cmd
+        run: echo version=${{ github.ref_name }}>> %GITHUB_OUTPUT%
 
       - name: Build Windows Executable
+        shell: cmd
         run: |
           pyinstaller --noconfirm --clean ^
             --name DiscogsRenamer ^
@@ -160,9 +161,8 @@ jobs:
             discogsrenamer/main.py
 
       - name: Rename Windows Executable
-        shell: pwsh
-        run: Rename-Item "dist/DiscogsRenamer/DiscogsRenamer.exe" "DiscogsRenamer-${{ steps.get_version.outputs.version }}.exe"
-
+        shell: cmd
+        run: move dist\DiscogsRenamer\DiscogsRenamer.exe dist\DiscogsRenamer\DiscogsRenamer-${{ steps.get_version.outputs.version }}.exe
 
       - name: Upload Windows artifact
         uses: actions/upload-artifact@v4

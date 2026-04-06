@@ -158,7 +158,7 @@ jobs:
             --windowed `
             --onedir `
             --add-data "discogsrenamer/gui/icons;discogsrenamer/gui/icons" `
-            discogsrenamer/main.py
+            main.py
 
       - name: Rename Windows Executable
         shell: pwsh

@@ -10,11 +10,10 @@ permissions:
 
 env:
   PYTHON_VERSION: "3.12"
-  UBUNTU_VERSION: "22.04"
 
 jobs:
   create-release:
-    runs-on: ubuntu-${{ env.UBUNTU_VERSION }}
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout
@@ -27,7 +26,7 @@ jobs:
           prerelease: ${{ contains(github.ref, '-beta') }}
 
   build-appimage:
-    runs-on: ubuntu-${{ env.UBUNTU_VERSION }}
+    runs-on: ubuntu-22.04
     needs: create-release
 
     steps:
@@ -173,7 +172,7 @@ jobs:
 
   publish-assets:
     needs: [build-appimage, build-windows]
-    runs-on: ubuntu-${{ env.UBUNTU_VERSION }}
+    runs-on: ubuntu-22.04
     steps:
 
       - name: Extract version from git tag

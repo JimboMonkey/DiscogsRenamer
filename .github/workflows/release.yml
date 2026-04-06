@@ -61,7 +61,7 @@ jobs:
           version: "0.8.11"
 
       - name: Sync Python dependencies
-        run: uv sync --all-groups
+        run: uv sync --extra dev
 
       - name: Build PyInstaller bundle
         run: |

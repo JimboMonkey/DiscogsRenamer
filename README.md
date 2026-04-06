@@ -34,7 +34,7 @@ source .venv/bin/activate
 3. Install project dependencies
 
 ```bash
-uv sync --all-groups
+uv sync --extra dev
 ```
 
 This installs both the runtime and development dependencies defined in pyproject.toml.
@@ -68,7 +68,7 @@ uv venv
 4. Install project dependencies
 
 ```powershell
-uv sync --all-groups
+uv sync --extra dev
 ```
 
 This installs both the runtime and development dependencies defined in pyproject.toml.

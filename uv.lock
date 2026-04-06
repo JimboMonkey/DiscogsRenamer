@@ -115,7 +115,7 @@ dependencies = [
     { name = "python3-discogs-client" },
 ]
 
-[package.dev-dependencies]
+[package.optional-dependencies]
 dev = [
     { name = "black" },
     { name = "pyinstaller" },
@@ -125,17 +125,14 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "black", marker = "extra == 'dev'", specifier = ">=25.1.0" },
+    { name = "pyinstaller", marker = "extra == 'dev'", specifier = ">=6.19.0" },
     { name = "pyqt6", specifier = ">=6.9.1" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.4.1" },
+    { name = "pytest-qt", marker = "extra == 'dev'", specifier = ">=4.5.0" },
     { name = "python3-discogs-client", specifier = ">=2.8" },
 ]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "black", specifier = ">=25.1.0" },
-    { name = "pyinstaller", specifier = ">=6.19.0" },
-    { name = "pytest", specifier = ">=8.4.1" },
-    { name = "pytest-qt", specifier = ">=4.5.0" },
-]
+provides-extras = ["dev"]
 
 [[package]]
 name = "idna"

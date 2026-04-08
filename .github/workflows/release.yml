@@ -162,13 +162,13 @@ jobs:
 
       - name: Rename Windows Executable
         shell: pwsh
-        run: Move-Item "dist\DiscogsRenamer\DiscogsRenamer.exe" "dist\DiscogsRenamer\DiscogsRenamer-${{ steps.get_version.outputs.version }}.exe"
+        run: Move-Item "dist\DiscogsRenamer.exe" "dist\DiscogsRenamer-${{ steps.get_version.outputs.version }}.exe"
 
       - name: Upload Windows artifact
         uses: actions/upload-artifact@v4
         with:
           name: DiscogsRenamer-windows
-          path: dist/DiscogsRenamer/DiscogsRenamer-${{ steps.get_version.outputs.version }}.exe
+          path: dist\DiscogsRenamer-${{ steps.get_version.outputs.version }}.exe
 
   publish-assets:
     needs: [build-appimage, build-windows]

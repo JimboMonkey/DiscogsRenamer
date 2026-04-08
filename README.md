@@ -9,7 +9,7 @@ It retrieves release tracklisting data, allows you to match tracks to files, and
 - Enter a Discogs release ID to fetch its tracklisting
 - Browse and select your local folder of audio tracks
 - The files being renamed can be reordered if needed
-- Rename every files in the folder or just a selected subset
+- Rename every file in the folder or just a selected subset
 - Specify the formatting of the filename and the information included
 - Rename files safely with user-controlled substitution for invalid filename characters
 
@@ -97,15 +97,15 @@ uv sync --extra dev
 
 This installs both the runtime and development dependencies defined in pyproject.toml.
 
-## Running the Application
+## Running from Source
 
-From the command line:
+### From the command line:
 
 ```bash
 python main.py
 ```
 
-From VS Code:
+### From VS Code:
 
 * Use the included launch.json to start the application from main.py
 

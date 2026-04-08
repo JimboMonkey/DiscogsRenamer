@@ -111,7 +111,9 @@ From VS Code:
 
 ## Building a Standalone Executable
 
-PyInstaller uses different path separators for --add-data depending on the platform:
+If you want to build a standalone executable for your own system (not an AppImage), use PyInstaller in onefile mode. This applies to both Windows and Linux.
+
+Note that PyInstaller uses different path separators for --add-data depending on the platform:
 
 * Linux / macOS: SRC:DEST
 * Windows: SRC;DEST
@@ -120,7 +122,9 @@ PyInstaller uses different path separators for --add-data depending on the platf
 uv run pyinstaller --noconfirm --name DiscogsRenamer --windowed --onefile --add-data="discogsrenamer/gui/icons:discogsrenamer/gui/icons" main.py
 ```
 
-This command produces a standalone executable in the dist/ directory.
+This command produces a single executable in the dist/ directory.
+
+If you want to build an AppImage, use PyInstaller in onedir mode and then package the directory using appimagetool.
 
 ## Contributing
 

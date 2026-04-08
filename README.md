@@ -13,6 +13,30 @@ It retrieves release tracklisting data, allows you to match tracks to files, and
 - Specify the formatting of the filename and the information included
 - Rename files safely with user-controlled substitution for invalid filename characters
 
+## Download & Run
+
+### Windows
+
+1. Download the .exe from the Assets of the [latest release](https://github.com/JimboMonkey/DiscogsRenamer/releases/latest)
+
+2. Double‑click to run
+
+### Linux (AppImage)
+
+1. Download the AppImage from the Assets of the [latest release](https://github.com/JimboMonkey/DiscogsRenamer/releases/latest)
+
+2. Make it executable:
+
+    ```bash
+    chmod +x DiscogsRenamer-v1.0.0-x86_64.AppImage
+    ```
+
+3. Run it:
+
+    ```bash
+    ./DiscogsRenamer-v1.0.0-x86_64.AppImage
+    ```
+
 ## Developer Setup (Linux)
 
 1. Install system dependencies

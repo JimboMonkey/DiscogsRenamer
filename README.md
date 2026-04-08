@@ -4,6 +4,8 @@ A PyQt6-based desktop application that automates renaming audio files in a folde
 
 It retrieves release tracklisting data, allows you to match tracks to files, and applies consistent filename rules through a clean GUI.
 
+![Main window](screenshots/main_window.png)
+
 ## Features
 
 - Enter a Discogs release ID to fetch its tracklisting

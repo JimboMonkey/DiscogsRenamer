@@ -156,7 +156,7 @@ jobs:
           pyinstaller --noconfirm --clean `
             --name DiscogsRenamer `
             --windowed `
-            --onedir `
+            --onefile `
             --add-data "discogsrenamer/gui/icons;discogsrenamer/gui/icons" `
             main.py
 
